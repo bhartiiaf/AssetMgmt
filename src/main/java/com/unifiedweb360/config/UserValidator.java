@@ -63,7 +63,6 @@ public class UserValidator implements Validator {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	@Override
 	public BeanDescriptor getConstraintsForClass(Class<?> clazz) {
 		// TODO Auto-generated method stub
