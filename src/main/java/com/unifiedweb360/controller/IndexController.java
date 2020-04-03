@@ -17,4 +17,16 @@ public class IndexController {
 		mv.addObject("dateval",strDate);  
 		return mv;
 	}
+	
+	@GetMapping({"/welcome"})
+	public ModelAndView getWelcomePage()
+	{
+		ModelAndView mv = new ModelAndView("welcome");
+		Date date = new Date();  
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");  
+		String strDate= formatter.format(date);  
+		mv.addObject("dateval",strDate);  
+		return mv;
+	}
+	
 }
