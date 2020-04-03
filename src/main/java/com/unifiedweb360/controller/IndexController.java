@@ -17,5 +17,4 @@ public class IndexController {
 		mv.addObject("dateval",strDate);  
 		return mv;
 	}
-
 }
