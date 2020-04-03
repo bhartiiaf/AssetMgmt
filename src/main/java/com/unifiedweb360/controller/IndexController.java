@@ -10,9 +10,7 @@ public class IndexController {
 	@GetMapping({"/"})
 	public ModelAndView getArticleView(HttpServletRequest request)
 	{
-		ModelAndView mv = new ModelAndView("index");
-		System.out.println(request.getParameter("censusNo"));
-		mv.addObject("uname",System.getProperty("user.name"));
+		ModelAndView mv = new ModelAndView("login");
 		Date date = new Date();  
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");  
 		String strDate= formatter.format(date);  
