@@ -18,8 +18,4 @@ public class IndexController {
 		return mv;
 	}
 
-	
-	
-	
-	
 }
