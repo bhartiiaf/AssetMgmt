@@ -59,10 +59,10 @@
           <!-- <img class="brand-img" src="assets/images/logo-colored%402x.png" alt="..."> -->
           <h3 class="brand-text font-size-40">UnifiedWeb360</h3>
         </div>
-        <h3 class="font-size-24">Sign In</h3>
-        <p>You must authenticate to proceed</p>
+        <h3 class="font-size-24">Sign Up</h3>
+        <p>You must Register to Sign In</p>
 
-        <form method="post" action="login" autocomplete="off">
+       	<form th:action="@{/registration}" method="post" th:object="${userForm}">
           <div class="form-group form-material floating" data-plugin="formMaterial">
             <input type="text" class="form-control empty" id="username" name="username">
             <label class="floating-label" for="inputEmail">Username</label>
@@ -75,17 +75,17 @@
             <span class="passWord error text-danger"></span>
             
           </div>
-          <div class="form-group clearfix">
-            <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
-              <input type="checkbox" id="remember" name="checkbox">
-              <label for="inputCheckbox">Remember me</label>
-            </div>
-            <a class="float-right" href="#">Forgot password?</a>
+          <div class="form-group form-material floating" data-plugin="formMaterial">
+            <input type="password" class="form-control empty" id="passwordConfirm" name="passwordConfirm">
+            <label class="floating-label" for="inputPassword">Confirm Password</label>
+            <span class="passwordconfirm error text-danger"></span>
+            
           </div>
-          <button type="submit" class="btn btn-primary btn-block" id="signin">Sign in</button>
+          
+          <button type="submit" class="btn btn-primary btn-block" id="register">Register!</button>
         </form>
 
-        <p>No account? <a href="registration">Sign Up</a></p>
+        <p>Already Registered? <a href="login">Sign In</a></p>
 
         <footer class="page-copyright">
           <p>WEBSITE BY UNIFIEDWEB360</p>
@@ -166,7 +166,7 @@
   <script>
   $(document).ready(function(){
 	
-	  $("#signin").on('click',function(){
+	  $("#register").on('click',function(){
 		 var username = $("#username").val();
 		 var password = $("#password").val();
 		  
