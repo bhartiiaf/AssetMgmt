@@ -79,6 +79,8 @@
             <input type="password" class="form-control empty" id="passwordConfirm" name="passwordConfirm">
             <label class="floating-label" for="inputPassword">Confirm Password</label>
             <span class="passwordconfirm error text-danger"></span>
+            <span id="divCheckPasswordMatch"></span>
+            
             
           </div>
           
@@ -165,6 +167,8 @@
   </script>
   <script>
   $(document).ready(function(){
+	  
+	  
 	
 	  $("#register").on('click',function(){
 		 var username = $("#username").val();
@@ -185,6 +189,14 @@
 				return false;
 			}
 	  });
+	  
+	  $(function() {
+		    $("#passwordConfirm").keyup(function() {
+		        var password = $("#password").val();
+		        $("#divCheckPasswordMatch").html(password == $(this).val() ? "Passwords match." : "Passwords do not match!");
+		    });
+
+		});
 	  
 	  $("#username").on('keypress', function(e){
 			$("#username").closest('.form-group').removeClass('has-error');

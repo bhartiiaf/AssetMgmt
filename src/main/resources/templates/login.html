@@ -62,7 +62,7 @@
         <h3 class="font-size-24">Sign In</h3>
         <p>You must authenticate to proceed</p>
 
-        <form method="post" action="login" autocomplete="off">
+        <form method="post" th:action="@{/login}" autocomplete="off">
           <div class="form-group form-material floating" data-plugin="formMaterial">
             <input type="text" class="form-control empty" id="username" name="username">
             <label class="floating-label" for="inputEmail">Username</label>
