@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.unifiedweb360.usermodal.User;
-import com.unifiedweb360.userrepo.RoleRepository;
-import com.unifiedweb360.userrepo.UserRepository;
+import com.unifiedweb360.modal.user.User;
+import com.unifiedweb360.repo.master.RoleRepository;
+import com.unifiedweb360.repo.master.UserRepository;
 
 
 

@@ -1,4 +1,4 @@
-package com.unifiedweb360.userrepo;
+package com.unifiedweb360.service;
 
 public interface SecurityService {
     String findLoggedInUsername();

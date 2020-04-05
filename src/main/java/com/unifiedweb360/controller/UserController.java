@@ -14,10 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.unifiedweb360.config.UserValidator;
+import com.unifiedweb360.modal.user.User;
+import com.unifiedweb360.service.SecurityService;
 import com.unifiedweb360.service.UserService;
 import com.unifiedweb360.service.usermgmt.RoleService;
-import com.unifiedweb360.usermodal.User;
-import com.unifiedweb360.userrepo.SecurityService;
 
 
 

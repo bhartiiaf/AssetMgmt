@@ -2,7 +2,7 @@ package com.unifiedweb360.service.usermgmt;
 
 import java.util.List;
 
-import com.unifiedweb360.usermodal.Role;
+import com.unifiedweb360.modal.user.Role;
 
 
 public interface RoleService {

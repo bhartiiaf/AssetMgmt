@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import com.unifiedweb360.userrepo.SecurityService;
-
 
 @Service
 public class SecurityServiceImpl implements SecurityService{

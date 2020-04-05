@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.unifiedweb360.modal.user.Role;
+import com.unifiedweb360.repo.master.RoleRepository;
 import com.unifiedweb360.service.usermgmt.RoleService;
-import com.unifiedweb360.usermodal.Role;
-import com.unifiedweb360.userrepo.RoleRepository;
 
 
 

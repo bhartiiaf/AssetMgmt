@@ -13,9 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.unifiedweb360.usermodal.Role;
-import com.unifiedweb360.usermodal.User;
-import com.unifiedweb360.userrepo.UserRepository;
+import com.unifiedweb360.modal.user.Role;
+import com.unifiedweb360.modal.user.User;
+import com.unifiedweb360.repo.master.UserRepository;
 
 
 

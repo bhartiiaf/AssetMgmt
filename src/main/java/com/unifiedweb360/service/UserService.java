@@ -3,7 +3,7 @@ package com.unifiedweb360.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.unifiedweb360.usermodal.User;
+import com.unifiedweb360.modal.user.User;
 
 
 public interface UserService {

@@ -11,7 +11,7 @@
 	<groupId>com.unifiedweb360</groupId>
 	<artifactId>unifiedweb360</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>unifiedweb360</name>
 	<description>UnifiedWeb360 Web Application</description>
 	<properties>

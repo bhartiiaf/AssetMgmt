@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
+import com.unifiedweb360.modal.user.User;
 import com.unifiedweb360.service.UserService;
-import com.unifiedweb360.usermodal.User;
 
 
 @Component

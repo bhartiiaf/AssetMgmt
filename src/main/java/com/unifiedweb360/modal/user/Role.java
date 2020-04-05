@@ -1,4 +1,4 @@
-package com.unifiedweb360.usermodal;
+package com.unifiedweb360.modal.user;
 
 import java.util.Set;
 
