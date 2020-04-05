@@ -16,5 +16,4 @@ public class Unifiedweb360Application extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplication.run(Unifiedweb360Application.class, args);
 	}
-
 }
