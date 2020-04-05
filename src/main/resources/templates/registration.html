@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js css-menubar" lang="en">
+<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace = "/skin/template :: head" />
 
 <body class="animsition site-navbar-small ">
@@ -13,9 +13,11 @@
   <!-- Page -->
   <div class="page">
     <div class="page-content">
+      <div class="row">
+      <div class="col-sm-5">
       
-      
-      <h4 class="text-danger" th:text=${regfailmessage}> </h4>
+      <h4 class="text-danger"  th:text="${regfailmessage}"> </h4>
+      <h4 class="text-success" th:text="${regsuccessmessage}"></h4>
         <h3 class="font-size-24">Sign Up</h3>
         
         <p>You must Register to Sign In</p>
@@ -44,7 +46,28 @@
           <button type="submit" class="btn btn-primary btn-block" id="register">Register!</button>
         </form>
       
+      </div>
+      <div class="col-sm-7">
+     <table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>UserName</th>
+				<th>Created On</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="emp : ${userdetail}">
+			
+				<td th:text="${emp.username}" />	
+				<td th:text="${emp.createdOn}" />
+				
+			</tr>
+		</tbody>		
+	</table>
       
+      </div>
+      </div>
       
       
     </div>

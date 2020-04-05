@@ -1,7 +1,7 @@
 package com.unifiedweb360.service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 import com.unifiedweb360.usermodal.User;
 
@@ -13,5 +13,7 @@ public interface UserService {
     List<User> findByUsernameAndPassword(String username, String password);
     
     List<User> findUserByUserName(String username);
+    
+    List<User> findAllUser();
     
 }
