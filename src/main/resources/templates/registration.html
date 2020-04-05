@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en">
+<head th:replace = "/skin/template :: head" />
+
+<body class="animsition site-navbar-small ">
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div th:replace="/skin/sidemenu :: topandsidemenu"></div> 
+  
+
+  <!-- Page -->
+  <div class="page">
+    <div class="page-content">
+      
+      
+      <h4 class="text-danger" th:text=${regfailmessage}> </h4>
+        <h3 class="font-size-24">Sign Up</h3>
+        
+        <p>You must Register to Sign In</p>
+
+       	<form th:action="@{/getregistration}" method="post">
+          <div class="form-group form-material floating" data-plugin="formMaterial">
+            <input type="text" class="form-control empty" id="username" name="username">
+            <label class="floating-label" for="inputEmail">Username</label>
+            <span class="userName error text-danger"></span>
+            
+          </div>
+          <div class="form-group form-material floating" data-plugin="formMaterial">
+            <input type="password" class="form-control empty" id="password" name="password">
+            <label class="floating-label" for="inputPassword">Password</label>
+            <span class="passWord error text-danger"></span>
+            
+          </div>
+          <div class="form-group form-material floating" data-plugin="formMaterial">
+            <input type="password" class="form-control empty" id="passwordConfirm" name="passwordConfirm">
+            <label class="floating-label" for="inputPassword">Confirm Password</label>
+            <span class="passwordconfirm error text-danger"></span>
+            <span id="divCheckPasswordMatch"></span>
+                        
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block" id="register">Register!</button>
+        </form>
+      
+      
+      
+      
+    </div>
+  </div>
+  <!-- End Page -->
+
+
+  <!-- Footer -->
+  <div th:replace = "/skin/template :: footer"></div>
+  
+<script>
+  $(document).ready(function(){
+	  
+	  
+	
+	  $("#register").on('click',function(){
+		 var username = $("#username").val();
+		 var password = $("#password").val();
+		  
+		 if(username == null || username == '')
+			{
+			$("#username").closest('.form-group').addClass('has-error');
+			$(".userName").html("*Enter Username.");
+			$("#username").focus();
+			return false;
+			}
+		 else if(password == null || password == '')
+			{
+				$("#password").closest('.form-group').addClass('has-error');
+				$(".passWord").html("*Enter Password");
+				$("#password").focus();
+				return false;
+			}
+	  });
+	  
+	  $(function() {
+		    $("#passwordConfirm").keyup(function() {
+		        var password = $("#password").val();
+		        $("#divCheckPasswordMatch").html(password == $(this).val() ? "Passwords match." : "Passwords do not match!");
+		    });
+
+		});
+	  
+	  $("#username").on('keypress', function(e){
+			$("#username").closest('.form-group').removeClass('has-error');
+			$(".userName").html("");
+		});
+	  $("#password").on('keypress', function(e){
+			$("#password").closest('.form-group').removeClass('has-error');
+			$(".passWord").html("");
+		});
+	  
+  });
+  </script>
+  
+</body>
+
+
+</html>

@@ -3,6 +3,7 @@ package com.unifiedweb360.service;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,4 +45,13 @@ public class UserServiceImpl implements UserService {
 	public List<User> findByUsernameAndPassword(String username, String password) {
 		return userRepository.findByUsernameAndPassword(username, password);
 	}
+
+
+	@Override
+	public List<User> findUserByUserName(String username) {
+		return userRepository.findUserByUsername(username);
+	}
+
+
+	
 }

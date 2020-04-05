@@ -59,10 +59,12 @@
           <!-- <img class="brand-img" src="assets/images/logo-colored%402x.png" alt="..."> -->
           <h3 class="brand-text font-size-40">UnifiedWeb360</h3>
         </div>
+        <h4 class="text-danger" th:text=${regfailmessage}> </h4>
         <h3 class="font-size-24">Sign Up</h3>
+        
         <p>You must Register to Sign In</p>
 
-       	<form th:action="@{/registration}" method="post" th:object="${userForm}">
+       	<form th:action="@{/getregistration}" method="post">
           <div class="form-group form-material floating" data-plugin="formMaterial">
             <input type="text" class="form-control empty" id="username" name="username">
             <label class="floating-label" for="inputEmail">Username</label>

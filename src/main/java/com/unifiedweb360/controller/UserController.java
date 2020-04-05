@@ -1,5 +1,8 @@
 package com.unifiedweb360.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.unifiedweb360.config.UserValidator;
 import com.unifiedweb360.service.UserService;
@@ -39,22 +44,30 @@ public class UserController {
         model.addAttribute("userForm", new User());
         model.addAttribute("userrole",roleService.findAll());
         
-        return "userregistration";
+        return "registration";
     }
 
-    @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult,
-    		HttpServletRequest request) {
-        userValidator.validate(userForm, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "registration";
+   
+    @PostMapping("/getregistration")
+    public ModelAndView getRegistered(User userForm,HttpServletRequest request,RedirectAttributes redirectAttributes)
+    {
+        List<User> u = userService.findUserByUserName(userForm.getUsername());
+        if(u.size() == 0)
+        {
+        	userService.save(userForm);
+            securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+            redirectAttributes.addFlashAttribute("regsuccessmessage", "You are registered");
+            return  new ModelAndView("redirect:/welcome");
         }
-        System.out.println(request.getParameter("roles"));
-        
-        userService.save(userForm);
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-        return "redirect:/welcome";
+        else
+        {
+            redirectAttributes.addFlashAttribute("regfailmessage", "Hey! You are already registered");
+        	return  new ModelAndView("redirect:/registration");
+        }
+
     }
+    
+    
 
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
