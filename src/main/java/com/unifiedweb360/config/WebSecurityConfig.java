@@ -37,8 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login?logout=true")
-                .invalidateHttpSession(true);
-        
+                .invalidateHttpSession(true)
+                .and().csrf().disable();
+        		
     }
     
     
