@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace = "/skin/template :: head" />
+<head th:replace = "skin/template :: head" />
 
 <body class="animsition site-navbar-small ">
   <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-  <div th:replace="/skin/sidemenu :: topandsidemenu"></div> 
+  <div th:replace="skin/sidemenu :: topandsidemenu"></div> 
   
 
   <!-- Page -->
@@ -76,7 +76,7 @@
 
 
   <!-- Footer -->
-  <div th:replace = "/skin/template :: footer"></div>
+  <div th:replace = "skin/template :: footer"></div>
   
 <script>
   $(document).ready(function(){

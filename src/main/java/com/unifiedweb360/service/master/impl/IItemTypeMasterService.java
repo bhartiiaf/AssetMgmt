@@ -1,9 +1,11 @@
 package com.unifiedweb360.service.master.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.unifiedweb360.modal.master.ItemTypeMaster;
@@ -17,6 +19,8 @@ public class IItemTypeMasterService implements ItemTypeMasterService {
 	ItemTypeMasterRepository itemTypeMasterRepo;
 	@Override
 	public void save(ItemTypeMaster itemTypeMaster) {
+		itemTypeMaster.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+		itemTypeMaster.setCreatedOn(new Date());
 		itemTypeMasterRepo.save(itemTypeMaster);
 
 	}
