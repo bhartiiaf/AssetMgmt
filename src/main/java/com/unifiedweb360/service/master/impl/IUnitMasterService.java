@@ -1,5 +1,7 @@
 package com.unifiedweb360.service.master.impl;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ public class IUnitMasterService implements UnitMasterService {
 
 	@Override
 	public void save(UnitMaster unitMaster) {
+		unitMaster.setCreatedOn(new Date());
 		unitRepo.save(unitMaster);
 	}
 

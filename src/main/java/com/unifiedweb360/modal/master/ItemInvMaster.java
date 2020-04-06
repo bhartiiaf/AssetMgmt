@@ -14,13 +14,9 @@ import javax.persistence.Table;
 
 import com.unifiedweb360.modal.user.User;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name="item_inv_master")
 public class ItemInvMaster implements Serializable {
