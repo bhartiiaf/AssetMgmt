@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace = "skin/template :: head" />
+
+<body class="animsition site-navbar-small ">
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div th:replace="skin/sidemenu :: topandsidemenu"></div> 
+  
+
+  <!-- Page -->
+  <div class="page">
+    <div class="page-content">
+      <div class="row">
+      <div class="col-sm-5">
+      
+      <h4 class="text-danger"  th:text="${failure}"> </h4>
+      <h4 class="text-success" th:text="${success}"></h4>
+        <h3 class="font-size-24">Item Type Master</h3>
+       	<form th:action="@{/submititemtype}" method="post">
+          <div class="form-group form-material floating" data-plugin="formMaterial">
+            <input type="text" class="form-control empty" id="itemDescription" name="itemDescription">
+            <label class="floating-label" for="itemDescription">Item Type</label>
+            <span class="itemdescription error text-danger"></span>
+            
+          </div>
+                   
+          <button type="submit" class="btn btn-primary btn-block" id="itemtypesubmit">Submit Item Type!</button>
+        </form>
+      
+      </div>
+      <div class="col-sm-7">
+     <table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Item Type</th>
+				<th>Created On</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="it : ${itetype}">
+			
+				<td th:text="${it.itemDescription}" />	
+				<td th:text="${it.createdOn}" />
+				
+			</tr>
+		</tbody>		
+	</table>
+      
+      </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  <!-- End Page -->
+
+
+  <!-- Footer -->
+  <div th:replace = "skin/template :: footer"></div>
+  
+<script>
+  $(document).ready(function(){
+	  
+	  
+	
+	  $("#itemtypesubmit").on('click',function(){
+		 var itemDescription = $("#itemDescription").val();
+		  
+		 if(itemDescription == null || itemDescription == '')
+			{
+			$("#itemDescription").closest('.form-group').addClass('has-error');
+			$(".itemdescription").html("*Enter Item Description.");
+			$("#itemDescription").focus();
+			return false;
+			}
+		
+	  });
+	  
+	 	  
+	  $("#itemDescription").on('keypress', function(e){
+			$("#itemDescription").closest('.form-group').removeClass('has-error');
+			$(".itemdescription").html("");
+		});
+	  
+	  
+  });
+  </script>
+  
+</body>
+
+
+</html>

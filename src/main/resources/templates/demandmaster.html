@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace = "skin/template :: head" />
+
+<body class="animsition site-navbar-small ">
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div th:replace="skin/sidemenu :: topandsidemenu"></div> 
+  
+
+  <!-- Page -->
+  <div class="page">
+    <div class="page-content">
+      <div class="row">
+      <div class="col-sm-10">
+      
+       
+            
+      
+      <h4 class="text-danger"  th:text="${failure}"> </h4>
+      <h4 class="text-success" th:text="${success}"></h4>
+        <h3 class="font-size-24" id="dmd">Demand Master</h3>
+       	<form th:action="@{/submitdemand}" method="post">
+       	
+       	<div class="container" id="formobject">
+          <div class="row">
+          <div class="col-sm-3">
+         
+           <select name="codeHead" class="form-control" id="codeHead">
+           <option value="">Select Code Head</option>
+          	<option th:each="ch : ${onlyahq}"
+                            th:value="${ch.id}"
+                            th:utext="${ch.codeHeadDescription}"/>
+           </select>
+            <span class="codeheadid error text-danger"></span>
+          
+          </div>
+          <div class="col-sm-3">
+			<select name="itemTypeId" class="form-control" id="itemTypeId">
+           <option value="">Select Item Type</option>
+          	<option th:each="itm : ${itemtype}"
+                            th:value="${itm.id}"
+                            th:utext="${itm.itemDescription}"/>
+           </select>
+           <span class="itemtypeid error text-danger"></span>
+           
+          </div>
+          <div class="col-sm-3">
+ 			<select name="itemSubTypeId" class="form-control" id="itemSubTypeId">
+           </select>
+           <span class="itemsubtypeid error text-danger"></span>
+           
+          </div>
+          <div class="col-sm-3">
+           <input type ="number" class="form-control empty" id="itemQty" name="itemQty" placeholder="Item Qty">
+            <span class="itemqty error text-danger"></span>
+          	
+          </div>
+          </div>
+          <div class="row mt-2">
+          <div class="col-sm-3">
+           <select name="demandReason" class="form-control" id="demandReason">
+           <option value="">Select Demand Reason</option>
+          	<option value="Against Downgradation">Against Downgradation</option>
+          	<option value="Fresh">Fresh</option>
+           </select>
+            <span class="demandreason error text-danger"></span>
+           
+          </div>
+          <div class="col-sm-3">
+          <input type ="text" class="form-control empty" id="demandAuth" name="demandAuth" placeholder="Demand Authority">
+          <span class="demandauth error text-danger"></span>
+          </div>
+          
+          </div>
+          </div>
+          <div id="moreitem"><br /></div>
+          <hr />
+          <div class="row mt-2">
+          <div class="col-sm-2">
+          <button type="submit" id="addmoreitem" class="btn btn-primary">Add More Items!</button>
+          </div>
+          <div class="col-sm-2">
+          <button type="submit" id="draftdemand" class="btn btn-danger">Draft Demand!</button>
+          </div>
+          <div class="col-sm-2">
+          <button type="submit" id="raisedemand" class="btn btn-success">Raise Demand!</button>
+          </div>
+          </div>
+        </form>
+      
+      </div>
+      <!-- <div class="col-sm-7">
+     <table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Code Head</th>
+				<th>Item Type</th>
+				<th>Qty</th>
+				<th>Reason</th>
+				<th>Authority</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="dm : ${demand}">
+			
+				<td th:text="${dm.codeHeadId.codeHeadDescription}" />	
+				<td th:text="${dm.itemTypeId.itemDescription}" />
+				<td th:text="${dm.itemQty}" />
+				<td th:text="${dm.demandReason}" />
+				<td th:text="${dm.demandAuth}" />
+				
+			</tr> 
+		</tbody>		
+	</table>
+      
+      </div> -->
+      </div>
+      
+      
+    </div>
+  </div>
+  <!-- End Page -->
+
+
+  <!-- Footer -->
+  <div th:replace = "skin/template :: footer"></div>
+  
+<script>
+  $(document).ready(function(){
+	  
+	 $("#addmoreitem").on('click',function(e){
+		 e.preventDefault();
+	var appendmore = '<div class="otherdata"><div class="container" id="formobject"><div class="row"><div class="col-sm-3"> <select name="codeHead" class="form-control" id="codeHead"><option value="">Select Code Head</option><option th:each="ch : ${onlyahq}" th:value="${ch.id}" th:utext="${ch.codeHeadDescription}"/> </select> <span class="codeheadid error text-danger"></span></div><div class="col-sm-3"> <select name="itemTypeId" class="form-control" id="itemTypeId"><option value="">Select Item Type</option><option th:each="itm : ${itemtype}" th:value="${itm.id}" th:utext="${itm.itemDescription}"/> </select> <span class="itemtypeid error text-danger"></span></div><div class="col-sm-3"> <select name="itemSubTypeId" class="form-control" id="itemSubTypeId"> </select> <span class="itemsubtypeid error text-danger"></span></div><div class="col-sm-3"> <input type ="number" class="form-control empty" id="itemQty" name="itemQty" placeholder="Item Qty"> <span class="itemqty error text-danger"></span></div></div><div class="row mt-2"><div class="col-sm-3"> <select name="demandReason" class="form-control" id="demandReason"><option value="">Select Demand Reason</option><option value="Against Downgradation">Against Downgradation</option><option value="Fresh">Fresh</option> </select> <span class="demandreason error text-danger"></span></div><div class="col-sm-3"> <input type ="text" class="form-control empty" id="demandAuth" name="demandAuth" placeholder="Demand Authority"> <span class="demandauth error text-danger"></span></div></div></div></div><br />';
+          
+		
+		$("#moreitem").append(appendmore);
+	 });
+	
+	 /*  $("#codeHead").on('change',function(e){
+		  e.preventDefault();
+		  
+			 var chid = $("#codeHead").val();
+			// alert(chid);
+			 $.ajax({
+					type : 'GET',
+					data : {'codeHead' : chid},
+					url : "codeheaddata",
+					dataType: 'json',
+					success: function(result) {
+						for(var i=0; i<result.length; i++){
+							
+							$("#codeHeadDescription").val(result[i][0].codeHeadDescription);
+							$("#codeHeadType").val(result[i][0].codeHeadType);
+						}
+				}
+				});
+		}); */
+	  
+	  
+	  
+	  $("#itemTypeId").on('change',function(e){
+		  e.preventDefault();
+		  $("#itemSubTypeId").find('option').remove();
+		  var itid = $("#itemTypeId").val();
+		  $.ajax({
+			  type : 'GET',
+			  data : {'itemTypeId' : itid},
+			  url : "fetchsubitem",
+			  dataType : 'json',
+			  success: function(result){
+				  for(var i=0; i<result.length; i++){
+					  
+					   $("#itemSubTypeId")
+					    .append($("<option></option>")
+			                    .attr("value",result[i][0].id)
+			                    .text(result[i][0].subTypeDesc));
+						}
+				  
+				  
+			  }
+			  
+		  });
+		  
+		  
+		  
+		  
+	  });
+	  
+	  
+	  
+	  
+	  
+	  
+	  $("#raisedemand").on('click',function(){
+		 var codeHeadId = $("#codeHeadId").val();
+		 var itemTypeId = $("#itemTypeId").val();
+		 var itemQty = $("#itemQty").val();
+		 var demandReason = $("#demandReason").val();
+		 var demandAuth = $("#demandAuth").val();
+
+		 
+		  
+		 
+		 if(codeHeadId == null || codeHeadId == '')
+			{
+			$("#codeHeadId").closest('.form-group').addClass('has-error');
+			$(".codeheadid").html("*Select Code Head.");
+			$("#codeHeadId").focus();
+			return false;
+			}
+		 else if(itemTypeId == null || itemTypeId == '')
+				{
+				$("#itemTypeId").closest('.form-group').addClass('has-error');
+				$(".itemtypeid").html("*Select Item Type.");
+				$("#itemTypeId").focus();
+				return false;
+				}
+		 else if(itemQty == null || itemQty == '')
+			{
+			$("#itemQty").closest('.form-group').addClass('has-error');
+			$(".itemqty").html("*Enter Item Qty.");
+			$("#itemQty").focus();
+			return false;
+			}
+		 else if(demandReason == null || demandReason == '')
+			{
+			$("#demandReason").closest('.form-group').addClass('has-error');
+			$(".demandreason").html("*Select Demand Reason.");
+			$("#demandReason").focus();
+			return false;
+			}
+		 else if(demandAuth == null || demandAuth == '')
+			{
+			$("#demandAuth").closest('.form-group').addClass('has-error');
+			$(".demandauth").html("*Enter Demand Authority.");
+			$("#demandAuth").focus();
+			return false;
+			}
+		 
+		 
+	  });
+	  
+	 	  
+	  $("#codeHeadId").on('change', function(e){
+			$("#codeHeadId").closest('.form-group').removeClass('has-error');
+			$(".codeheadid").html("");
+		});
+	  $("#itemTypeId").on('change', function(e){
+			$("#itemTypeId").closest('.form-group').removeClass('has-error');
+			$(".itemtypeid").html("");
+		});
+	  $("#itemQty").on('keypress', function(e){
+			$("#itemQty").closest('.form-group').removeClass('has-error');
+			$(".itemqty").html("");
+		});
+	  $("#demandReason").on('change', function(e){
+			$("#demandReason").closest('.form-group').removeClass('has-error');
+			$(".demandreason").html("");
+		});
+	  $("#demandAuth").on('keypress', function(e){
+			$("#demandAuth").closest('.form-group').removeClass('has-error');
+			$(".demandauth").html("");
+		});
+  });
+  </script>
+  
+</body>
+
+
+</html>

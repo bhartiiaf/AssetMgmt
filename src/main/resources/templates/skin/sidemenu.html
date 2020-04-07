@@ -1,6 +1,6 @@
-<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org" 
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security"  -->    
 <div th:fragment = "topandsidemenu">
 <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
 
@@ -216,11 +216,16 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
               </div>
             </div>
           </li>
+         
+          
         </ul>
         <!-- End Navbar Toolbar -->
 
         <!-- Navbar Toolbar Right -->
         <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+          
+           
+          
           
           <li class="nav-item dropdown">
             <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
@@ -231,7 +236,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
               </span>
             </a>
             <div class="dropdown-menu" role="menu">
-              <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
+              <a class="dropdown-item text-danger" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Welcome: [[${#httpServletRequest.remoteUser}]]</a>
+              <!-- <div class="dropdown-divider" role="presentation"></div>
+              <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a> -->
               <div class="dropdown-divider" role="presentation"></div>
               <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
             </div>
@@ -328,9 +335,26 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
           </li>
         </ul>
       </li>
+      
+       <li class="site-menu-item">
+        <a th:href="@{/itemtype}">
+                  <i class="site-menu-icon md-layers" aria-hidden="true"></i>
+                  <span class="site-menu-title">Item Type Master</span>
+              </a>
+      </li>
 
-     
-     
+     <li class="site-menu-item">
+        <a th:href="@{/codehead}">
+                  <i class="site-menu-icon md-collection-text" aria-hidden="true"></i>
+                  <span class="site-menu-title">Code Head Master</span>
+              </a>
+      </li>
+      <li class="site-menu-item">
+        <a th:href="@{/demand}">
+                  <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
+                  <span class="site-menu-title">Demand Master</span>
+              </a>
+      </li>
       
       
       

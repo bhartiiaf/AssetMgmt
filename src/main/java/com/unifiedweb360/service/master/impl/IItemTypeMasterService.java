@@ -25,13 +25,19 @@ public class IItemTypeMasterService implements ItemTypeMasterService {
 
 	}
 
-	@Override
-	public List<ItemTypeMaster> findAllItemData() {
-	return itemTypeMasterRepo.findAll();
-	}
+	
 
 	@Override
-	public Optional<ItemTypeMaster> findById(Integer id) {
-		return itemTypeMasterRepo.findById(id);
+	public List<ItemTypeMaster> findByItemDescription(String itemDescription) {
+		return itemTypeMasterRepo.findByItemDescription(itemDescription);
 	}
+
+
+
+	@Override
+	public List<ItemTypeMaster> findAll() {
+		return itemTypeMasterRepo.findAll();
+	}
+
+	
 }

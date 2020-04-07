@@ -8,7 +8,6 @@ import com.unifiedweb360.modal.master.ItemTypeMaster;
 public interface ItemTypeMasterService {
 	
 	void save(ItemTypeMaster itemTypeMaster);
-	List<ItemTypeMaster> findAllItemData();
-	Optional<ItemTypeMaster> findById(Integer id);
-
+	List<ItemTypeMaster> findAll();
+	List<ItemTypeMaster> findByItemDescription(String itemDescription);
 }
