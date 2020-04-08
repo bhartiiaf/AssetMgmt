@@ -27,6 +27,7 @@ public class ItemSubTypeMaster {
 	@JoinColumn(name="item_type_id")
 	private ItemTypeMaster itemTypeId;
 	private String subTypeDesc;
+	private Double subItemPrice;
 	private Date createdOn;
 	private String createdBy;
 

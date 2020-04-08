@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace = "skin/template :: head" />
+
+<body class="animsition site-navbar-small ">
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div th:replace="skin/sidemenu :: topandsidemenu"></div> 
+  
+
+  <!-- Page -->
+  <div class="page">
+    <div class="page-content">
+      <div class="row">
+      <div class="col-sm-5">
+      
+      <h4 class="text-danger"  th:text="${failure}"> </h4>
+      <h4 class="text-success" th:text="${success}"></h4>
+        <h3 class="font-size-24">Code Head Master</h3>
+       	<form th:action="@{/submitcodehead}" method="post">
+          <div class="form-group form-material floating" data-plugin="formMaterial">
+            <input type="text" class="form-control empty" id="codeHeadDescription" name="codeHeadDescription">
+            <label class="floating-label" for="codeHeadDescription">Code Head</label>
+            <span class="codeheaddescription error text-danger"></span>
+            
+          </div>
+                   
+          <button type="submit" class="btn btn-primary btn-block" id="codeheadsubmit">Submit Code Head!</button>
+        </form>
+      
+      </div>
+      <div class="col-sm-7">
+     <table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>CodeHead</th>
+				<th>Created On</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="ch : ${codehead}">
+			
+				<td th:text="${ch.codeHeadDescription}" />	
+				<td th:text="${ch.createdOn}" />
+				
+			</tr>
+		</tbody>		
+	</table>
+      
+      </div>
+      </div>
+      
+      
+    </div>
+  </div>
+  <!-- End Page -->
+
+
+  <!-- Footer -->
+  <div th:replace = "skin/template :: footer"></div>
+  
+<script>
+  $(document).ready(function(){
+	  
+	  
+	
+	  $("#codeheadsubmit").on('click',function(){
+		 var codeHeadDescription = $("#codeHeadDescription").val();
+		  
+		 if(codeHeadDescription == null || codeHeadDescription == '')
+			{
+			$("#codeHeadDescription").closest('.form-group').addClass('has-error');
+			$(".codeheaddescription").html("*Enter CodeHead.");
+			$("#codeHeadDescription").focus();
+			return false;
+			}
+		
+	  });
+	  
+	 	  
+	  $("#codeHeadDescription").on('keypress', function(e){
+			$("#codeHeadDescription").closest('.form-group').removeClass('has-error');
+			$(".codeheaddescription").html("");
+		});
+	  
+	  
+  });
+  </script>
+  
+</body>
+
+
+</html>

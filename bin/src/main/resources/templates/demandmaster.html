@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace = "skin/template :: head" />
+
+<body class="animsition site-navbar-small ">
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div th:replace="skin/sidemenu :: topandsidemenu"></div> 
+  
+
+  <!-- Page -->
+  <div class="page">
+    <div class="page-content">
+      <div class="row">
+      <div class="col-sm-10">
+      
+       
+            
+      
+      <h4 class="text-danger"  th:text="${failure}"> </h4>
+      <h4 class="text-success" th:text="${success}"></h4>
+        <h3 class="font-size-24" id="dmd">Demand Master</h3>
+       	<form th:action="@{/submitdemand}" method="post">
+       	
+       	<div class="container" id="formobject">
+          <div class="row">
+          <div class="col-sm-3">
+         
+           <select name="codeHeadId" class="form-control" id="codeHead">
+           <option value="">Select Code Head</option>
+          	<option th:each="ch : ${onlyahq}"
+                            th:value="${ch.id}"
+                            th:utext="${ch.codeHeadDescription}"/>
+           </select>
+            <span class="codeheadid error text-danger"></span>
+          
+          </div>
+          <div class="col-sm-3">
+			<select name="itemTypeId" class="form-control" id="itemTypeId">
+           <option value="">Select Item Type</option>
+          	<option th:each="itm : ${itemtype}"
+                            th:value="${itm.id}"
+                            th:utext="${itm.itemDescription}"/>
+           </select>
+           <span class="itemtypeid error text-danger"></span>
+           
+          </div>
+          <div class="col-sm-3">
+ 			<select name="itemSubTypeId" class="form-control" id="itemSubTypeId">
+           </select>
+           <span class="itemsubtypeid error text-danger"></span>
+           
+          </div>
+          <div class="col-sm-3">
+           <input type ="number" class="form-control empty" id="itemQty" name="itemQty" placeholder="Item Qty">
+            <span class="itemqty error text-danger"></span>
+          	
+          </div>
+          </div>
+          <div class="row mt-2">
+          <div class="col-sm-3">
+           <select name="demandReason" class="form-control" id="demandReason">
+           <option value="">Select Demand Reason</option>
+          	<option value="Against Downgradation">Against Downgradation</option>
+          	<option value="Fresh">Fresh</option>
+           </select>
+            <span class="demandreason error text-danger"></span>
+           
+          </div>
+          <div class="col-sm-3">
+          <input type ="text" class="form-control empty" id="demandAuth" name="demandAuth" placeholder="Demand Authority">
+          <span class="demandauth error text-danger"></span>
+          </div>
+          
+           <div class="col-sm-4">
+          <button type="submit" id="addmoreitem" class="btn btn-primary">Preview</button>
+          </div>
+          
+          
+          
+          </div>
+          </div>
+          </form>
+          
+          <hr />
+          <div id="moreitem">
+          <form th:action="@{/submitdemand}" method="post">
+          <table id="moreitemshow" class="table table-bordered table-hover specialCollapse" style="margin-bottom:0px">
+          <thead class="thead-dark">
+					<tr>
+						
+						<th style="text-align:center">Code Head</th>
+						<th style="text-align:center">Item Type</th>
+						<th style="text-align:center">Item Sub Type</th>
+						<th style="text-align:center">Qty</th>
+						<th style="text-align:center">Reason</th>
+						<th style="text-align:center">Auth</th>
+						<th style="text-align:center">#</th>
+				</tr>
+				</thead>
+				<tbody id="pushdata">
+				
+				
+				</tbody>
+				
+          </table>
+          <div class="row mt-2">
+          <div class="col-sm-2">
+          <!-- <button type="submit" id="addmoreitem" class="btn btn-primary">Add More Items!</button> -->
+          </div>
+          
+           <div class="col-sm-2">
+          <button type="submit" id="draftdemand" class="btn btn-danger">Save as Draft</button>
+          </div>
+          <div class="col-sm-2">
+          <button type="submit" id="raisedemand" class="btn btn-success">Save & Submit</button>
+          </div>
+          </div>
+          </form>
+           </div>
+          
+        
+      
+      </div>
+      <!-- <div class="col-sm-7">
+     <table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Code Head</th>
+				<th>Item Type</th>
+				<th>Qty</th>
+				<th>Reason</th>
+				<th>Authority</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="dm : ${demand}">
+			
+				<td th:text="${dm.codeHeadId.codeHeadDescription}" />	
+				<td th:text="${dm.itemTypeId.itemDescription}" />
+				<td th:text="${dm.itemQty}" />
+				<td th:text="${dm.demandReason}" />
+				<td th:text="${dm.demandAuth}" />
+				
+			</tr> 
+		</tbody>		
+	</table>
+      
+      </div> -->
+      </div>
+      
+      
+    </div>
+  </div>
+  <!-- End Page -->
+
+
+  <!-- Footer -->
+  <div th:replace = "skin/template :: footer"></div>
+  
+<script>
+  $(document).ready(function(){
+	  
+	  $("#moreitem").hide();
+	  $("#draftdemand").hide();
+	  $("#raisedemand").hide();
+	  
+	 $("#addmoreitem").on('click',function(e){
+		 e.preventDefault();
+		  
+
+		 var codeHeadId = $.trim($("#codeHead").val());
+		 var codeHead = $("#codeHead option:selected").html();
+		 var itemTypeId = $.trim($("#itemTypeId").val());
+		 var itemType = $("#itemTypeId option:selected").html();
+		 var itemSubTypeId = $.trim($("#itemSubTypeId").val());
+		 var itemSubType = $("#itemSubTypeId option:selected").html();
+		 var itemQty = $.trim($("#itemQty").val());
+		 var demandReasonId = $.trim($("#demandReason").val());
+		 var demandReason = $("#demandReason option:selected").html();
+		 var demandAuth = $.trim($("#demandAuth").val());
+		 
+		 
+
+		 
+		 
+		 
+		 
+		 var moreDemandData="<tr>"+
+		 					"<td><input  type='hidden' id='codeHead' name='codeHeadId' value="+codeHeadId+">"+codeHead+"</td>" +
+		    		        "<td><input  type='hidden' id='itemTypeId' name='itemTypeId' value="+itemTypeId+">"+itemType+"</td>" +
+		    		        "<td><input  type='hidden' id='itemSubTypeId' name='itemSubTypeId' value="+itemSubTypeId+">"+itemSubType+"</td>" +
+		    		        "<td><input  type='hidden' id='itemQty' name='itemQty' value="+itemQty+">"+itemQty+"</td>" +
+		    		        "<td><input  type='hidden' id='demandReason' name='demandReason' value="+demandReasonId+">"+demandReason+"</td>" +
+		    		        "<td><input  type='hidden' id='demandAuth' name='demandAuth' value="+demandAuth+">"+demandAuth+"</td>" +
+		    		        "<td><button class='remove btn btn-danger'>-</button</td>"+
+							"</tr>";
+          
+		 if(!codeHeadId)
+		 	{
+ 			alert("Please Select Code Head");
+ 	    	}
+		 else if(!itemTypeId)
+		 	{
+	 			alert("Please Select Item Type");
+	 		}
+		 else if(!itemSubTypeId)
+			{
+			 alert("Please Select Sub Item TYpe");
+			}
+		 else if(!itemQty)
+			 {
+			 alert("Please entre Item Qty");
+			 }
+		 else if(!demandReasonId)
+			 {
+			 alert("Please select Demand Reason");
+			 }
+		 else if(!demandAuth)
+			 {
+			 alert("Please enter Demand Auth");
+			 }
+		 else
+			 {
+			 $("#moreitem").show();
+			 $("#pushdata").append(moreDemandData);
+			 $("#draftdemand").show();
+			  $("#raisedemand").show();
+			 }
+	 });
+	 
+	 $(document).on('click', '.remove', function() {
+	        $(this).parents('tr').remove();
+
+		 var rowCount=$("#pushdata tr").length;
+			if(rowCount==0){
+				$("#moreitem").hide();
+				 $("#draftdemand").hide();
+				  $("#raisedemand").hide();
+				
+			}
+	 });
+	 
+	 /* $('#deleteRow').click(function(){
+			alert('Delete data');
+ 		$("#pushdata tbody").find('input[name="record"]').each(function(){
+ 			if($(this).is(":checked")){
+ 				$(this).parents("tr").remove();
+ 			}
+ 		});
+ 	});  */
+	
+	 /*  $("#codeHead").on('change',function(e){
+		  e.preventDefault();
+		  
+			 var chid = $("#codeHead").val();
+			// alert(chid);
+			 $.ajax({
+					type : 'GET',
+					data : {'codeHead' : chid},
+					url : "codeheaddata",
+					dataType: 'json',
+					success: function(result) {
+						for(var i=0; i<result.length; i++){
+							
+							$("#codeHeadDescription").val(result[i][0].codeHeadDescription);
+							$("#codeHeadType").val(result[i][0].codeHeadType);
+						}
+				}
+				});
+		}); */
+	  
+	  
+	  
+	  $("#itemTypeId").on('change',function(e){
+		  e.preventDefault();
+		  $("#itemSubTypeId").find('option').remove();
+		  var itid = $("#itemTypeId").val();
+		  $.ajax({
+			  type : 'GET',
+			  data : {'itemTypeId' : itid},
+			  url : "fetchsubitem",
+			  dataType : 'json',
+			  success: function(result){
+				 for(var i=0; i<result.length; i++){
+					   $("#itemSubTypeId")
+					    .append($("<option></option>")
+			                    .attr("value",result[i][0].id)
+			                    .text(result[i][0].subTypeDesc));
+						} 
+				  
+				  
+			  }
+			  
+		  });
+		  
+		  
+		  
+		  
+	  });
+	  
+	  
+	  
+	  
+	  
+	  
+	  $("#raisedemand").on('click',function(){
+		 var codeHead = $("#codeHead").val();
+		 var itemTypeId = $("#itemTypeId").val();
+		 var itemQty = $("#itemQty").val();
+		 var demandReason = $("#demandReason").val();
+		 var demandAuth = $("#demandAuth").val();
+
+		 
+		  
+		 
+		 if(codeHeadId == null || codeHeadId == '')
+			{
+			$("#codeHead").closest('.form-group').addClass('has-error');
+			$(".codehead").html("*Select Code Head.");
+			$("#codeHead").focus();
+			return false;
+			}
+		 else if(itemTypeId == null || itemTypeId == '')
+				{
+				$("#itemTypeId").closest('.form-group').addClass('has-error');
+				$(".itemtypeid").html("*Select Item Type.");
+				$("#itemTypeId").focus();
+				return false;
+				}
+		 else if(itemQty == null || itemQty == '')
+			{
+			$("#itemQty").closest('.form-group').addClass('has-error');
+			$(".itemqty").html("*Enter Item Qty.");
+			$("#itemQty").focus();
+			return false;
+			}
+		 else if(demandReason == null || demandReason == '')
+			{
+			$("#demandReason").closest('.form-group').addClass('has-error');
+			$(".demandreason").html("*Select Demand Reason.");
+			$("#demandReason").focus();
+			return false;
+			}
+		 else if(demandAuth == null || demandAuth == '')
+			{
+			$("#demandAuth").closest('.form-group').addClass('has-error');
+			$(".demandauth").html("*Enter Demand Authority.");
+			$("#demandAuth").focus();
+			return false;
+			}
+		 
+		 
+	  });
+	  
+	 	  
+	  $("#codeHead").on('change', function(e){
+			$("#codeHead").closest('.form-group').removeClass('has-error');
+			$(".codehead").html("");
+		});
+	  $("#itemTypeId").on('change', function(e){
+			$("#itemTypeId").closest('.form-group').removeClass('has-error');
+			$(".itemtypeid").html("");
+		});
+	  $("#itemQty").on('keypress', function(e){
+			$("#itemQty").closest('.form-group').removeClass('has-error');
+			$(".itemqty").html("");
+		});
+	  $("#demandReason").on('change', function(e){
+			$("#demandReason").closest('.form-group').removeClass('has-error');
+			$(".demandreason").html("");
+		});
+	  $("#demandAuth").on('keypress', function(e){
+			$("#demandAuth").closest('.form-group').removeClass('has-error');
+			$(".demandauth").html("");
+		});
+  });
+  </script>
+  
+</body>
+
+
+</html>
