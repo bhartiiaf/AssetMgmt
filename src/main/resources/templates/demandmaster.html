@@ -28,7 +28,7 @@
           <div class="row">
           <div class="col-sm-3">
          
-           <select name="codeHead" class="form-control" id="codeHead">
+           <select name="codeHeadId" class="form-control" id="codeHead">
            <option value="">Select Code Head</option>
           	<option th:each="ch : ${onlyahq}"
                             th:value="${ch.id}"
@@ -74,22 +74,54 @@
           <span class="demandauth error text-danger"></span>
           </div>
           
+           <div class="col-sm-4">
+          <button type="submit" id="addmoreitem" class="btn btn-primary">Preview</button>
+          </div>
+          
+          
+          
           </div>
           </div>
-          <div id="moreitem"><br /></div>
+          </form>
+          
           <hr />
+          <div id="moreitem">
+          <form th:action="@{/submitdemand}" method="post">
+          <table id="moreitemshow" class="table table-bordered table-hover specialCollapse" style="margin-bottom:0px">
+          <thead class="thead-dark">
+					<tr>
+						
+						<th style="text-align:center">Code Head</th>
+						<th style="text-align:center">Item Type</th>
+						<th style="text-align:center">Item Sub Type</th>
+						<th style="text-align:center">Qty</th>
+						<th style="text-align:center">Reason</th>
+						<th style="text-align:center">Auth</th>
+						<th style="text-align:center">#</th>
+				</tr>
+				</thead>
+				<tbody id="pushdata">
+				
+				
+				</tbody>
+				
+          </table>
           <div class="row mt-2">
           <div class="col-sm-2">
-          <button type="submit" id="addmoreitem" class="btn btn-primary">Add More Items!</button>
+          <!-- <button type="submit" id="addmoreitem" class="btn btn-primary">Add More Items!</button> -->
+          </div>
+          
+           <div class="col-sm-2">
+          <button type="submit" id="draftdemand" class="btn btn-danger">Save as Draft</button>
           </div>
           <div class="col-sm-2">
-          <button type="submit" id="draftdemand" class="btn btn-danger">Draft Demand!</button>
-          </div>
-          <div class="col-sm-2">
-          <button type="submit" id="raisedemand" class="btn btn-success">Raise Demand!</button>
+          <button type="submit" id="raisedemand" class="btn btn-success">Save & Submit</button>
           </div>
           </div>
-        </form>
+          </form>
+           </div>
+          
+        
       
       </div>
       <!-- <div class="col-sm-7">
@@ -132,13 +164,94 @@
 <script>
   $(document).ready(function(){
 	  
+	  $("#moreitem").hide();
+	  $("#draftdemand").hide();
+	  $("#raisedemand").hide();
+	  
 	 $("#addmoreitem").on('click',function(e){
 		 e.preventDefault();
-	var appendmore = '<div class="otherdata"><div class="container" id="formobject"><div class="row"><div class="col-sm-3"> <select name="codeHead" class="form-control" id="codeHead"><option value="">Select Code Head</option><option th:each="ch : ${onlyahq}" th:value="${ch.id}" th:utext="${ch.codeHeadDescription}"/> </select> <span class="codeheadid error text-danger"></span></div><div class="col-sm-3"> <select name="itemTypeId" class="form-control" id="itemTypeId"><option value="">Select Item Type</option><option th:each="itm : ${itemtype}" th:value="${itm.id}" th:utext="${itm.itemDescription}"/> </select> <span class="itemtypeid error text-danger"></span></div><div class="col-sm-3"> <select name="itemSubTypeId" class="form-control" id="itemSubTypeId"> </select> <span class="itemsubtypeid error text-danger"></span></div><div class="col-sm-3"> <input type ="number" class="form-control empty" id="itemQty" name="itemQty" placeholder="Item Qty"> <span class="itemqty error text-danger"></span></div></div><div class="row mt-2"><div class="col-sm-3"> <select name="demandReason" class="form-control" id="demandReason"><option value="">Select Demand Reason</option><option value="Against Downgradation">Against Downgradation</option><option value="Fresh">Fresh</option> </select> <span class="demandreason error text-danger"></span></div><div class="col-sm-3"> <input type ="text" class="form-control empty" id="demandAuth" name="demandAuth" placeholder="Demand Authority"> <span class="demandauth error text-danger"></span></div></div></div></div><br />';
+		  
+
+		 var codeHeadId = $.trim($("#codeHead").val());
+		 var codeHead = $("#codeHead option:selected").html();
+		 var itemTypeId = $.trim($("#itemTypeId").val());
+		 var itemType = $("#itemTypeId option:selected").html();
+		 var itemSubTypeId = $.trim($("#itemSubTypeId").val());
+		 var itemSubType = $("#itemSubTypeId option:selected").html();
+		 var itemQty = $.trim($("#itemQty").val());
+		 var demandReasonId = $.trim($("#demandReason").val());
+		 var demandReason = $("#demandReason option:selected").html();
+		 var demandAuth = $.trim($("#demandAuth").val());
+		 
+		 
+
+		 
+		 
+		 
+		 
+		 var moreDemandData="<tr>"+
+		 					"<td><input  type='hidden' id='codeHead' name='codeHeadId' value="+codeHeadId+">"+codeHead+"</td>" +
+		    		        "<td><input  type='hidden' id='itemTypeId' name='itemTypeId' value="+itemTypeId+">"+itemType+"</td>" +
+		    		        "<td><input  type='hidden' id='itemSubTypeId' name='itemSubTypeId' value="+itemSubTypeId+">"+itemSubType+"</td>" +
+		    		        "<td><input  type='hidden' id='itemQty' name='itemQty' value="+itemQty+">"+itemQty+"</td>" +
+		    		        "<td><input  type='hidden' id='demandReason' name='demandReason' value="+demandReasonId+">"+demandReason+"</td>" +
+		    		        "<td><input  type='hidden' id='demandAuth' name='demandAuth' value="+demandAuth+">"+demandAuth+"</td>" +
+		    		        "<td><button class='remove btn btn-danger'>-</button</td>"+
+							"</tr>";
           
-		
-		$("#moreitem").append(appendmore);
+		 if(!codeHeadId)
+		 	{
+ 			alert("Please Select Code Head");
+ 	    	}
+		 else if(!itemTypeId)
+		 	{
+	 			alert("Please Select Item Type");
+	 		}
+		 else if(!itemSubTypeId)
+			{
+			 alert("Please Select Sub Item TYpe");
+			}
+		 else if(!itemQty)
+			 {
+			 alert("Please entre Item Qty");
+			 }
+		 else if(!demandReasonId)
+			 {
+			 alert("Please select Demand Reason");
+			 }
+		 else if(!demandAuth)
+			 {
+			 alert("Please enter Demand Auth");
+			 }
+		 else
+			 {
+			 $("#moreitem").show();
+			 $("#pushdata").append(moreDemandData);
+			 $("#draftdemand").show();
+			  $("#raisedemand").show();
+			 }
 	 });
+	 
+	 $(document).on('click', '.remove', function() {
+	        $(this).parents('tr').remove();
+
+		 var rowCount=$("#pushdata tr").length;
+			if(rowCount==0){
+				$("#moreitem").hide();
+				 $("#draftdemand").hide();
+				  $("#raisedemand").hide();
+				
+			}
+	 });
+	 
+	 /* $('#deleteRow').click(function(){
+			alert('Delete data');
+ 		$("#pushdata tbody").find('input[name="record"]').each(function(){
+ 			if($(this).is(":checked")){
+ 				$(this).parents("tr").remove();
+ 			}
+ 		});
+ 	});  */
 	
 	 /*  $("#codeHead").on('change',function(e){
 		  e.preventDefault();
@@ -172,13 +285,12 @@
 			  url : "fetchsubitem",
 			  dataType : 'json',
 			  success: function(result){
-				  for(var i=0; i<result.length; i++){
-					  
+				 for(var i=0; i<result.length; i++){
 					   $("#itemSubTypeId")
 					    .append($("<option></option>")
 			                    .attr("value",result[i][0].id)
 			                    .text(result[i][0].subTypeDesc));
-						}
+						} 
 				  
 				  
 			  }
@@ -196,7 +308,7 @@
 	  
 	  
 	  $("#raisedemand").on('click',function(){
-		 var codeHeadId = $("#codeHeadId").val();
+		 var codeHead = $("#codeHead").val();
 		 var itemTypeId = $("#itemTypeId").val();
 		 var itemQty = $("#itemQty").val();
 		 var demandReason = $("#demandReason").val();
@@ -207,9 +319,9 @@
 		 
 		 if(codeHeadId == null || codeHeadId == '')
 			{
-			$("#codeHeadId").closest('.form-group').addClass('has-error');
-			$(".codeheadid").html("*Select Code Head.");
-			$("#codeHeadId").focus();
+			$("#codeHead").closest('.form-group').addClass('has-error');
+			$(".codehead").html("*Select Code Head.");
+			$("#codeHead").focus();
 			return false;
 			}
 		 else if(itemTypeId == null || itemTypeId == '')
@@ -245,9 +357,9 @@
 	  });
 	  
 	 	  
-	  $("#codeHeadId").on('change', function(e){
-			$("#codeHeadId").closest('.form-group').removeClass('has-error');
-			$(".codeheadid").html("");
+	  $("#codeHead").on('change', function(e){
+			$("#codeHead").closest('.form-group').removeClass('has-error');
+			$(".codehead").html("");
 		});
 	  $("#itemTypeId").on('change', function(e){
 			$("#itemTypeId").closest('.form-group').removeClass('has-error');

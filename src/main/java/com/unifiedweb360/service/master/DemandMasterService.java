@@ -8,4 +8,7 @@ public interface DemandMasterService {
 
 	public void save(DemandMaster demandMaster);
 	public List<DemandMaster> findAll();
+	
+	void saveAll(List<DemandMaster> t);
+
 }

@@ -1,5 +1,6 @@
 package com.unifiedweb360.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,7 +83,24 @@ public class DemandController {
 	public ModelAndView submitDemand(HttpServletRequest request, DemandMaster demandMaster,
 			RedirectAttributes redirectAttribute)
 	{
-		demandService.save(demandMaster);
+		//demandService.save(demandMaster);
+		int dataSize = request.getParameterValues("codeHeadId").length;
+		List<DemandMaster> dm = new ArrayList<>();
+		for (int i = 0; i < dataSize; i++) {
+			DemandMaster dmm = new DemandMaster();
+			Integer codeHeadId = Integer.parseInt(request.getParameterValues("codeHeadId")[i]);
+			System.out.println(codeHeadId);
+			Integer itemTypeId = Integer.parseInt(request.getParameterValues("itemTypeId")[i]);
+			Integer itemSubTypeId = Integer.parseInt(request.getParameterValues("itemSubTypeId")[i]);
+			Integer itemQty = Integer.parseInt(request.getParameterValues("itemQty")[i]);
+			String demandReason = request.getParameterValues("demandReason")[i];
+			String demandAuth = request.getParameterValues("demandAuth")[i];
+			dmm.setItemQty(itemQty);
+			dmm.setDemandAuth(demandAuth);
+			dm.add(dmm);
+		}
+		
+		demandService.saveAll(dm);
 		return new ModelAndView("redirect:/demand");
 	}
 	

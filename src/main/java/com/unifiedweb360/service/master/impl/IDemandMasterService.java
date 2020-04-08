@@ -27,4 +27,9 @@ DemandMasterRepository demandRepo;
 		return demandRepo.findAll();
 	}
 
+	@Override
+	public void saveAll(List<DemandMaster> t) {
+		demandRepo.saveAll(t);
+	}
+
 }
