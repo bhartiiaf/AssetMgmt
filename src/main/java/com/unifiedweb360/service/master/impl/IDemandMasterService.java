@@ -32,4 +32,19 @@ DemandMasterRepository demandRepo;
 		demandRepo.saveAll(t);
 	}
 
+	@Override
+	public List<DemandMaster> findByDemandNo(String demandNo) {
+		return demandRepo.findByDemandNo(demandNo);
+	}
+
+	@Override
+	public List<DemandMaster> findByDemandedBy(String demandedBy) {
+		return demandRepo.findByDemandedBy(demandedBy);
+	}
+
+	@Override
+	public List<DemandMaster> findByDemandedByAndDemandStatusFinalised(String demandedBy) {
+		return demandRepo.findByDemandedByAndDemandStatusFinalised(demandedBy);
+	}
+
 }

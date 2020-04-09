@@ -38,6 +38,9 @@
                 </i>
               </a>
           </li>
+          <li class="nav-item hidden-sm-down" id="toggleFullscreen">
+                       <a class="nav-link">Role is: <b th:text="${urole}"></b></a>
+          </li>
          <!--  <li class="nav-item hidden-sm-down" id="toggleFullscreen">
             <a class="nav-link icon icon-fullscreen" data-toggle="fullscreen" href="#" role="button">
               <span class="sr-only">Toggle fullscreen</span>
@@ -314,13 +317,14 @@
   
   <div class="site-menubar">
     <ul class="site-menu">
-      <li class="site-menu-item active">
+      <li th:if="${urole == 'ADMIN' || urole == 'UNIT' || urole == 'CMD'}" class="site-menu-item active">
         <a th:href="@{/welcome}">
                   <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                   <span class="site-menu-title">Dashboard</span>
               </a>
       </li>
-      <li class="site-menu-item has-sub">
+     
+      <li th:if="${urole == 'ADMIN'}" class="site-menu-item has-sub">
         <a href="javascript:void(0)">
                   <i class="site-menu-icon md-account-circle" aria-hidden="true"></i>
                   <span class="site-menu-title">User Mgmt</span>
@@ -336,20 +340,20 @@
         </ul>
       </li>
       
-       <li class="site-menu-item">
+       <li th:if="${urole == 'ADMIN'}" class="site-menu-item">
         <a th:href="@{/itemtype}">
                   <i class="site-menu-icon md-layers" aria-hidden="true"></i>
                   <span class="site-menu-title">Item Type Master</span>
               </a>
       </li>
 
-     <li class="site-menu-item">
+     <li th:if="${urole == 'ADMIN'}" class="site-menu-item">
         <a th:href="@{/codehead}">
                   <i class="site-menu-icon md-collection-text" aria-hidden="true"></i>
                   <span class="site-menu-title">Code Head Master</span>
               </a>
       </li>
-      <li class="site-menu-item">
+      <li th:if="${urole == 'UNIT' || urole == 'CMD'}" class="site-menu-item">
         <a th:href="@{/demand}">
                   <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
                   <span class="site-menu-title">Demand Master</span>

@@ -15,6 +15,10 @@ public interface CodeHeadMasterRepository extends JpaRepository<CodeHeadMaster,I
 	
 	@Query("from CodeHeadMaster chm where chm.id=?1")
 	List<Object[]> findAllById(@RequestParam("id") int id);
+	
+	
+	@Query("from CodeHeadMaster chm where chm.id=?1")
+	CodeHeadMaster find(Integer id);
 
 
 }

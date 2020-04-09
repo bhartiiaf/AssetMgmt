@@ -43,6 +43,11 @@ public class ICodeHeadMaster implements CodeHeadMasterService {
 		return codeHeadRepo.findAllById(id);
 	}
 
+	@Override
+	public CodeHeadMaster find(Integer id) {
+		return codeHeadRepo.find(id);
+	}
+
 	
 
 }

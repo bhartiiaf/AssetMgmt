@@ -1,5 +1,6 @@
 package com.unifiedweb360.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.unifiedweb360.modal.master.CodeHeadMaster;
 import com.unifiedweb360.modal.master.ItemTypeMaster;
+import com.unifiedweb360.modal.user.User;
+import com.unifiedweb360.service.UserService;
 import com.unifiedweb360.service.master.CodeHeadMasterService;
 import com.unifiedweb360.service.master.ItemTypeMasterService;
 
@@ -24,10 +27,17 @@ public class MiscController {
 	@Autowired
 	ItemTypeMasterService itemTypeService;
 	
+	@Autowired
+	UserService userService;
+	
 	@GetMapping("/itemtype")
-	public ModelAndView getItemType()
+	public ModelAndView getItemType(HttpServletRequest request)
 	{
 		ModelAndView mv = new ModelAndView("itemtypemaster");
+		Principal principal = request.getUserPrincipal();
+		String uname = principal.getName();
+		User u1 = userService.findByUsername(uname);
+		mv.addObject("urole",u1.getRoles().iterator().next().getName());
 		List<ItemTypeMaster> itm = itemTypeService.findAll();
 		mv.addObject("itetype",itm);
 		return mv;
@@ -54,9 +64,13 @@ public class MiscController {
 	
 	
 	@GetMapping("/codehead")
-	public ModelAndView getCodeHead()
+	public ModelAndView getCodeHead(HttpServletRequest request)
 	{
 		ModelAndView mv = new ModelAndView("codehead");
+		Principal principal = request.getUserPrincipal();
+		String uname = principal.getName();
+		User u1 = userService.findByUsername(uname);
+		mv.addObject("urole",u1.getRoles().iterator().next().getName());
 		List<CodeHeadMaster> chm = codeHeadService.findAll();
 		mv.addObject("codehead",chm);
 		return mv;

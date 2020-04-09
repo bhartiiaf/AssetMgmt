@@ -10,6 +10,8 @@ public interface ItemSubTypeService {
 	
 	public void save(ItemSubTypeMaster itemSubTypeMaster);
 	List<Object[]> findByItemTypeId(Integer itemTypeId);
+	
+	ItemSubTypeMaster find(Integer id);
 
 
 }

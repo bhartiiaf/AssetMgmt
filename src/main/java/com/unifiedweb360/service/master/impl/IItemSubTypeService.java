@@ -29,6 +29,11 @@ public class IItemSubTypeService implements ItemSubTypeService {
 		return itemSubTypeRepo.findByItemTypeId(itemTypeId);
 	}
 
+	@Override
+	public ItemSubTypeMaster find(Integer id) {
+		return itemSubTypeRepo.find(id);
+	}
+
 	
 
 }

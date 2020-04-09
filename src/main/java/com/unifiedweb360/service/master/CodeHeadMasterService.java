@@ -13,7 +13,7 @@ public interface CodeHeadMasterService {
 	List<CodeHeadMaster> findAll();
 	List<CodeHeadMaster> findByCodeHeadDescription(String codeHeadDescription);
 	Optional<CodeHeadMaster> findById(Integer id);
-	
+	CodeHeadMaster find(Integer id);
 	List<Object[]> findAllById(@RequestParam("id") int id);
 
 	

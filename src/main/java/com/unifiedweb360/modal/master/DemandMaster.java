@@ -24,13 +24,13 @@ public class DemandMaster implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="DEMAND_MASTER_SEQ")
     @SequenceGenerator(name="DEMAND_MASTER_SEQ", sequenceName="DEMAND_MASTER_SEQ",allocationSize=1)
 	private Integer id;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="code_head_id")
 	private CodeHeadMaster codeHeadId;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="item_type_id")
 	private ItemTypeMaster itemTypeId;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="item_sub_type_id")
 	private ItemSubTypeMaster itemSubTypeId;	
 	private Integer itemQty;
@@ -39,4 +39,5 @@ public class DemandMaster implements Serializable {
 	private String demandedBy;
 	private Date demandedOn;
 	private String demandNo;
+	private String demandStatus;
 }

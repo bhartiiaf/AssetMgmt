@@ -10,4 +10,7 @@ public interface ItemTypeMasterService {
 	void save(ItemTypeMaster itemTypeMaster);
 	List<ItemTypeMaster> findAll();
 	List<ItemTypeMaster> findByItemDescription(String itemDescription);
+	
+	ItemTypeMaster find(Integer id);
+
 }

@@ -10,5 +10,10 @@ public interface DemandMasterService {
 	public List<DemandMaster> findAll();
 	
 	void saveAll(List<DemandMaster> t);
+	
+	public List<DemandMaster> findByDemandNo(String demandNo);
+	
+	List<DemandMaster> findByDemandedBy(String demandedBy);
+	List<DemandMaster> findByDemandedByAndDemandStatusFinalised(String demandedBy);
 
 }

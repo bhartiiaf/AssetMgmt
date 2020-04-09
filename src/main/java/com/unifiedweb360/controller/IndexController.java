@@ -12,12 +12,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.unifiedweb360.modal.user.Role;
 import com.unifiedweb360.modal.user.User;
 import com.unifiedweb360.service.UserService;
+import com.unifiedweb360.service.usermgmt.RoleService;
 @Controller
 public class IndexController {
 	@Autowired
 	UserService userService;
+	@Autowired
+	RoleService roleService;
 	@GetMapping({"/"})
 	public ModelAndView getArticleView(HttpServletRequest request)
 	{
@@ -35,19 +39,9 @@ public class IndexController {
 		ModelAndView mv = new ModelAndView("welcome");
 		Principal principal = request.getUserPrincipal();
 		String uname = principal.getName();
-		List<User> u = userService.findUserByUserName(uname);
-		for(User us:u)
-		{
-			request.getSession().setAttribute("userDetails", us.getUsername());
-		}
-		//System.out.println(request.getSession().getAttribute("userDetails"));
-
-
-		Date date = new Date();  
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");  
-		String strDate= formatter.format(date);  
-		mv.addObject("dateval",strDate);  
-		mv.addObject("udetail",request.getSession().getAttribute("userDetails"));
+		User u1 = userService.findByUsername(uname);
+		mv.addObject("udetail",u1);
+		mv.addObject("urole",u1.getRoles().iterator().next().getName());
 		return mv;
 	}
 	

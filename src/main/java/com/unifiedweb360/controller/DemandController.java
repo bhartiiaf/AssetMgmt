@@ -1,6 +1,9 @@
 package com.unifiedweb360.controller;
 
+import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.unifiedweb360.modal.master.CodeHeadMaster;
 import com.unifiedweb360.modal.master.DemandMaster;
+import com.unifiedweb360.modal.master.ItemSubTypeMaster;
 import com.unifiedweb360.modal.master.ItemTypeMaster;
 import com.unifiedweb360.modal.user.User;
 import com.unifiedweb360.service.UserService;
@@ -41,9 +45,15 @@ public class DemandController {
 	
 	
 	@GetMapping("/demand")
-	public ModelAndView getDemandPage()
+	public ModelAndView getDemandPage(HttpServletRequest request)
 	{
 		ModelAndView mv = new ModelAndView("demandmaster");
+		Principal principal = request.getUserPrincipal();
+		String uname = principal.getName();
+		User u1 = userService.findByUsername(uname);
+		List<DemandMaster> dMaster = demandService.findByDemandedBy(u1.getUsername());
+		List<DemandMaster> dMasterFin = demandService.findByDemandedByAndDemandStatusFinalised(u1.getUsername());
+		mv.addObject("urole",u1.getRoles().iterator().next().getName());
 		System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
 		List<User> u = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
 		List<CodeHeadMaster> chmaster = codeHeadService.findAll();
@@ -51,7 +61,8 @@ public class DemandController {
 				.collect(Collectors.toList());
 		List<CodeHeadMaster> onlycmdstn = chmaster.stream().filter(c -> c.getCodeHeadType().equals("LOCAL"))
 				.collect(Collectors.toList());
-		
+		mv.addObject("demanddraft",dMaster);
+		mv.addObject("findemand",dMasterFin);
 		for(User us : u)
 		{
 			if(us.getAuthLevel().equals("AHQ"))
@@ -73,6 +84,8 @@ public class DemandController {
 		List<DemandMaster> dm = demandService.findAll();
 		List<ItemTypeMaster> itm = itemTypeService.findAll();
 		List<CodeHeadMaster> chm = codeHeadService.findAll();
+		List<DemandMaster> dms = demandService.findByDemandNo(request.getParameter("demandNo"));
+		mv.addObject("dmdsearch", dms);
 		mv.addObject("demand",dm);
 		mv.addObject("itemtype",itm);
 		mv.addObject("codehead",chm);
@@ -80,27 +93,54 @@ public class DemandController {
 	}
 	
 	@PostMapping("/submitdemand")
-	public ModelAndView submitDemand(HttpServletRequest request, DemandMaster demandMaster,
+	public ModelAndView submitDemand(HttpServletRequest request,DemandMaster demandMaster,
 			RedirectAttributes redirectAttribute)
 	{
-		//demandService.save(demandMaster);
+		
 		int dataSize = request.getParameterValues("codeHeadId").length;
 		List<DemandMaster> dm = new ArrayList<>();
+		
 		for (int i = 0; i < dataSize; i++) {
 			DemandMaster dmm = new DemandMaster();
-			Integer codeHeadId = Integer.parseInt(request.getParameterValues("codeHeadId")[i]);
+			String codeHeadId = request.getParameterValues("codeHeadId")[i];
 			System.out.println(codeHeadId);
-			Integer itemTypeId = Integer.parseInt(request.getParameterValues("itemTypeId")[i]);
-			Integer itemSubTypeId = Integer.parseInt(request.getParameterValues("itemSubTypeId")[i]);
+			String itemTypeId = request.getParameterValues("itemTypeId")[i];
+			String itemSubTypeId = request.getParameterValues("itemSubTypeId")[i];
 			Integer itemQty = Integer.parseInt(request.getParameterValues("itemQty")[i]);
 			String demandReason = request.getParameterValues("demandReason")[i];
 			String demandAuth = request.getParameterValues("demandAuth")[i];
+			dmm.setCodeHeadId(codeHeadService.find(Integer.parseInt(codeHeadId)));
+			dmm.setItemTypeId(itemTypeService.find(Integer.parseInt(itemTypeId)));
+			dmm.setItemSubTypeId(itemSubTypeService.find(Integer.parseInt(itemSubTypeId)));
 			dmm.setItemQty(itemQty);
 			dmm.setDemandAuth(demandAuth);
+			dmm.setDemandReason(demandReason);
+			dmm.setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+			dmm.setDemandedOn(new Date());
+			
+			Date date = new Date();  
+			SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyyHHmmSS");  
+			String strDate= formatter.format(date); 
+			if(request.getParameter("saveandsubmit") != null)
+			{
+				dmm.setDemandStatus("Finalised");
+				dmm.setDemandNo(SecurityContextHolder.getContext().getAuthentication().getName()+strDate);
+
+			}
+			else if(request.getParameter("saveasdraft")!=null)
+			{
+				dmm.setDemandStatus("Draft");
+				redirectAttribute.addFlashAttribute("draft","Demand in Draft Mode");
+
+			}
 			dm.add(dmm);
 		}
 		
 		demandService.saveAll(dm);
+		if(request.getParameter("saveandsubmit") != null)
+		{
+		redirectAttribute.addFlashAttribute("success","Demand Raised with Demand No:" +dm.iterator().next().getDemandNo());
+		}
 		return new ModelAndView("redirect:/demand");
 	}
 	

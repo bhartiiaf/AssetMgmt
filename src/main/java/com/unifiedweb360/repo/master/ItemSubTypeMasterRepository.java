@@ -12,5 +12,8 @@ public interface ItemSubTypeMasterRepository extends JpaRepository<ItemSubTypeMa
 	
 	@Query("from ItemSubTypeMaster itsm where itsm.itemTypeId.id=?1")
 	List<Object[]> findByItemTypeId(Integer itemTypeId);
+	@Query("from ItemSubTypeMaster itsm where itsm.id=?1 ")
+	ItemSubTypeMaster find(Integer id);
+	
 
 }

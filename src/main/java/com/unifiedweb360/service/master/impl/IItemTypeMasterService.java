@@ -39,5 +39,12 @@ public class IItemTypeMasterService implements ItemTypeMasterService {
 		return itemTypeMasterRepo.findAll();
 	}
 
+
+
+	@Override
+	public ItemTypeMaster find(Integer id) {
+		return itemTypeMasterRepo.find(id);
+	}
+
 	
 }
