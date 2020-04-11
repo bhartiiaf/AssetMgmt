@@ -12,5 +12,7 @@ public interface ItemTypeMasterService {
 	List<ItemTypeMaster> findByItemDescription(String itemDescription);
 	
 	ItemTypeMaster find(Integer id);
+	List<Object[]> findByCodeHeadMaster(Integer codeHeadMaster);
+
 
 }

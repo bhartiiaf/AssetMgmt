@@ -3,7 +3,6 @@ package com.unifiedweb360.modal.master;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +37,14 @@ public class DemandMaster implements Serializable {
 	private String demandAuth;
 	private String demandedBy;
 	private Date demandedOn;
-	private String demandNo;
+	@ManyToOne
+	@JoinColumn(name="demand_no_master")
+	private DemandNoMaster demandNoMaster;
 	private String demandStatus;
+	private Integer cmdApprovedQty;
+	private Integer ditApprovedQty;
+	private String cmdRemarks;
+	private String ditRemarks;
+	
+
 }

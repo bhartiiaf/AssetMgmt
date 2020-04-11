@@ -46,5 +46,12 @@ public class IItemTypeMasterService implements ItemTypeMasterService {
 		return itemTypeMasterRepo.find(id);
 	}
 
+
+
+	@Override
+	public List<Object[]> findByCodeHeadMaster(Integer codeHeadMaster) {
+		return itemTypeMasterRepo.findByCodeHeadMaster(codeHeadMaster);
+	}
+
 	
 }

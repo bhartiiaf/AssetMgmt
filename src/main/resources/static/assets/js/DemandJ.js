@@ -1,6 +1,55 @@
   $(document).ready(function(){
+
 	  
 	  
+	  $(".fetchmoredatafordemand").each(function(){
+		  $(this).click(function(e){
+			  $('#databydemandno').empty();
+			  $('#demandNoHeader').empty();
+			  e.preventDefault();
+			  var urld = $(this).attr('href');
+			  $.ajax({
+				  url : urld,
+				  dataType : 'json',
+				  success: function(result){
+					  for(var i=0; i<result.length; i++){
+					   		$('#databydemandno').append(
+					   				
+					   $("<tr>"+
+							   "<td>"+result[i][0].codeHeadId.codeHeadDescription+"</td>"+
+							   "<td>"+result[i][0].itemTypeId.itemDescription+"</td>"+
+							   "<td>"+result[i][0].itemSubTypeId.subTypeDesc+"</td>"+
+							   "<td>"+result[i][0].itemQty+"</td>"+
+							   "<td>"+result[i][0].demandReason+"</td>"+
+							   "<td>"+result[i][0].demandAuth+"</td>"+
+							   "<td>"+result[i][0].demandStatus+"</td>"+
+					     "</tr>"
+					     
+					   
+					   
+					   ));
+							} 
+					  
+					  $("#demandNoHeader").append($("<b>"+result[0][0].demandNoMaster.demandMasterNo+"</b>"));
+					  
+
+					  
+				  
+				  }
+			  });
+			  
+			  
+			  });
+		  });
+		         
+	        
+		  //var urld = $(event.target).attr("href");
+		  
+		 
+		  
+
+	  
+	 
 	  
 	  $("#seachDemand").on('click',function(){
 		  $("#demandSearchTable").show();
@@ -47,8 +96,6 @@
 	  
 	 $("#addmoreitem").on('click',function(e){
 		 e.preventDefault();
-		  
-
 		 var codeHeadId = $.trim($("#codeHead").val());
 		 var codeHead = $("#codeHead option:selected").html();
 		 var itemTypeId = $.trim($("#itemTypeId").val());
@@ -59,20 +106,13 @@
 		 var demandReasonId = $.trim($("#demandReason").val());
 		 var demandReason = $("#demandReason option:selected").html();
 		 var demandAuth = $.trim($("#demandAuth").val());
-		 
-		 
-
-		 
-		 
-		 
-		 
 		 var moreDemandData="<tr>"+
 		 					"<td><input  type='hidden' id='codeHead' name='codeHeadId' value="+codeHeadId+">"+codeHead+"</td>" +
 		    		        "<td><input  type='hidden' id='itemTypeId' name='itemTypeId' value="+itemTypeId+">"+itemType+"</td>" +
 		    		        "<td><input  type='hidden' id='itemSubTypeId' name='itemSubTypeId' value="+itemSubTypeId+">"+itemSubType+"</td>" +
 		    		        "<td><input  type='hidden' id='itemQty' name='itemQty' value="+itemQty+">"+itemQty+"</td>" +
-		    		        "<td><input  type='hidden' id='demandReason' name='demandReason' value="+demandReasonId+">"+demandReason+"</td>" +
-		    		        "<td><input  type='hidden' id='demandAuth' name='demandAuth' value="+demandAuth+">"+demandAuth+"</td>" +
+		    		        "<td><input  type='hidden' id='demandReason' name='demandReason' value='"+demandReasonId+"'>"+demandReason+"</td>" +
+		    		        "<td><input  type='hidden' id='demandAuth' name='demandAuth' value='"+demandAuth+"'>"+demandAuth+"</td>" +
 		    		        "<td><button class='remove btn btn-danger'>-</button</td>"+
 							"</tr>";
           
@@ -106,9 +146,14 @@
 			 $("#pushdata").append(moreDemandData);
 			 $("#draftdemand").show();
 			  $("#raisedemand").show();
+			  $("#codeHead").val('');
+			  $("#itemTypeId").val('');
+			  $("#itemSubTypeId").val('');
+			  $("#itemQty").val('');
+			  $("#demandReason").val('');
+			  $("#demandAuth").val('');
 			 }
 	 });
-	 
 	 $(document).on('click', '.remove', function() {
 	        $(this).parents('tr').remove();
 
@@ -162,22 +207,42 @@
 			  url : "fetchsubitem",
 			  dataType : 'json',
 			  success: function(result){
+				  $("#itemSubTypeId").append($("<option value=''>"+'Select Sub Item Type'+"</option>"));
 				 for(var i=0; i<result.length; i++){
 					   $("#itemSubTypeId")
 					    .append($("<option></option>")
 			                    .attr("value",result[i][0].id)
 			                    .text(result[i][0].subTypeDesc));
 						} 
-				  
-				  
-			  }
-			  
+			  	}
+		  	});
 		  });
-		  
-		  
-		  
-		  
-	  });
+	  
+	  
+	  
+	  $("#codeHead").on('change',function(e){
+		  e.preventDefault();
+		  $("#itemTypeId").find('option').remove();
+		  $("#itemSubTypeId").find('option').remove();
+		  var chid = $("#codeHead").val();
+		  $.ajax({
+			  type : 'GET',
+			  data : {'codeHead' : chid},
+			  url : "fetchitemtypebycodehead",
+			  dataType : 'json',
+			  success: function(result){
+				  $("#itemTypeId").append($("<option value=''>"+'Select Item Type'+"</option>"));
+				 for(var i=0; i<result.length; i++){
+					 
+					
+
+					// var x = "<option value="+result[i][0].id+">"+result[i][0].itemDescription+"</option>"
+					$("#itemTypeId").append($("<option></option>").attr("value",result[i][0].id).text(result[i][0].itemDescription));
+					 //  
+						} 
+			  	}
+		  	});
+		  });
 	  
 	  
 	  

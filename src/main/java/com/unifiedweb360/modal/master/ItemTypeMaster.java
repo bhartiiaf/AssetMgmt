@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -35,6 +37,7 @@ public class ItemTypeMaster implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy ="itemTypeId" , cascade = CascadeType.MERGE)
 	@JsonBackReference
 	private List<DemandMaster> demandMaster = new ArrayList<>();
-	
-	
+	@ManyToOne
+	@JoinColumn(name="code_head_master_id")
+	private CodeHeadMaster codeHeadMaster;
 }

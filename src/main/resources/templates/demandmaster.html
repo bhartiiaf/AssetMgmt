@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace = "skin/template :: head" />
+<style>
+
+td.details-control {
+    background: url('assets/images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('assets/images/details_close.png') no-repeat center center;
+}
+</style>
 
 <body class="animsition site-navbar-small ">
   <!--[if lt IE 8]>
@@ -52,10 +62,8 @@
 												<div class="col-sm-3">
 													<select name="itemTypeId" class="form-control"
 														id="itemTypeId">
-														<option value="">Select Item Type</option>
-														<option th:each="itm : ${itemtype}" th:value="${itm.id}"
-															th:utext="${itm.itemDescription}" />
-													</select> <span class="itemtypeid error text-danger"></span>
+													</select> 
+													<span class="itemtypeid error text-danger"></span>
 
 												</div>
 												<div class="col-sm-3">
@@ -141,7 +149,7 @@
 
 								</div>
                     <div class="tab-pane" id="exampleTabsLeftTwo" role="tabpanel">
-                      <table class="table table-hover dataTable table-striped w-full" id="exampleTableTools">
+                      <!-- <table class="table table-hover dataTable table-striped w-full" id="exampleTableTools">
 											<thead class="thead-dark">
 												<tr>
 													
@@ -152,13 +160,12 @@
 													<th>Reason</th>
 													<th>Authority</th>
 													<th>Status</th>
+													<th>Action</th>
 												</tr>
 											</thead>
 
 											<tbody>
 												<tr th:each="dm : ${demanddraft}">
-
-													
 													<td th:text="${dm.codeHeadId.codeHeadDescription}" />
 													<td th:text="${dm.itemTypeId.itemDescription}" />
 													<td th:text="${dm.itemSubTypeId.subTypeDesc}" />
@@ -166,46 +173,37 @@
 													<td th:text="${dm.demandReason}" />
 													<td th:text="${dm.demandAuth}" />
 													<td th:text="${dm.demandStatus}" />
-
+													<td>
+													<a th:href="@{'/fetchdemand/' + ${dm.id}}" class="btn btn-success"><i class="md-eye"></i></a>
+													</td>
 												</tr>
 											</tbody>
 
-										</table> 
+										</table>  -->
                     </div>
                     <div class="tab-pane" id="exampleTabsLeftThree" role="tabpanel">
-                      <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
+                      <table id="finaldemanddatatable" class="table table-hover dataTable table-striped w-full">
 											<thead class="thead-dark">
 												<tr>
-													<th>Dmd No.</th>
-													<th>Code Head</th>
-													<th>Item Type</th>
-													<th>Sub Type</th>
-													<th>Qty</th>
-													<th>Reason</th>
-													<th>Authority</th>
-													<th>Status</th>
+													<th>Demand No.</th>
+													<th>View</th>
 												</tr>
 											</thead>
 
 											<tbody>
-												<tr th:each="dm : ${findemand}">
-
-													<td th:text="${dm.demandNo}" />
-													<td th:text="${dm.codeHeadId.codeHeadDescription}" />
-													<td th:text="${dm.itemTypeId.itemDescription}" />
-													<td th:text="${dm.itemSubTypeId.subTypeDesc}" />
-													<td th:text="${dm.itemQty}" />
-													<td th:text="${dm.demandReason}" />
-													<td th:text="${dm.demandAuth}" />
-													<td th:text="${dm.demandStatus}" />
-
+												<tr th:each="dm : ${fetchDemandNO}">
+													<td th:text="${dm.demandMasterNo}" />
+													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
+													data-target="#showmoreitemsofdemandno" data-toggle="modal">
+													<i class="md-eye"></i></a></td>
 												</tr>
+												<tr id="showalldata"></tr>
 											</tbody>
 
-										</table> 
+										</table>
                     </div>
                     <div class="tab-pane" id="searchDemand" role="tabpanel">
-									<form th:action="@{/fetchdemand}" method="post">
+									<!-- <form th:action="@{/fetchdemand}" method="post">
 										<div class="row">
 											<div class="col-sm-3">
 												<input class="form-control" type="text" name="demandNo"
@@ -217,7 +215,7 @@
 											</div>
 										</div>
 									</form>
-
+ -->
 									<div class="row mt-2">
 										<!-- <table
 											class="table table-hover dataTable table-striped w-full"
@@ -272,8 +270,59 @@
       
       
       
-      
        
+
+                  <!-- View More Item of Demand -->
+                  <div class="modal fade modal-just-me" id="showmoreitemsofdemandno" aria-hidden="true"
+                    aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+                    <div class="modal-dialog modal-simple">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="btn btn-danger">&times;</span>
+                          </button>
+                          <b>Demand No:</b>&nbsp; <h5 id = "demandNoHeader" class="modal-title text-primary"></h5>
+                        </div>
+                        <div class="modal-body">
+                         
+                         <table
+											class="table table-hover dataTable table-striped w-full"
+											id="exampleTableTools demandSearchTable">
+											<thead class="thead-dark">
+												<tr>
+													
+													<th>Code Head</th>
+													<th>Item Type</th>
+													<th>Sub Type</th>
+													<th>Qty</th>
+													<th>Reason</th>
+													<th>Authority</th>
+													<th>Status</th>
+												</tr>
+											</thead>
+
+											<tbody id="databydemandno">
+												
+											</tbody>
+
+										</table>
+                         
+                        </div>
+                        <!-- <div class="modal-footer">
+                          <button type="button" class="btn btn-danger btn-pure" data-dismiss="modal">Close</button>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Modal -->
+
+                 
+       
+            
+            
+            
+            
+            
             
       
       
@@ -319,8 +368,13 @@
 
   <!-- Footer -->
   <div th:replace = "skin/template :: footer"></div>
-  <script src="assets/js/DemandJ.js"></script>
+  <script>
+  var table = $("#finaldemanddatatable").DataTable();
 
+  </script>
+  <script src="assets/js/DemandJ.js"></script>
+  <script src="assets/js/DemandShow.js"></script>
+  
   
 </body>
 
