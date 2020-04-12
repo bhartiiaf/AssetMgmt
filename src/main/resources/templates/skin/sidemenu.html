@@ -230,27 +230,12 @@
            
           
           
-          <li class="nav-item dropdown">
-            <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
-              data-animation="scale-up" role="button">
-              <span class="avatar avatar-online">
-                <img src="global/portraits/5.jpg" alt="...">
-                <i></i>
-              </span>
-            </a>
-            <div class="dropdown-menu" role="menu">
-              <a class="dropdown-item text-danger" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Welcome: [[${#httpServletRequest.remoteUser}]]</a>
-              <!-- <div class="dropdown-divider" role="presentation"></div>
-              <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a> -->
-              <div class="dropdown-divider" role="presentation"></div>
-              <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
-            </div>
-          </li>
+         
           <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
               aria-expanded="false" data-animation="scale-up" role="button">
                 <i class="icon md-notifications" aria-hidden="true"></i>
-                <span class="badge badge-pill badge-danger up">5</span>
+                <span class="badge badge-pill badge-danger up">0</span>
               </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
               <div class="dropdown-menu-header">
@@ -285,7 +270,22 @@
               </div>
             </div>
           </li>
-          
+           <li class="nav-item dropdown">
+            <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
+              data-animation="scale-up" role="button">
+              <span class="avatar avatar-online">
+                <img src="global/portraits/5.jpg" alt="...">
+                <i></i>
+              </span>
+            </a>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item text-danger" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Welcome: [[${#httpServletRequest.remoteUser}]]</a>
+              <!-- <div class="dropdown-divider" role="presentation"></div>
+              <a class="dropdown-item" href="javascript:void(0)" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a> -->
+              <div class="dropdown-divider" role="presentation"></div>
+              <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+            </div>
+          </li>
          <!--  <li class="nav-item" id="toggleChat">
             <a class="nav-link" data-toggle="site-sidebar" href="javascript:void(0)" title="Chat"
               data-url="site-sidebar.tpl">
