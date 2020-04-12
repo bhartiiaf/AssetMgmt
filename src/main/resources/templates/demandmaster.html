@@ -31,10 +31,10 @@ tr.shown td.details-control {
                   <ul class="nav nav-tabs mr-25" role="tablist">
                     <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsLeftOne"
                         aria-controls="exampleTabsLeftOne" role="tab">Raise Demand</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsLeftTwo"
-                        aria-controls="exampleTabsLeftTwo" role="tab">Demand in Draft Mode</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#exampleTabsLeftThree"
-                        aria-controls="exampleTabsLeftThree" role="tab">Finalised Demand</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandindraftmode"
+                        aria-controls="demandindraftmode" role="tab">Demand in Draft Mode</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandinfinalisedmode"
+                        aria-controls="demandinfinalisedmode" role="tab">Finalised Demand</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#searchDemand"
                         aria-controls="searchDemand" role="tab">Search</a></li>
                   </ul>
@@ -148,44 +148,40 @@ tr.shown td.details-control {
 
 
 								</div>
-                    <div class="tab-pane" id="exampleTabsLeftTwo" role="tabpanel">
-                      <!-- <table class="table table-hover dataTable table-striped w-full" id="exampleTableTools">
+                    <div class="tab-pane" id="demandindraftmode" role="tabpanel">
+                   
+    									<table id="finaldemanddatatable" class="table table-hover dataTable table-striped w-full">
 											<thead class="thead-dark">
 												<tr>
-													
-													<th>Code Head</th>
-													<th>Item Type</th>
-													<th>Sub Type</th>
-													<th>Qty</th>
-													<th>Reason</th>
-													<th>Authority</th>
-													<th>Status</th>
-													<th>Action</th>
+													<th>Demand No.</th>
+													<th>Unit</th>
+													<th>Demand Date</th>
+													<th>View</th>
 												</tr>
 											</thead>
 
 											<tbody>
-												<tr th:each="dm : ${demanddraft}">
-													<td th:text="${dm.codeHeadId.codeHeadDescription}" />
-													<td th:text="${dm.itemTypeId.itemDescription}" />
-													<td th:text="${dm.itemSubTypeId.subTypeDesc}" />
-													<td th:text="${dm.itemQty}" />
-													<td th:text="${dm.demandReason}" />
-													<td th:text="${dm.demandAuth}" />
-													<td th:text="${dm.demandStatus}" />
-													<td>
-													<a th:href="@{'/fetchdemand/' + ${dm.id}}" class="btn btn-success"><i class="md-eye"></i></a>
-													</td>
+												<tr th:each="dm : ${demandmode}">
+													<td th:text="${dm.demandMasterNo}" />
+													<td th:text="${dm.unitId.unitName}" />
+													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
+													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
+													data-target="#showmoreitemsofdemandno" data-toggle="modal">
+													<i class="md-eye"></i></a></td>
 												</tr>
+												<tr id="showalldata"></tr>
 											</tbody>
 
-										</table>  -->
+										</table>
+										
                     </div>
-                    <div class="tab-pane" id="exampleTabsLeftThree" role="tabpanel">
+                    <div class="tab-pane" id="demandinfinalisedmode" role="tabpanel">
                       <table id="finaldemanddatatable" class="table table-hover dataTable table-striped w-full">
 											<thead class="thead-dark">
 												<tr>
 													<th>Demand No.</th>
+													<th>Unit</th>
+													<th>Demand Date</th>
 													<th>View</th>
 												</tr>
 											</thead>
@@ -193,6 +189,8 @@ tr.shown td.details-control {
 											<tbody>
 												<tr th:each="dm : ${fetchDemandNO}">
 													<td th:text="${dm.demandMasterNo}" />
+													<td th:text="${dm.unitId.unitName}" />
+													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
 													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
 													<i class="md-eye"></i></a></td>
@@ -258,20 +256,7 @@ tr.shown td.details-control {
                 </div>
               </div>
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-       
-
+    
                   <!-- View More Item of Demand -->
                   <div class="modal fade modal-just-me" id="showmoreitemsofdemandno" aria-hidden="true"
                     aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
@@ -285,9 +270,7 @@ tr.shown td.details-control {
                         </div>
                         <div class="modal-body">
                          
-                         <table
-											class="table table-hover dataTable table-striped w-full"
-											id="exampleTableTools demandSearchTable">
+                         <table class="table table-hover dataTable table-striped w-full" id="exampleTableTools demandSearchTable">
 											<thead class="thead-dark">
 												<tr>
 													
@@ -302,62 +285,16 @@ tr.shown td.details-control {
 											</thead>
 
 											<tbody id="databydemandno">
-												
 											</tbody>
-
 										</table>
-                         
                         </div>
-                        <!-- <div class="modal-footer">
-                          <button type="button" class="btn btn-danger btn-pure" data-dismiss="modal">Close</button>
-                        </div> -->
                       </div>
                     </div>
                   </div>
                   <!-- End Modal -->
-
-                 
-       
-            
-            
-            
-            
-            
-            
-      
-      
-          
-          
-          
-        
-      
+                  
       </div>
-      <!-- <div class="col-sm-7">
-     <table class="table table-bordered table-striped">
-		<thead class="thead-dark">
-			<tr>
-				<th>Code Head</th>
-				<th>Item Type</th>
-				<th>Qty</th>
-				<th>Reason</th>
-				<th>Authority</th>
-			</tr>
-		</thead>
-		
-		<tbody>
-			<tr th:each="dm : ${demand}">
-			
-				<td th:text="${dm.codeHeadId.codeHeadDescription}" />	
-				<td th:text="${dm.itemTypeId.itemDescription}" />
-				<td th:text="${dm.itemQty}" />
-				<td th:text="${dm.demandReason}" />
-				<td th:text="${dm.demandAuth}" />
-				
-			</tr> 
-		</tbody>		
-	</table>
       
-      </div> -->
       </div>
       
       
@@ -368,12 +305,7 @@ tr.shown td.details-control {
 
   <!-- Footer -->
   <div th:replace = "skin/template :: footer"></div>
-  <script>
-  var table = $("#finaldemanddatatable").DataTable();
-
-  </script>
   <script src="assets/js/DemandJ.js"></script>
-  <script src="assets/js/DemandShow.js"></script>
   
   
 </body>

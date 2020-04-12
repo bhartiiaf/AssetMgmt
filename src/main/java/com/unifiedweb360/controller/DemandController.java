@@ -62,6 +62,8 @@ public class DemandController {
 		String uname = principal.getName();
 		User u1 = userService.findByUsername(uname);
 		List<DemandNoMaster> fetchDemandNoByUnit = demandNoMasterService.findByDemandNoGenerateddBy(uname);
+		List<DemandNoMaster> demandByUnitId = demandNoMasterService.findByUnitId(u1.getUnitId().getId()).stream().filter(q -> q.getDemandMaster().iterator().next().getDemandStatus().equals("Finalised")).collect(Collectors.toList());
+		List<DemandNoMaster> demandByUnitIdDraft = demandNoMasterService.findByUnitId(u1.getUnitId().getId()).stream().filter(q -> q.getDemandMaster().iterator().next().getDemandStatus().equals("Draft")).collect(Collectors.toList());
 		List<DemandMaster> demandMasterInDraftMode = demandService.findAll().stream().filter(x -> x.getDemandStatus().equals("Draft")).collect(Collectors.toList());
 
 		List<DemandMaster> dMaster = demandService.findByDemandedBy(u1.getUsername());
@@ -90,7 +92,8 @@ public class DemandController {
 		List<DemandMaster> dm = demandService.findAll();
 		List<ItemTypeMaster> itm = itemTypeService.findAll();
 		List<CodeHeadMaster> chm = codeHeadService.findAll();
-		mv.addObject("fetchDemandNO",fetchDemandNoByUnit);
+		mv.addObject("fetchDemandNO",demandByUnitId);
+		mv.addObject("demandmode",demandByUnitIdDraft);
 		mv.addObject("demanddraft", dMaster);
 		mv.addObject("findemand", dMasterFin);
 		mv.addObject("demand", dm);
@@ -107,10 +110,12 @@ public class DemandController {
 		SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyyHHmm");
 		String strDate = formatter.format(date);
 		String demandnoalloted = SecurityContextHolder.getContext().getAuthentication().getName() + strDate;
-		if (request.getParameter("saveandsubmit") != null) {
+		List<User> u = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		/* if (request.getParameter("saveandsubmit") != null) { */
 			demandNoMaster.setDemandMasterNo(demandnoalloted);
+			demandNoMaster.setUnitId(u.iterator().next().getUnitId());
 			demandNoMasterService.save(demandNoMaster);
-		}
+			/* } */
 		int dataSize = request.getParameterValues("codeHeadId").length;
 		List<DemandMaster> dm = new ArrayList<>();
 		for (int i = 0; i < dataSize; i++) {
@@ -130,10 +135,9 @@ public class DemandController {
 			dmm.setDemandReason(demandReason);
 			dmm.setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
 			dmm.setDemandedOn(new Date());
+			dmm.setDemandNoMaster(demandNoMaster);
 			if (request.getParameter("saveandsubmit") != null) {
-				dmm.setDemandNoMaster(demandNoMaster);
 				dmm.setDemandStatus("Finalised");
-				demandNoMaster.setDemandMasterNo(demandnoalloted);
 			} else if (request.getParameter("saveasdraft") != null) {
 				dmm.setDemandStatus("Draft");
 				redirectAttribute.addFlashAttribute("draft", "Demand in Draft Mode");
@@ -142,9 +146,10 @@ public class DemandController {
 		}
 
 		demandService.saveAll(dm);
-		if (request.getParameter("saveandsubmit") != null) {
-			redirectAttribute.addFlashAttribute("success","Demand Raised with Demand No:" +dm.iterator().next().getDemandNoMaster().getDemandMasterNo());
-		}
+		
+		redirectAttribute.addFlashAttribute("success","Demand Raised with Demand No: " +dm.iterator().
+								next().getDemandNoMaster().getDemandMasterNo()+ " | Demand Status is:  "+ dm.iterator().next().getDemandStatus());
+		
 		return new ModelAndView("redirect:/demand");
 	}
 
@@ -176,8 +181,7 @@ public class DemandController {
 		return itemTypeService.findByCodeHeadMaster(codeHead);
 	}
 
-	
-	@GetMapping(value = "fetchdemand/{id}")
+	@GetMapping(value = "editdemanddataindraftmode/{id}")
 	public ModelAndView fetchDemandDetail(@PathVariable("id") int id) {
 
 		ModelAndView mv = new ModelAndView("editdemandindraft");

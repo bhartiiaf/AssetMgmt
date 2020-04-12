@@ -46,5 +46,5 @@ public class DemandMaster implements Serializable {
 	private String cmdRemarks;
 	private String ditRemarks;
 	
-
+	
 }

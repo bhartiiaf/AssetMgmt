@@ -30,6 +30,8 @@ public class MiscController {
 	@Autowired
 	UserService userService;
 	
+	
+	
 	@GetMapping("/itemtype")
 	public ModelAndView getItemType(HttpServletRequest request)
 	{

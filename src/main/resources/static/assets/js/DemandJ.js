@@ -1,7 +1,4 @@
-  $(document).ready(function(){
-
-	  
-	  
+  $(document).ready(function(){ 
 	  $(".fetchmoredatafordemand").each(function(){
 		  $(this).click(function(e){
 			  $('#databydemandno').empty();
@@ -13,6 +10,8 @@
 				  dataType : 'json',
 				  success: function(result){
 					  for(var i=0; i<result.length; i++){
+						  if(result[i][0].demandStatus == 'Finalised')
+							  {
 					   		$('#databydemandno').append(
 					   				
 					   $("<tr>"+
@@ -23,11 +22,42 @@
 							   "<td>"+result[i][0].demandReason+"</td>"+
 							   "<td>"+result[i][0].demandAuth+"</td>"+
 							   "<td>"+result[i][0].demandStatus+"</td>"+
+							   
 					     "</tr>"
 					     
 					   
 					   
 					   ));
+							  }
+						  else if(result[i][0].demandStatus == 'Draft')
+							  {
+							  $('#databydemandno').append(
+						   				
+									   $("<tr>"+
+											   "<td><input  type='hidden' id='codeHead' name='codeHeadId' value="+result[i][0].codeHeadId+">"+result[i][0].codeHeadId.codeHeadDescription+"</td>" +
+							    		        "<td><input  type='hidden' id='itemTypeId' name='itemTypeId' value="+result[i][0].itemTypeId+">"+result[i][0].itemTypeId.itemDescription+"</td>" +
+							    		        "<td><input  type='hidden' id='itemSubTypeId' name='itemSubTypeId' value="+result[i][0].itemSubTypeId+">"+result[i][0].itemSubTypeId.subTypeDesc+"</td>" +
+							    		        "<td><input  type='text' id='itemQty' name='itemQty' class='form-control' value="+result[i][0].itemQty+"></td>" +
+							    		        "<td><input  type='hidden' id='demandReason' name='demandReason' value='"+result[i][0].demandReason+"'>"+result[i][0].demandReason+"</td>" +
+							    		        "<td><input  type='hidden' id='demandAuth' name='demandAuth' value='"+result[i][0].demandAuth+"'>"+result[i][0].demandAuth+"</td>" +
+							    		        "<td><a href="+'updatedraftdata/' + result[i][0].id+"><i class='md-eye'></i></a></td>" +
+											   
+											   /*"<td>"+result[i][0].codeHeadId.codeHeadDescription+"</td>"+
+											   "<td>"+result[i][0].itemTypeId.itemDescription+"</td>"+
+											   "<td>"+result[i][0].itemSubTypeId.subTypeDesc+"</td>"+
+											   "<td>"+result[i][0].itemQty+"</td>"+
+											   "<td>"+result[i][0].demandReason+"</td>"+
+											   "<td>"+result[i][0].demandAuth+"</td>"+
+											   "<td>"+result[i][0].demandStatus+"</td>"+*/
+							    		        
+							    		        
+											   
+									     "</tr>"
+									     
+									   
+									   
+									   ));
+							  }
 							} 
 					  
 					  $("#demandNoHeader").append($("<b>"+result[0][0].demandNoMaster.demandMasterNo+"</b>"));
@@ -319,4 +349,6 @@
 			$("#demandAuth").closest('.form-group').removeClass('has-error');
 			$(".demandauth").html("");
 		});
+	  
+
   });

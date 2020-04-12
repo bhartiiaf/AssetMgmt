@@ -14,5 +14,7 @@ public interface DemandNoMasterRepository extends JpaRepository<DemandNoMaster,I
 	
 	List<DemandNoMaster> findByDemandNoGenerateddBy(String demandNoGenerateddBy);
 	
-	
+	@Query("from DemandNoMaster dnm where dnm.unitId.id=?1")
+	List<DemandNoMaster> findByUnitId(Integer unitId);
+
 }

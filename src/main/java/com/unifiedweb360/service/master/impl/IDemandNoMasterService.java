@@ -3,6 +3,7 @@ package com.unifiedweb360.service.master.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,6 +48,12 @@ public class IDemandNoMasterService implements DemandNoMasterService {
 		return demandNoMasterRepo.findByDemandNoGenerateddBy(demandNoGenerateddBy);
 	}
 
+	@Override
+	public List<DemandNoMaster> findByUnitId(Integer unitId) {
+		return demandNoMasterRepo.findByUnitId(unitId);
+	}
+
+	
 	
 
 }
