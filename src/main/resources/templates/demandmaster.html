@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace = "skin/template :: head" />
-<style>
-
-td.details-control {
-    background: url('assets/images/details_open.png') no-repeat center center;
-    cursor: pointer;
-}
-tr.shown td.details-control {
-    background: url('assets/images/details_close.png') no-repeat center center;
-}
-</style>
-
 <body class="animsition site-navbar-small ">
   <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser</a> to improve your experience.</p>
@@ -150,7 +139,7 @@ tr.shown td.details-control {
 								</div>
                     <div class="tab-pane" id="demandindraftmode" role="tabpanel">
                    
-    									<table id="finaldemanddatatable" class="table table-hover dataTable table-striped w-full">
+    									<table class="table table-hover dataTable table-striped w-full" id="exampleTableTools">
 											<thead class="thead-dark">
 												<tr>
 													<th>Demand No.</th>
@@ -169,14 +158,13 @@ tr.shown td.details-control {
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
 													<i class="md-eye"></i></a></td>
 												</tr>
-												<tr id="showalldata"></tr>
 											</tbody>
 
 										</table>
 										
                     </div>
                     <div class="tab-pane" id="demandinfinalisedmode" role="tabpanel">
-                      <table id="finaldemanddatatable" class="table table-hover dataTable table-striped w-full">
+                      <table class="table table-hover dataTable table-striped w-full">
 											<thead class="thead-dark">
 												<tr>
 													<th>Demand No.</th>
@@ -195,7 +183,6 @@ tr.shown td.details-control {
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
 													<i class="md-eye"></i></a></td>
 												</tr>
-												<tr id="showalldata"></tr>
 											</tbody>
 
 										</table>
@@ -270,7 +257,7 @@ tr.shown td.details-control {
                         </div>
                         <div class="modal-body">
                          
-                         <table class="table table-hover dataTable table-striped w-full" id="exampleTableTools demandSearchTable">
+                         <table class="table table-hover dataTable table-striped w-full" id="exampleTableTools">
 											<thead class="thead-dark">
 												<tr>
 													
@@ -305,7 +292,11 @@ tr.shown td.details-control {
 
   <!-- Footer -->
   <div th:replace = "skin/template :: footer"></div>
+  <!-- <script src="assets/js/datatable.min.js"></script>
+  <script src="assets/js/datatable.jq.ui.js"></script> -->
+  
   <script src="assets/js/DemandJ.js"></script>
+  
   
   
 </body>
