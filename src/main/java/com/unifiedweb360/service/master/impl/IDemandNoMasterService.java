@@ -53,6 +53,11 @@ public class IDemandNoMasterService implements DemandNoMasterService {
 		return demandNoMasterRepo.findByUnitId(unitId);
 	}
 
+	@Override
+	public void deleteById(Integer id) {
+		demandNoMasterRepo.deleteById(id);
+	}
+
 	
 	
 

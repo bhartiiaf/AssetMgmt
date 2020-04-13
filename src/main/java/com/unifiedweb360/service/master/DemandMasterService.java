@@ -18,5 +18,8 @@ public interface DemandMasterService {
 	Optional<DemandMaster> findById(Integer id);
 	List<Object[]> findAllDataById(Integer id);
 	
+	public List<DemandMaster> getDemandMasterBydemandNoMaster(Integer demandNoMaster,Integer id);
+	
+	public void deleteById(Integer id);
 
 }

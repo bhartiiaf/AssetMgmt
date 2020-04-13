@@ -23,6 +23,10 @@ public interface DemandMasterRepository extends JpaRepository<DemandMaster,Integ
 	@Query("from DemandMaster dm where dm.demandNoMaster.id=?1")
 	List<Object[]> findAllDataById(Integer id);
 	
+	@Query("from DemandMaster dm where dm.demandNoMaster.id=?1 and dm.id=?2")
+	public List<DemandMaster> getDemandMasterBydemandNoMaster(Integer demandNoMaster,Integer id);
+
+	
 	
 	
 

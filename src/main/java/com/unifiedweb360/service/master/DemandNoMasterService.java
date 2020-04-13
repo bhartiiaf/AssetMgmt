@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.unifiedweb360.modal.master.DemandNoMaster;
+import com.unifiedweb360.modal.master.ItemTypeMaster;
 import com.unifiedweb360.service.ICommonService;
 
 public interface DemandNoMasterService extends ICommonService<DemandNoMaster,Integer> {
@@ -11,4 +12,6 @@ public interface DemandNoMasterService extends ICommonService<DemandNoMaster,Int
 List<DemandNoMaster> findByDemandNoGenerateddBy(String demandNoGenerateddBy);
 
 List<DemandNoMaster> findByUnitId(Integer unitId);
+DemandNoMaster find(Integer id);
+void deleteById(Integer id);
 }

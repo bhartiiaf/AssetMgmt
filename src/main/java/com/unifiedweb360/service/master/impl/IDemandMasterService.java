@@ -57,6 +57,20 @@ DemandMasterRepository demandRepo;
 		return demandRepo.findAllDataById(id);
 	}
 
+	@Override
+	public List<DemandMaster> getDemandMasterBydemandNoMaster(Integer demandNoMaster, Integer id) {
+		return demandRepo.getDemandMasterBydemandNoMaster(demandNoMaster, id);
+	}
+
+	@Override
+	public void deleteById(Integer id) {
+		demandRepo.deleteById(id);
+	}
+
+	
+
+	
+
 	
 
 	
