@@ -189,8 +189,10 @@ public class DemandController {
 			dm.addAll(dmm);
 			demandService.saveAll(dm);
 		}
-
+		redirectAttribute.addFlashAttribute("successedited","Demand No : " +dm.iterator().
+				next().getDemandNoMaster().getDemandMasterNo()+ " is finalised successfully");
 		return new ModelAndView("redirect:/demand");
+		
 
 
 		
@@ -240,10 +242,16 @@ public class DemandController {
 		return demandService.findAllDataById(id);
 	}
 	
+	@GetMapping(value="/demand#demandindraftmode")
+	public String getDatademand()
+	{
+		return null;
+	}
 	@GetMapping(value = "deletequery/{id}")
-	public String deleteQuery(@PathVariable("id") int id) {
+	public String deleteQuery(@PathVariable("id") int id,RedirectAttributes redirectAttribute) {
 		demandService.deleteById(id);
-		return "redirect:/demand";
+		redirectAttribute.addFlashAttribute("successdelete","Item ID "+ id +" is deleted");
+		return "redirect:/demand#demandindraftmode";
 	}
 	
 	

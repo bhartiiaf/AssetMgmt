@@ -29,9 +29,15 @@
                   </ul>
                   <div class="tab-content py-15">
                     <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
-                      <h4 class="text-danger"  th:text="${failure}"> </h4>
+                     				 <h4 class="text-danger"  th:text="${failure}"> </h4>
 									<h4 class="text-success" th:text="${success}"></h4>
 									<h4 class="text-danger" th:text="${draft}"></h4>
+									<h4 class="text-danger" th:text="${successdelete}"></h4>
+									<h4 class="text-success" th:text="${successedited}"></h4>
+									
+									
+									
+									
 
 									<h3 class="font-size-24" id="dmd">Demand Master</h3>
 									<form th:action="@{/submitdemand}" method="post">
@@ -148,7 +154,6 @@
 													<th>View</th>
 												</tr>
 											</thead>
-<!-- --- -->
 											<tbody>
 												<tr th:if="${urole == 'UNIT'}" th:each="dm : ${demandmode}">
 													<td th:text="${dm.demandMasterNo}" />
@@ -197,54 +202,9 @@
 										</table>
                     </div>
                     <div class="tab-pane" id="searchDemand" role="tabpanel">
-									<!-- <form th:action="@{/fetchdemand}" method="post">
-										<div class="row">
-											<div class="col-sm-3">
-												<input class="form-control" type="text" name="demandNo"
-													id="demandNo" placeholder="Enter Demand No" />
-													<span class="demandno error text-danger"></span>
-											</div>
-											<div class="col-sm-2">
-												<button type="submit" name="seachDemand" id="seachDemand" class="btn btn-success">Search</button>
-											</div>
-										</div>
-									</form>
- -->
-									<div class="row mt-2">
-										<!-- <table
-											class="table table-hover dataTable table-striped w-full"
-											id="exampleTableTools demandSearchTable">
-											<thead class="thead-dark">
-												<tr>
-													<th>Demand No</th>
-													<th>Code Head</th>
-													<th>Item Type</th>
-													<th>Sub Type</th>
-													<th>Qty</th>
-													<th>Reason</th>
-													<th>Authority</th>
-													<th>Status</th>
-												</tr>
-											</thead>
+									
 
-											<tbody>
-												<tr th:each="dm : ${dmdsearch}">
-
-													<td th:text="${dm.demandNo}" />
-													<td th:text="${dm.codeHeadId.codeHeadDescription}" />
-													<td th:text="${dm.itemTypeId.itemDescription}" />
-													<td th:text="${dm.itemSubTypeId.subTypeDesc}" />
-													<td th:text="${dm.itemQty}" />
-													<td th:text="${dm.demandReason}" />
-													<td th:text="${dm.demandAuth}" />
-													<td th:text="${dm.demandStatus}" />
-
-												</tr>
-											</tbody>
-
-										</table> -->
-
-									</div>
+					</div>
 						
                       </div>
                     </div>
