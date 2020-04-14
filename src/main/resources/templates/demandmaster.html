@@ -24,8 +24,8 @@
                         aria-controls="demandindraftmode" role="tab">Demand in Draft Mode</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandinfinalisedmode"
                         aria-controls="demandinfinalisedmode" role="tab">Finalised Demand</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#searchDemand"
-                        aria-controls="searchDemand" role="tab">Search</a></li>
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#searchDemand"
+                        aria-controls="searchDemand" role="tab">Search</a></li> -->
                   </ul>
                   <div class="tab-content py-15">
                     <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
@@ -34,6 +34,10 @@
 									<h4 class="text-danger" th:text="${draft}"></h4>
 									<h4 class="text-danger" th:text="${successdelete}"></h4>
 									<h4 class="text-success" th:text="${successedited}"></h4>
+									<h4 class="text-danger" th:text="${successdeleteofdraftdemand}"></h4>
+									
+									
+									
 									
 									
 									
@@ -161,7 +165,8 @@
 													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
 													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
-													<i class="md-eye"></i></a></td>
+													<i class="md-eye"></i></a> | <a th:href="@{'/deletedemandnoindraft/' + ${dm.id}}" class="btn btn-danger" onclick="return confirm('Are you sure to Delete?')" >
+													<i class="md-close"></i></a></td>
 												</tr>
 												<tr th:if="${urole == 'CMD'}" th:each="dm : ${demandforcmd}">
 													<td th:text="${dm.demandMasterNo}" />
@@ -201,10 +206,10 @@
 
 										</table>
                     </div>
-                    <div class="tab-pane" id="searchDemand" role="tabpanel">
+                   <!--  <div class="tab-pane" id="searchDemand" role="tabpanel">
 									
 
-					</div>
+					</div> -->
 						
                       </div>
                     </div>

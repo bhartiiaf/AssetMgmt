@@ -242,16 +242,20 @@ public class DemandController {
 		return demandService.findAllDataById(id);
 	}
 	
-	@GetMapping(value="/demand#demandindraftmode")
-	public String getDatademand()
-	{
-		return null;
-	}
+	
 	@GetMapping(value = "deletequery/{id}")
 	public String deleteQuery(@PathVariable("id") int id,RedirectAttributes redirectAttribute) {
 		demandService.deleteById(id);
 		redirectAttribute.addFlashAttribute("successdelete","Item ID "+ id +" is deleted");
-		return "redirect:/demand#demandindraftmode";
+		return "redirect:/demand";
+	}
+	
+	@GetMapping(value="deletedemandnoindraft/{id}")
+	public String deleteDemandNoInDraft(@PathVariable("id") int id, RedirectAttributes redirect) {
+		demandNoMasterService.deleteById(id);
+		redirect.addFlashAttribute("successdeleteofdraftdemand","Demand No is Deleted");
+
+		return "redirect:/demand";
 	}
 	
 	
