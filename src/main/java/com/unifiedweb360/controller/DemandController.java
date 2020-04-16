@@ -29,12 +29,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.unifiedweb360.modal.master.CodeHeadMaster;
 import com.unifiedweb360.modal.master.DemandMaster;
 import com.unifiedweb360.modal.master.DemandNoMaster;
+import com.unifiedweb360.modal.master.DemandStatusMaster;
 import com.unifiedweb360.modal.master.ItemTypeMaster;
 import com.unifiedweb360.modal.user.User;
 import com.unifiedweb360.service.UserService;
 import com.unifiedweb360.service.master.CodeHeadMasterService;
 import com.unifiedweb360.service.master.DemandMasterService;
 import com.unifiedweb360.service.master.DemandNoMasterService;
+import com.unifiedweb360.service.master.DemandStatusMasterService;
 import com.unifiedweb360.service.master.ItemSubTypeService;
 import com.unifiedweb360.service.master.ItemTypeMasterService;
 
@@ -52,6 +54,10 @@ public class DemandController {
 	UserService userService;
 	@Autowired
 	DemandNoMasterService demandNoMasterService;
+	@Autowired
+	DemandStatusMasterService demandStatusService;
+	
+	
 
 	
 	@GetMapping("/demand")
@@ -124,6 +130,7 @@ public class DemandController {
 		List<DemandMaster> dm = new ArrayList<>();
 		for (int i = 0; i < dataSize; i++) {
 			DemandMaster dmm = new DemandMaster();
+		
 			String codeHeadId = request.getParameterValues("codeHeadId")[i];
 			System.out.println(codeHeadId);
 			String itemTypeId = request.getParameterValues("itemTypeId")[i];
@@ -164,7 +171,9 @@ public class DemandController {
 	{
 		int dataSize = request.getParameterValues("codeHeadId").length;
 		List<DemandMaster> dm = new ArrayList<>();
+		String action= request.getParameter("submitvalue");
 		for (int i = 0; i < dataSize; i++) {
+			
 			Integer id = Integer.parseInt(request.getParameterValues("id")[i]);
 			Integer dnm = Integer.parseInt(request.getParameterValues("demandNoMaster")[i]);
 			List<DemandMaster> dmm = demandService.getDemandMasterBydemandNoMaster(dnm,id);
@@ -182,20 +191,16 @@ public class DemandController {
 			dmm.iterator().next().setDemandAuth(demandAuth);
 			dmm.iterator().next().setDemandReason(demandReason);
 			dmm.iterator().next().setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-			dmm.iterator().next().setDemandStatus("Finalised");
 			dmm.iterator().next().setDemandedOn(new Date());
 			dmm.iterator().next().setDemandNoMaster(demandNoMasterService.find(dnm));
 			dmm.iterator().next().setId(id);
+			dmm.iterator().next().setDemandStatus(action);
 			dm.addAll(dmm);
 			demandService.saveAll(dm);
 		}
 		redirectAttribute.addFlashAttribute("successedited","Demand No : " +dm.iterator().
-				next().getDemandNoMaster().getDemandMasterNo()+ " is finalised successfully");
+				next().getDemandNoMaster().getDemandMasterNo()+ " is saved successfully");
 		return new ModelAndView("redirect:/demand");
-		
-
-
-		
 	}
 	
 	

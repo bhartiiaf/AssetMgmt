@@ -1,6 +1,8 @@
-$(document)
-		.ready(
-				function() {
+$(document).ready(function() {
+	
+					
+					
+					
 					$(".fetchmoredatafordemand")
 							.each(
 									function() {
@@ -108,7 +110,7 @@ $(document)
 																			}
 
 																			if (result[0][0].demandStatus == 'Draft') {
-																				var submitButtonForDraft = "<input type='submit' class='btn btn-success' value='Finalize'></button>";
+																				var submitButtonForDraft = "<input type='submit' class='btn btn-success' name='submitvalue' value='Draft'></button>"+' &nbsp; '+ "<input type='submit' class='btn btn-success' name='submitvalue' value='Finalised'></button>";
 																				$(
 																						"#demandfordraft")
 																						.append(
@@ -376,7 +378,8 @@ $(document)
 																				+ "</option>"));
 														for (var i = 0; i < result.length; i++) {
 
-															// var x = "<option value="+result[i][0].id+">"+result[i][0].itemDescription+"</option>"
+															// var x = "<option
+															// value="+result[i][0].id+">"+result[i][0].itemDescription+"</option>"
 															$("#itemTypeId")
 																	.append(
 																			$(

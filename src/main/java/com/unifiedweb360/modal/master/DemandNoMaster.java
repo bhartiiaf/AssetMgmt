@@ -3,8 +3,6 @@ package com.unifiedweb360.modal.master;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,4 +38,7 @@ public class DemandNoMaster {
 	@ManyToOne
 	@JoinColumn(name="unit_id")
 	private UnitMaster unitId;
+	@ManyToOne
+	@JoinColumn(name="demand_status")
+	private DemandStatusMaster demandStatus;
 }
