@@ -170,32 +170,64 @@ public class DemandController {
 			 RedirectAttributes redirectAttribute)
 	{
 		int dataSize = request.getParameterValues("codeHeadId").length;
+		String dmnofornew = request.getParameter("demandNoMaster");
 		List<DemandMaster> dm = new ArrayList<>();
 		String action= request.getParameter("submitvalue");
 		for (int i = 0; i < dataSize; i++) {
 			
-			Integer id = Integer.parseInt(request.getParameterValues("id")[i]);
-			Integer dnm = Integer.parseInt(request.getParameterValues("demandNoMaster")[i]);
-			List<DemandMaster> dmm = demandService.getDemandMasterBydemandNoMaster(dnm,id);
-			String codeHeadId = request.getParameterValues("codeHeadId")[i];
-			System.out.println(codeHeadId);
-			String itemTypeId = request.getParameterValues("itemTypeId")[i];
-			String itemSubTypeId = request.getParameterValues("itemSubTypeId")[i];
-			Integer itemQty = Integer.parseInt(request.getParameterValues("itemQty")[i]);
-			String demandReason = request.getParameterValues("demandReason")[i];
-			String demandAuth = request.getParameterValues("demandAuth")[i];
-			dmm.iterator().next().setCodeHeadId(codeHeadService.find(Integer.parseInt(codeHeadId)));
-			dmm.iterator().next().setItemTypeId(itemTypeService.find(Integer.parseInt(itemTypeId)));
-			dmm.iterator().next().setItemSubTypeId(itemSubTypeService.find(Integer.parseInt(itemSubTypeId)));
-			dmm.iterator().next().setItemQty(itemQty);
-			dmm.iterator().next().setDemandAuth(demandAuth);
-			dmm.iterator().next().setDemandReason(demandReason);
-			dmm.iterator().next().setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-			dmm.iterator().next().setDemandedOn(new Date());
-			dmm.iterator().next().setDemandNoMaster(demandNoMasterService.find(dnm));
-			dmm.iterator().next().setId(id);
-			dmm.iterator().next().setDemandStatus(action);
-			dm.addAll(dmm);
+			
+			
+			if(request.getParameterValues("id")[i]=="")
+			{
+				DemandMaster dmm = new DemandMaster();
+				String codeHeadId = request.getParameterValues("codeHeadId")[i];
+				System.out.println(codeHeadId);
+				String itemTypeId = request.getParameterValues("itemTypeId")[i];
+				String itemSubTypeId = request.getParameterValues("itemSubTypeId")[i];
+				Integer itemQty = Integer.parseInt(request.getParameterValues("itemQty")[i]);
+				String demandReason = request.getParameterValues("demandReason")[i];
+				String demandAuth = request.getParameterValues("demandAuth")[i];
+				dmm.setCodeHeadId(codeHeadService.find(Integer.parseInt(codeHeadId)));
+				dmm.setItemTypeId(itemTypeService.find(Integer.parseInt(itemTypeId)));
+				dmm.setItemSubTypeId(itemSubTypeService.find(Integer.parseInt(itemSubTypeId)));
+				dmm.setItemQty(itemQty);
+				dmm.setDemandAuth(demandAuth);
+				dmm.setDemandReason(demandReason);
+				dmm.setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+				dmm.setDemandedOn(new Date());
+				dmm.setDemandNoMaster(demandNoMasterService.find(Integer.parseInt(dmnofornew)));
+				dmm.setDemandStatus(action);
+				dm.add(dmm);
+
+			}
+			else
+			{
+				Integer id = Integer.parseInt(request.getParameterValues("id")[i]);
+				Integer dnm = Integer.parseInt(request.getParameterValues("demandNoMaster")[i]);
+				List<DemandMaster> dmm = demandService.getDemandMasterBydemandNoMaster(dnm,id);
+				String codeHeadId = request.getParameterValues("codeHeadId")[i];
+				System.out.println(codeHeadId);
+				String itemTypeId = request.getParameterValues("itemTypeId")[i];
+				String itemSubTypeId = request.getParameterValues("itemSubTypeId")[i];
+				Integer itemQty = Integer.parseInt(request.getParameterValues("itemQty")[i]);
+				String demandReason = request.getParameterValues("demandReason")[i];
+				String demandAuth = request.getParameterValues("demandAuth")[i];
+				dmm.iterator().next().setCodeHeadId(codeHeadService.find(Integer.parseInt(codeHeadId)));
+				dmm.iterator().next().setItemTypeId(itemTypeService.find(Integer.parseInt(itemTypeId)));
+				dmm.iterator().next().setItemSubTypeId(itemSubTypeService.find(Integer.parseInt(itemSubTypeId)));
+				dmm.iterator().next().setItemQty(itemQty);
+				dmm.iterator().next().setDemandAuth(demandAuth);
+				dmm.iterator().next().setDemandReason(demandReason);
+				dmm.iterator().next().setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+				dmm.iterator().next().setDemandedOn(new Date());
+				dmm.iterator().next().setDemandNoMaster(demandNoMasterService.find(dnm));
+				dmm.iterator().next().setId(id);
+				dmm.iterator().next().setDemandStatus(action);
+				dm.addAll(dmm);
+
+
+			}
+			
 			demandService.saveAll(dm);
 		}
 		redirectAttribute.addFlashAttribute("successedited","Demand No : " +dm.iterator().
