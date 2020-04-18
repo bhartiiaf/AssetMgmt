@@ -156,6 +156,9 @@ $("#codeHeadOne").on('change',function(e) {
 																			for (var i = 0; i < result.length; i++) {
 																				if (result[i][0].demandStatus == 'Finalised') {
 																					$("#addmoreitemsindraft").hide();
+																					$("#formobjectone").hide();
+																					$("#hrone").hide();
+																					$("#hrtwo").hide();
 																					$('#databydemandno').append(
 
 																									$("<tr>"
