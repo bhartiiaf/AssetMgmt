@@ -1,68 +1,180 @@
 $(document).ready(function() {
+	$("#formobjectone").hide();
+	$("#hrone").hide();
+	$("#hrtwo").hide();
 	
+	$("#addmoreitemsindraft").on('click',function(){
+		
+		$("#formobjectone").toggle();
+		$("#hrone").toggle();
+		$("#hrtwo").toggle();
+	});
+		
+	
+	$("#addmoreitemOne").on('click',function(e) {
+				e.preventDefault();
+				
+				var codeHeadIdOne = $.trim($("#codeHeadOne").val());
+				var codeHeadOne = $("#codeHeadOne option:selected").html();
+				var itemTypeIdOne = $.trim($("#itemTypeIdOne").val());
+				var itemTypeOne = $("#itemTypeIdOne option:selected").html();
+				var itemSubTypeIdOne = $.trim($("#itemSubTypeIdOne").val());
+				var itemSubTypeOne = $("#itemSubTypeIdOne option:selected").html();
+				var itemQtyOne = $.trim($("#itemQtyOne").val());
+				var demandReasonIdOne = $.trim($("#demandReasonOne").val());
+				var demandReasonOne = $("#demandReasonOne option:selected").html();
+				var demandAuthOne = $.trim($("#demandAuthOne").val());
+							
+								
+				
+				var moreDemandDataOne = "<tr>"
+						+ "<td><input  type='hidden' id='codeHeadOne' name='codeHeadId' value="+ codeHeadIdOne+ ">"+ codeHeadOne+ "</td>"
+						+ "<td><input  type='hidden' id='itemTypeIdOne' name='itemTypeId' value="
+						+ itemTypeIdOne
+						+ ">"
+						+ itemTypeOne
+						+ "</td>"
+						+ "<td><input  type='hidden' id='itemSubTypeIdOne' name='itemSubTypeId' value="
+						+ itemSubTypeIdOne
+						+ ">"
+						+ itemSubTypeOne
+						+ "</td>"
+						+ "<td><input  type='hidden' id='itemQtyOne' name='itemQty' value="
+						+ itemQtyOne
+						+ ">"
+						+ itemQtyOne
+						+ "</td>"
+						+ "<td><input  type='hidden' id='demandReasonOne' name='demandReason' value='"
+						+ demandReasonIdOne
+						+ "'>"
+						+ demandReasonOne
+						+ "</td>"
+						+ "<td><input  type='hidden' id='id' name='id' value=''><input  type='hidden' id='demandAuthOne' name='demandAuth' value='"
+						+ demandAuthOne
+						+ "'>"
+						+ demandAuthOne
+						+ "</td>"
+						+ "<td><button class='removeone btn btn-danger'>-</button</td>"
+						+ "</tr>";
+				
+				
+
+				if (!codeHeadIdOne) {
+					alert("Please Select Code Head");
+				} else if (!itemTypeIdOne) {
+					alert("Please Select Item Type");
+				} else if (!itemSubTypeIdOne) {
+					alert("Please Select Sub Item TYpe");
+				} else if (!itemQtyOne) {
+					alert("Please entre Item Qty");
+				} else if (!demandReasonIdOne) {
+					alert("Please select Demand Reason");
+				} else if (!demandAuthOne) {
+					alert("Please enter Demand Auth");
+				} else {
+					
+					$("#databydemandno").append(
+							moreDemandDataOne);
+					
+					$("#codeHeadOne").val('');
+					$("#itemTypeIdOne").val('');
+					$("#itemSubTypeIdOne").val('');
+					$("#itemQtyOne").val('');
+					$("#demandReasonOne").val('');
+					$("#demandAuthOne").val('');
+				}
+						
+			});
+$(document).on('click', '.removeone', function() {
+$(this).parents('tr').remove();
+
+
+});
+
+
+
+$("#itemTypeIdOne").on('change',function(e) {
+			e.preventDefault();
+			$("#itemSubTypeIdOne").find('option').remove();
+			var itidOne = $("#itemTypeIdOne").val();
+			$.ajax({
+						type : 'GET',
+						data : {'itemTypeId' : itidOne},
+						url : "fetchsubitem",
+						dataType : 'json',
+						success : function(result) {
+							$("#itemSubTypeIdOne").append($("<option value=''>"	+ 'Select Sub Item Type'+ "</option>"));
+							for (var i = 0; i < result.length; i++) {
+								$("#itemSubTypeIdOne").append($("<option></option>").attr("value",result[i][0].id).text(result[i][0].subTypeDesc));
+							}
+						}
+					});
+		});
+
+$("#codeHeadOne").on('change',function(e) {
+			e.preventDefault();
+			$("#itemTypeIdOne").find('option').remove();
+			$("#itemSubTypeIdOne").find('option').remove();
+			var chidOne = $("#codeHeadOne").val();
+			$.ajax({
+						type : 'GET',
+						data : {'codeHead' : chidOne},
+						url : "fetchitemtypebycodehead",
+						dataType : 'json',
+						success : function(result) {
+							$("#itemTypeIdOne").append($("<option value=''>"+ 'Select Item Type'+ "</option>"));
+							for (var i = 0; i < result.length; i++) {
+
+								
+								$("#itemTypeIdOne").append($("<option></option>").attr("value",result[i][0].id).text(result[i][0].itemDescription));
+							}
+						}
+					});
+		});
+
+
+
+
+
+
+
+
 					
 					
-					
-					$(".fetchmoredatafordemand")
-							.each(
-									function() {
-										$(this)
-												.click(
-														function(e) {
-															$('#databydemandno')
-																	.empty();
-															$('#demandNoHeader')
-																	.empty();
-															$("#demandfordraft")
-																	.empty();
+					$(".fetchmoredatafordemand").each(function() {
+										$(this).click(function(e) {
+															$('#databydemandno').empty();
+															$('#demandNoHeader').empty();
+															$("#demandfordraft").empty();
 
 															e.preventDefault();
-															var urld = $(this)
-																	.attr(
-																			'href');
-															$
-																	.ajax({
+															var urld = $(this).attr('href');
+															$.ajax({
 																		url : urld,
 																		dataType : 'json',
-																		success : function(
-																				result) {
+																		success : function(result) {
 																			for (var i = 0; i < result.length; i++) {
 																				if (result[i][0].demandStatus == 'Finalised') {
-																					$(
-																							'#databydemandno')
-																							.append(
+																					$("#addmoreitemsindraft").hide();
+																					$('#databydemandno').append(
 
 																									$("<tr>"
-																											+ "<td>"
-																											+ result[i][0].codeHeadId.codeHeadDescription
-																											+ "</td>"
-																											+ "<td>"
-																											+ result[i][0].itemTypeId.itemDescription
-																											+ "</td>"
-																											+ "<td>"
-																											+ result[i][0].itemSubTypeId.subTypeDesc
-																											+ "</td>"
-																											+ "<td>"
-																											+ result[i][0].itemQty
-																											+ "</td>"
-																											+ "<td>"
-																											+ result[i][0].demandReason
-																											+ "</td>"
-																											+ "<td>"
-																											+ result[i][0].demandAuth
-																											+ "</td>"
-																											+ "<td>"
-																											+ result[i][0].demandStatus
-																											+ "</td>"
+																											+ "<td>"+ result[i][0].codeHeadId.codeHeadDescription+ "</td>"
+																											+ "<td>"+ result[i][0].itemTypeId.itemDescription+ "</td>"
+																											+ "<td>"+ result[i][0].itemSubTypeId.subTypeDesc+ "</td>"
+																											+ "<td>"+ result[i][0].itemQty+ "</td>"
+																											+ "<td>"+ result[i][0].demandReason+ "</td>"
+																											+ "<td>"+ result[i][0].demandAuth+ "</td>"
+																											+ "<td>"+ result[i][0].demandStatus+ "</td>"
 																											+
-
 																											"</tr>"
 
 																									));
 																				} else if (result[i][0].demandStatus == 'Draft') {
-																					$(
-																							'#databydemandno')
-																							.append(
+																					$("#addmoreitemsindraft").show();
+																					var xxxx = "<input type='hidden' name='demandNoMaster' value='"+ result[i][0].demandNoMaster.id+ "'>";
+																					
+																					$('#databydemandno').append(
 
 																									$("<tr>"
 																											+ "<td><input  type='hidden' id='codeHead' name='codeHeadId' value='"
@@ -136,7 +248,8 @@ $(document).ready(function() {
 																							$("<b>"
 																									+ result[0][0].demandNoMaster.demandMasterNo
 																									+ "</b>"));
-
+																			
+																			$("#databydemandno").append(xxxx);
 																		}
 																	});
 
