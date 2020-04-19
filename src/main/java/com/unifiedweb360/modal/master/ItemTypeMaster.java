@@ -40,4 +40,7 @@ public class ItemTypeMaster implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="code_head_master_id")
 	private CodeHeadMaster codeHeadMaster;
+	@OneToMany(mappedBy = "itemTypeId", cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+	@JsonBackReference
+	List<ItemSubTypeMaster> istm = new ArrayList<>();
 }

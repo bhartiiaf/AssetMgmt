@@ -34,7 +34,7 @@ public class ItemSubTypeMaster {
 	private ItemTypeMaster itemTypeId;
 	private String subTypeDesc;
 	private Double subItemPrice;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy ="itemSubTypeId")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy ="itemSubTypeId",cascade = CascadeType.MERGE)
 	@JsonBackReference
 	private List<DemandMaster> demandMasterForItem = new ArrayList<>();
 	private Date createdOn;

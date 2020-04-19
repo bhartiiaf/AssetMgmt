@@ -34,6 +34,42 @@ public class IItemSubTypeService implements ItemSubTypeService {
 		return itemSubTypeRepo.find(id);
 	}
 
+	@Override
+	public List<ItemSubTypeMaster> findAll() {
+		
+		return itemSubTypeRepo.findAll();
+	}
+
+	@Override
+	public List<ItemSubTypeMaster> findBySubTypeDesc(String subTypeDesc) {
+		// TODO Auto-generated method stub
+		return itemSubTypeRepo.findBySubTypeDesc(subTypeDesc);
+	}
+
+	@Override
+	public List<ItemSubTypeMaster> findByOrder() {
+		
+		return itemSubTypeRepo.findByOrderByItemTypeIdDesc();
+	}
+
+	@Override
+	public List<Object[]> findAllDataById(int id) {
+		
+		return itemSubTypeRepo.findAllDataById(id);
+	}
+
+	
+
+	@Override
+	public List<ItemSubTypeMaster> findAllDataByIdForUpdate(int id) {
+		return itemSubTypeRepo.findById(id);
+	}
+
+	@Override
+	public void deleteItemSubTypeById(int id) {
+		itemSubTypeRepo.deleteById(id);
+	}
+
 	
 
 }

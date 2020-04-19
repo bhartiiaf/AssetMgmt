@@ -340,6 +340,12 @@
         </ul>
       </li>
       
+      <li th:if="${urole == 'ADMIN'}" class="site-menu-item">
+        <a th:href="@{/codehead}">
+                  <i class="site-menu-icon md-collection-text" aria-hidden="true"></i>
+                  <span class="site-menu-title">Code Head Master</span>
+              </a>
+      </li>
        <li th:if="${urole == 'ADMIN'}" class="site-menu-item">
         <a th:href="@{/itemtype}">
                   <i class="site-menu-icon md-layers" aria-hidden="true"></i>
@@ -347,10 +353,11 @@
               </a>
       </li>
 
+
      <li th:if="${urole == 'ADMIN'}" class="site-menu-item">
-        <a th:href="@{/codehead}">
+        <a th:href="@{/itemsubtype}">
                   <i class="site-menu-icon md-collection-text" aria-hidden="true"></i>
-                  <span class="site-menu-title">Code Head Master</span>
+                  <span class="site-menu-title">Add Item Sub Type</span>
               </a>
       </li>
       <li th:if="${urole == 'UNIT' || urole == 'CMD'}" class="site-menu-item">
@@ -359,7 +366,12 @@
                   <span class="site-menu-title">Demand Master</span>
               </a>
       </li>
-      
+      <li th:if="${urole  == 'CMD'}" class="site-menu-item">
+        <a th:href="@{/demand}">
+                  <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
+                  <span class="site-menu-title">Station Demand Status</span>
+              </a>
+      </li>
       
       
     
