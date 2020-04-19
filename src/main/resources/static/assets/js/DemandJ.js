@@ -3,6 +3,12 @@ $(document).ready(function() {
 	$("#hrone").hide();
 	$("#hrtwo").hide();
 	
+	
+	$("#printoption").on('click',function(){
+		window.print(); 
+		return false;
+	});
+	
 	$("#addmoreitemsindraft").on('click',function(){
 		
 		$("#formobjectone").toggle();
@@ -291,20 +297,29 @@ $("#codeHeadOne").on('change',function(e) {
 					$('#area1')
 							.attr('placeholder', 'This is a new placeholder');
 
-					$("#demandReason").on(
-							'change',
-							function() {
+					$("#demandReason").on('change',function() {
 
 								var demandReason = $("#demandReason").val();
 								if (demandReason == 'Against Downgradation') {
-									$("#demandAuth").attr('placeholder',
-											'BOO Authority');
+									$("#demandAuth").attr('placeholder','BOO Authority');
 								} else if (demandReason == 'Fresh') {
-									$("#demandAuth").attr('placeholder',
-											'Reason for Demand');
+									$("#demandAuth").attr('placeholder','Reason for Demand');
 								} else {
-									$("#demandAuth").attr('placeholder',
-											'Demand Authority');
+									$("#demandAuth").attr('placeholder','Demand Authority');
+								}
+							});
+					
+					$("#demandReasonOne").on(
+							'change',
+							function() {
+
+								var demandReasonOne = $("#demandReasonOne").val();
+								if (demandReasonOne == 'Against Downgradation') {
+									$("#demandAuthOne").attr('placeholder','BOO Authority');
+								} else if (demandReasonOne == 'Fresh') {
+									$("#demandAuthOne").attr('placeholder','Reason for Demand');
+								} else {
+									$("#demandAuthOne").attr('placeholder','Demand Authority');
 								}
 							});
 

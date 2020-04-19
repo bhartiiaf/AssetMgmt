@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
+<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace = "skin/template :: head" />
 <body class="animsition site-navbar-small ">
   <!--[if lt IE 8]>
@@ -18,14 +18,14 @@
       <div class="example-wrap">
                 <div class="nav-tabs-vertical" data-plugin="tabs">
                   <ul class="nav nav-tabs mr-25" role="tablist">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsLeftOne"
+                    <li  th:if="${urole == 'UNIT' || urole == 'CMD'}" class="nav-item" role="presentation"><a class="nav-link active" data-toggle="tab" href="#exampleTabsLeftOne"
                         aria-controls="exampleTabsLeftOne" role="tab">Raise Demand</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandindraftmode"
+                    <li  th:if="${urole == 'UNIT' || urole == 'CMD'}" class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandindraftmode"
                         aria-controls="demandindraftmode" role="tab">Demand in Draft Mode</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandinfinalisedmode"
+                    <li  th:if="${urole == 'UNIT' || urole == 'CMD'}" class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandinfinalisedmode"
                         aria-controls="demandinfinalisedmode" role="tab">Finalised Demand</a></li>
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#searchDemand"
-                        aria-controls="searchDemand" role="tab">Search</a></li> -->
+                    <li  th:if="${urole == 'CMD'}" class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandForPerusal"
+                        aria-controls="demandForPerusal" role="tab">Demand For Perusal</a></li>
                   </ul>
                   <div class="tab-content py-15">
                     <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
@@ -159,7 +159,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr th:if="${urole == 'UNIT'}" th:each="dm : ${demandmode}">
+												<tr th:each="dm : ${demandmode}">
 													<td th:text="${dm.demandMasterNo}" />
 													<td th:text="${dm.unitId.unitName}" />
 													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
@@ -168,14 +168,7 @@
 													<i class="md-eye"></i></a> | <a th:href="@{'/deletedemandnoindraft/' + ${dm.id}}" class="btn btn-danger" onclick="return confirm('Are you sure to Delete?')" >
 													<i class="md-close"></i></a></td>
 												</tr>
-												<tr th:if="${urole == 'CMD'}" th:each="dm : ${demandforcmd}">
-													<td th:text="${dm.demandMasterNo}" />
-													<td th:text="${dm.unitId.unitName}" />
-													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
-													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
-													data-target="#showmoreitemsofdemandno" data-toggle="modal">
-													<i class="md-eye"></i></a></td>
-												</tr>
+												
 												
 											</tbody>
 
@@ -183,7 +176,7 @@
 										
                     </div>
                     <div class="tab-pane" id="demandinfinalisedmode" role="tabpanel">
-                      <table class="table table-hover dataTable table-striped w-full">
+                      <table class="table table-hover dataTable table-striped w-full" id="finalisedDemand">
 											<thead class="thead-dark">
 												<tr>
 													<th>Demand No.</th>
@@ -206,10 +199,37 @@
 
 										</table>
                     </div>
-                   <!--  <div class="tab-pane" id="searchDemand" role="tabpanel">
+                    
+                    <!--  Demand For Perusal -->
+                   <div class="tab-pane" id="demandForPerusal" role="tabpanel">
+						
+						<table class="table table-hover dataTable table-striped w-full" id="exampleTableTools1">
+											<thead class="thead-dark">
+												<tr>
+													<th>Demand No.</th>
+													<th>Unit</th>
+													<th>Demand Date</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												
+												<tr th:if="${urole == 'CMD'}" th:each="dm : ${demandforcmd}">
+													<td th:text="${dm.demandMasterNo}" />
+													<td th:text="${dm.unitId.unitName}" />
+													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
+													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
+													data-target="#showmoreitemsofdemandno" data-toggle="modal">
+													<i class="md-eye"></i></a></td>
+												</tr>
+												
+											</tbody>
+
+										</table>
+						
 									
 
-					</div> -->
+					</div>
 						
                       </div>
                     </div>
@@ -232,7 +252,9 @@
                         </div>
                         <div class="modal-body">
                         <button type="button" id="addmoreitemsindraft" class="btn btn-primary"><i class="icon md-collection-plus" aria-hidden="true"></i>
-                        </button>
+                        </button> 
+                        <button type="button" id="printoption" class="btn btn-secondary"><i class="icon md-print" aria-hidden="true"></i>
+                        </button> 
                         <hr id="hrone" />
                         
                         <div class="container" id="formobjectone">
@@ -294,9 +316,9 @@
                         
                         <hr id="hrtwo" />
                         
-                        
+                        <!-- id="demandindraftmodeforperusal" -->
                         <form th:action="@{changedemandstatus}" method="post">
-                         <table class="table table-hover dataTable table-striped w-full" id="exampleTableTools">
+                         <table class="table table-hover dataTable table-striped w-full" id="forprintarea" >
 											<thead class="thead-dark">
 												<tr>
 													
