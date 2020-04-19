@@ -2,7 +2,6 @@
 <html class="no-js css-menubar" lang="en"
 	xmlns:th="http://www.thymeleaf.org">
 <head th:replace="skin/template :: head" />
-<link rel="stylesheet" type="text/css" href="assets/css/datatables.min.css"/>
 
 <body class="animsition site-navbar-small ">
 <div th:replace="skin/sidemenu :: topandsidemenu"></div>
@@ -64,17 +63,16 @@
 					</form>
 
 
-			
+			<hr />
 			<div class="row">
-
 				<div class="col-sm-12">
-					<table class="table table-hover dataTable table-striped " id="subitemlist">
+					<table class="table table-hover dataTable table-striped " id="subitemlistdata">
 						<thead class="thead-dark">
 							<tr>
 								<th>Item Sub Type</th>
 								<th>Item Type</th>
 
-								<th colspan="2" align="center">Action</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 
@@ -88,13 +86,11 @@
 									<a th:href="@{'/fetchitemsubtypedata/' + ${it.id}}"
 									class="fetchitemsubtypedata btn btn-success"
 									data-target="#showitemSubType" data-toggle="modal"> <i
-										class="md-eye"></i></a></td>
-								<td>	<a th:href="@{'/deleteitemsubtype/' + ${it.id}}"
+										class="md-eye"></i></a> | <a th:href="@{'/deleteitemsubtype/' + ${it.id}}"
 									class="btn btn-danger"
 									> <i
-										class="md-delete"></i></a>
-										
-								</td>
+										class="md-delete"></i></a></td>
+								
 							</tr>
 						</tbody>
 					</table>
@@ -182,7 +178,6 @@
 	 
   });
   </script>
-    <script type="text/javascript" src="assets/css/datatables.min.js"></script>
   
 	<script src="assets/js/fetchItemSubType.js"></script>
 	

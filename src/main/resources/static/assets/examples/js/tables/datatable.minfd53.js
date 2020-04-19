@@ -107,9 +107,9 @@
                 [5, 10, 25, 50, "All"]
             ],
             sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
-            buttons: ["copy", "excel", "csv", "pdf", "print"]
+            buttons: ["print"]
         });
-    (0, _jquery2.default)("#subitemlist").dataTable(options)
+    (0, _jquery2.default)("#subitemlistdata").dataTable(options)
 }),
     (0, _jquery2.default)(document).ready(function() {
         var defaults = Plugin.getDefaults("dataTable"),
@@ -124,7 +124,7 @@
                 [5, 10, 25, 50, "All"]
             ],
             sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
-            buttons: ["csv"]
+            buttons: ["copy", "excel", "csv","print"]
         });
     (0, _jquery2.default)("#demandindraftmodeforperusal").dataTable(options)
 }),
