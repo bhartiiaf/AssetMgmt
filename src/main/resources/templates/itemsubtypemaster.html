@@ -1,161 +1,178 @@
 <!DOCTYPE html>
-<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace = "skin/template :: head" />
+<html class="no-js css-menubar" lang="en"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="skin/template :: head" />
 
 <body class="animsition site-navbar-small ">
-  <!--[if lt IE 8]>
+	<!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-  <div th:replace="skin/sidemenu :: topandsidemenu"></div> 
-  
-
-  <!-- Page -->
-  <div class="page">
-    <div class="page-content">
-      <div class="row">
-      <div class="col-sm-5">
-      
-      <h4 class="text-danger"  th:text="${failure}"> </h4>
-      <h4 class="text-success" th:text="${success}"></h4>
-        <h3 class="font-size-24">Item Sub Type Master</h3>
-       	<form th:action="@{/submititemsubtype}" method="post">
-          <div class="form-group form-material floating" data-plugin="formMaterial">
-           	<div class="row mt-2">
-           		<div class="col-sm-5">
-           		 <select name="itemTypeId" class="form-control"
-														id="itemTypeId">
-														<option value="">Select Item Type</option>
-														<option th:each="item : ${itemtype}" th:value="${item.id}"
-															th:utext="${item.itemDescription}" />
-													</select> <span class="itemTypeId error text-danger"></span>
-           		
-           		
-           		</div>
-           	</div>
-          
-           <div class="row mt-2">
-           		<div class="col-sm-5">
-            <input type="text" class="form-control empty" id="subTypeDesc" name="subTypeDesc">
-            <label class="floating-label" for="subTypeDesc">Select Item Type</label>
-            <span class="subTypeDesc error text-danger"></span>
-            </div>
-            
-            
-            </div>
-            
-              <div class="row mt-2">
-           		<div class="col-sm-5">
-            <input type="text" class="form-control empty" id="subItemPrice" name="subItemPrice" required="required">
-            <label class="floating-label" for="subItemPrice">Price</label>
-            <span class="subItemPrice error text-danger"></span>
-            </div>
-            
-            
-            </div>
-          </div>
-                   
-          <button type="submit" class="btn btn-primary btn-block" id="itemtypesubmit">Add Item Sub Type!</button>
-        </form>
-      
-      </div>
-      <div class="col-sm-7">
-     <table class="table table-bordered table-striped">
-		<thead class="thead-dark">
-			<tr>
-				<th>Item Sub Type</th>
-				<th>Item Type</th>
-				
-				<th>Action</th>
-			</tr>
-		</thead>
-		
-		<tbody>
-			<tr th:each="it : ${subTypeItem}">
-			
-				<td th:text="${it.subTypeDesc}" />	
-				<td th:text="${it.itemTypeId.itemDescription}" />
-				
-				<td><a th:href="@{'/fetchitemsubtypedata/' + ${it.id}}" class="fetchitemsubtypedata btn btn-success"
-													data-target="#showitemSubType" data-toggle="modal">
-													<i class="md-eye"></i></a></td>
-			</tr>
-		</tbody>		
-	</table>
-      
-      </div>
-      
-        <!-- Edit section of Item Sub Type -->
-                  <div class="modal fade modal-just-me" id="showitemSubType" aria-hidden="true"
-                    aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
-                    <div class="modal-dialog modal-simple">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" class="btn btn-danger">&times;</span>
-                          </button>
-                          
-                         
-                        </div>
-                        <div class="modal-body">
-                        
-                        <form th:action="@{updateItemSubType}" method="post">
-                         <div class="form-group form-material floating" data-plugin="formMaterial">
-           	<div class="row mt-2">
-           		
-           		<div class="col-sm-5">
-           		 <select name="itemTypeId" class="form-control"
-														id="itemTypeId">
-														<option value="">Select Item Type</option>
-														<option th:each="item : ${itm}" th:value="${item.id}"
-															th:utext="${item.itemDescription}" />
-													</select> <span class="codeheadid error text-danger"></span>
-           		
-           		
-           		</div>
-           	</div>
-          
-           <div class="row mt-2">
-           		<div class="col-sm-5">
-            <input type="text" class="form-control empty" id="itemDescription" name="itemDescription" value="test">
-            <label class="floating-label" for="itemDescription">Select Item Type</label>
-            <span class="itemdescription error text-danger"></span>
-            </div>
-            </div>
-             <div class="row mt-2">
-           		<div class="col-sm-5">
-            <input type="text" class="form-control empty" id="msubItemPrice" name="subItemPrice" required="required">
-            <label class="floating-label" for="subItemPrice">Price</label>
-            <span class="subItemPrice error text-danger"></span>
-            </div>
-            
-            
-            </div>
-            
-          </div>
-                  
-          <button type="submit" class="btn btn-primary btn-block" id="itemtypesubmit">Update Item Sub Type!</button>
-        </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End Modal -->
-      
-      
-      
-      </div>
-      
-      
-    </div>
-  </div>
-  <!-- End Page -->
+	<div th:replace="skin/sidemenu :: topandsidemenu"></div>
 
 
-  <!-- Footer -->
-  <div th:replace = "skin/template :: footer"></div>
-  
-<script>
+	<!-- Page -->
+	<div class="page">
+		<div class="page-content">
+			<div class="row mt-2">
+				<div class="col-sm-12">
+					<h4 class="text-danger" th:text="${failure}"></h4>
+					<h4 class="text-success" th:text="${success}"></h4>
+
+					<h3 class="font-size-24">Item Sub Type Master</h3>
+					<form th:action="@{/submititemsubtype}" method="post">
+						<div class="form-group form-material floating"
+							data-plugin="formMaterial">
+
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<select name="itemTypeId" class="form-control" id="itemTypeId">
+									<option value="">Select Item Type</option>
+									<option th:each="item : ${itemtype}" th:value="${item.id}"
+										th:utext="${item.itemDescription}" />
+								</select> <span class="itemTypeId error text-danger"></span>
+
+
+							</div>
+
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control empty" id="subTypeDesc"
+									name="subTypeDesc"> <label class="floating-label"
+									for="subTypeDesc">Select Item Type</label> <span
+									class="subTypeDesc error text-danger"></span>
+							</div>
+
+							<div class="col-sm-4 col-md-4 col-lg-4">
+								<input type="text" class="form-control empty" id="subItemPrice"
+									name="subItemPrice" required="required"> <label
+									class="floating-label" for="subItemPrice">Price</label> <span
+									class="subItemPrice error text-danger"></span>
+							</div>
+
+
+
+						</div>
+
+						<button type="submit" class="btn btn-primary btn-block"
+							id="itemtypesubmit">Add Item Sub Type!</button>
+					</form>
+
+
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-sm-12">
+					<table class="table table-hover dataTable table-striped "
+						id="itemSubTypeTable">
+						<thead class="thead-dark">
+							<tr>
+								<th>Item Sub Type</th>
+								<th>Item Type</th>
+
+								<th colspan="2" align="center">Action</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr th:each="it : ${subTypeItem}">
+
+								<td th:text="${it.subTypeDesc}" />
+								<td th:text="${it.itemTypeId.itemDescription}" />
+
+								<td>
+									<a th:href="@{'/fetchitemsubtypedata/' + ${it.id}}"
+									class="fetchitemsubtypedata btn btn-success"
+									data-target="#showitemSubType" data-toggle="modal"> <i
+										class="md-eye"></i></a></td>
+								<td>	<a th:href="@{'/deleteitemsubtype/' + ${it.id}}"
+									class="fetchitemsubtypedata btn btn-danger"
+									> <i
+										class="md-delete"></i></a>
+										
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+			<!-- Edit section of Item Sub Type -->
+			<div class="modal fade modal-just-me" id="showitemSubType"
+				aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog"
+				tabindex="-1">
+				<div class="modal-dialog modal-simple">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true" class="btn btn-danger">&times;</span>
+							</button>
+
+
+						</div>
+						<div class="modal-body">
+
+							<form th:action="@{updateItemSubType}" method="post">
+								<div class="form-group form-material floating"
+									data-plugin="formMaterial">
+									<div class="row mt-2">
+
+										<div class="col-sm-5">
+											<select name="itemTypeId" class="form-control"
+												id="itemTypeId">
+												<option value="">Select Item Type</option>
+												<option th:each="item : ${itm}" th:value="${item.id}"
+													th:utext="${item.itemDescription}" />
+											</select> <span class="codeheadid error text-danger"></span>
+
+
+										</div>
+									</div>
+
+									<div class="row mt-2">
+										<div class="col-sm-5">
+											<input type="text" class="form-control empty"
+												id="itemDescription" name="itemDescription" value="test">
+											<label class="floating-label" for="itemDescription">Select
+												Item Type</label> <span class="itemdescription error text-danger"></span>
+										</div>
+									</div>
+									<div class="row mt-2">
+										<div class="col-sm-5">
+											<input type="text" class="form-control empty"
+												id="msubItemPrice" name="subItemPrice" required="required">
+											<label class="floating-label" for="subItemPrice">Price</label>
+											<span class="subItemPrice error text-danger"></span>
+										</div>
+
+
+									</div>
+
+								</div>
+
+								<button type="submit" class="btn btn-primary btn-block"
+									id="itemtypesubmit">Update Item Sub Type!</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Modal -->
+
+
+
+		</div>
+
+
+	</div>
+	</div>
+	<!-- End Page -->
+
+
+	<!-- Footer -->
+	<div th:replace="skin/template :: footer"></div>
+
+	<script>
   $(document).ready(function(){
 	  
 	  
@@ -182,7 +199,23 @@
 	 
   });
   </script>
-  <script src="assets/js/fetchItemSubType.js"></script>
+	<script src="assets/js/fetchItemSubType.js"></script>
+	<script src="assets/js/datatable.jq.ui.js"></script>
+	<script src="assets/js/datatable.min.js"></script>
+	<script>
+$(function () {
+   
+    $('#itemSubTypeTable').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+      
+    })
+  })
+</script>
 </body>
 
 

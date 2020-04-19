@@ -103,9 +103,17 @@ public class MiscController {
 	}
 
 	@GetMapping(value = "fetchitemsubtypedata/{id}")
-	public @ResponseBody List<Object[]> fetchDemandData(@PathVariable("id") int id) {
+	public @ResponseBody List<Object[]> fetchItemSubTypeData(@PathVariable("id") int id) {
 		return itemSubTypeService.findAllDataById(id);
 	}
+	
+	@GetMapping(value = "deleteitemsubtype/{id}")
+	public boolean  deleteItemSubType(@PathVariable("id") int id) {
+		return itemSubTypeService.deleteItemSubTypeById(id);
+	}
+	
+	
+	
 	
 	@GetMapping("/codehead")
 	public ModelAndView getCodeHead(HttpServletRequest request)

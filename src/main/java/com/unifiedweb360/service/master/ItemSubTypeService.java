@@ -19,6 +19,7 @@ public interface ItemSubTypeService {
     List<ItemSubTypeMaster> findBySubTypeDesc(String subTypeDesc);
     List<ItemSubTypeMaster> findByOrder();
     List<Object[]> findAllDataById(int id);
+    boolean deleteItemSubTypeById(int id);
 
 
 }

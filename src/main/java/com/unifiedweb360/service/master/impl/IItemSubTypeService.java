@@ -58,6 +58,17 @@ public class IItemSubTypeService implements ItemSubTypeService {
 		return itemSubTypeRepo.findAllDataById(id);
 	}
 
+	@Override
+	public boolean deleteItemSubTypeById(int id) {
+		try {
+			itemSubTypeRepo.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+
 	
 
 }
