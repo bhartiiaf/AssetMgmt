@@ -31,6 +31,12 @@ public class MiscController {
 	UserService userService;
 	
 	
+	@GetMapping("/viewdt")
+	public ModelAndView getView()
+	{
+		ModelAndView mv = new ModelAndView("datatable");
+		return mv;
+	}
 	
 	@GetMapping("/itemtype")
 	public ModelAndView getItemType(HttpServletRequest request)

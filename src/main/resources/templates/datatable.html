@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style>
+td.details-control {
+    background: url('assets/images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('assets/images/details_close.png') no-repeat center center;
+}
+</style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="container">
+<table id="example" class="display table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Demand No.</th>
+				<th>Unit</th>
+				<th>Demand Date</th>
+            </tr>
+        </thead>
+        
+    </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+    function format ( d ) {
+        // `d` is the original data object for the row
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+            '<tr>'+
+                '<td>Full name:</td>'+
+                '<td>'+d.name+'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Extension number:</td>'+
+                '<td>'+d.extn+'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td>Extra info:</td>'+
+                '<td>And any further details here (images etc)...</td>'+
+            '</tr>'+
+        '</table>';
+    }
+     
+    $(document).ready(function() {
+        var table = $('#example').DataTable( {
+        	  "ordering": true,
+            "ajax": "assets/js/objects.txt",
+            "columns": [
+                {
+                    "className":      'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": ''
+                },
+                { "data": "name" },
+                { "data": "position" },
+                { "data": "office" }
+                
+            ]
+        } );
+         
+        // Add event listener for opening and closing details
+        $('#example tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+     
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
+    } );
+    
+    </script>
+</body>
+</html>
