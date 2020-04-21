@@ -14,7 +14,7 @@
   <div class="page">
     <div class="page-content">
       <div class="row">
-      <div class="col-sm-5">
+      <div class="col-sm-4 border border-primary">
       
       <h4 class="text-danger"  th:text="${failure}"> </h4>
       <h4 class="text-success" th:text="${success}"></h4>
@@ -22,29 +22,36 @@
        	<form th:action="@{/submititemtype}" method="post">
           <div class="form-group form-material floating" data-plugin="formMaterial">
             <input type="text" class="form-control empty" id="itemDescription" name="itemDescription">
-            <label class="floating-label" for="itemDescription">Item Type</label>
+            <label class="floating-label" for="itemDescription">Enter Item Type</label>
             <span class="itemdescription error text-danger"></span>
             
           </div>
-                   
-          <button type="submit" class="btn btn-primary btn-block" id="itemtypesubmit">Submit Item Type!</button>
+            <select name="codeHeadMaster" class="form-control" id="codeHeadMaster" multiple="multiple" data-plugin="select2">
+			<option th:each="ch : ${codehead}" th:value="${ch.id}" th:utext="${ch.codeHead}+ ' | ' +${ch.codeHeadType}+  ' | '+ ${ch.codeHeadDescription}" />
+			</select> 
+          <button type="submit" class="btn btn-primary btn-block mt-2" id="itemtypesubmit">Submit Item Type!</button>
         </form>
       
       </div>
-      <div class="col-sm-7">
-     <table class="table table-bordered table-striped">
+      <div class="col-sm-8">
+     <table class="table table-bordered table-striped" id="itetypenew">
 		<thead class="thead-dark">
 			<tr>
+				<th>#</th>
 				<th>Item Type</th>
+				<th>Code Head</th>
 				<th>Created On</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		
 		<tbody>
-			<tr th:each="it : ${itemtype}">
-			
-				<td th:text="${it.itemDescription}" />	
+			<tr th:each="it,iterationStatus : ${itemtype}">
+				<td th:text=${iterationStatus.count}></td>
+				<td th:text="${it.itemDescription}" />
+				<td th:text="${it.codeHeadMaster.codeHead}+ ' | ' + ${it.codeHeadMaster.codeHeadType}+ ' | ' + ${it.codeHeadMaster.codeHeadDescription}" />	
 				<td th:text="${it.createdOn}" />
+				<td><a th:href="@{'/deleteItemType/' + ${it.id}}" class="btn btn-danger" onclick="return confirm('Are you sure to Delete?')"><i class="md-close"></i></a></td>
 				
 			</tr>
 		</tbody>		

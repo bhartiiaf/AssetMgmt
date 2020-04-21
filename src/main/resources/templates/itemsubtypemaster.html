@@ -2,6 +2,11 @@
 <html class="no-js css-menubar" lang="en"
 	xmlns:th="http://www.thymeleaf.org">
 <head th:replace="skin/template :: head" />
+<style>
+#subtypeformdiv{
+display: none;
+}
+</style>
 
 <body class="animsition site-navbar-small ">
 <div th:replace="skin/sidemenu :: topandsidemenu"></div>
@@ -14,56 +19,53 @@
 		<h4 class="text-success" th:text="${updatesuccessitemsubtype}"></h4>
 		<h4 class="text-danger" th:text="${deletesuccess}"></h4>
 					<h4 class="text-success" th:text="${success}"></h4>
-
 					<h3 class="font-size-24">Item Sub Type Master</h3>
-			<form th:action="@{/submititemsubtype}" method="post">
-			<div class="row">
-				
-					
-					
-						
-
+					<div id="subtypeformtoggle">
+					<button id="btnone" class="btn btn-success"><i class="md-plus-square"></i>&nbsp;Click to Add</button>
+					</div>
+					<div class="container border border-success mt-2" id="subtypeformdiv">
+					<form th:action="@{/submititemsubtype}" method="post">
+					<div class="row">
 							<div class="col-sm-3">
 							<div class="form-group form-material floating"
 							data-plugin="formMaterial">
 								<select name="itemTypeId" class="form-control" id="itemTypeId">
 									<option value="">Select Item Type</option>
-									<option th:each="item : ${itemtype}" th:value="${item.id}"
-										th:utext="${item.itemDescription}" />
+									<option th:each="item : ${itemtype}" th:value="${item.id}" th:utext="${item.itemDescription}" />
 								</select> <span class="itemTypeId error text-danger"></span>
 							</div>
-
 							</div>
-
 							<div class="col-sm-3">
-							<div class="form-group form-material floating"
-							data-plugin="formMaterial">
-								<input type="text" class="form-control empty" id="subTypeDesc"
-									name="subTypeDesc"> <label class="floating-label"
-									for="subTypeDesc">Enter Item Sub Type</label> <span
-									class="subTypeDesc error text-danger"></span>
+							<div class="form-group form-material floating" data-plugin="formMaterial">
+								<input type="text" class="form-control empty" id="subTypeDesc" name="subTypeDesc"> 
+								<label class="floating-label" for="subTypeDesc">Enter Item Sub Type</label>
+								 <span class="subTypeDesc error text-danger"></span>
 							</div>
 							</div>
 
 							<div class="col-sm-3">
 							<div class="form-group form-material floating"
 							data-plugin="formMaterial">
-								<input type="text" class="form-control empty" id="subItemPrice"
-									name="subItemPrice" required="required"> <label
-									class="floating-label" for="subItemPrice">Price</label> <span
-									class="subItemPrice error text-danger"></span>
+								<input type="text" class="form-control empty" id="subItemPrice" name="subItemPrice" required="required">
+								 <label class="floating-label" for="subItemPrice">Price</label>
+								  <span class="subItemPrice error text-danger"></span>
 							</div>
 							</div>
-							<div class="col-sm-3"><button type="submit" class="btn btn-primary btn-block"
-							id="itemtypesubmit">Add Item Sub Type!</button></div>
+							<div class="col-sm-3">
+							<div class="form-group form-material floating"
+							data-plugin="formMaterial">
+							<button type="submit" class="btn btn-primary btn-block" id="itemtypesubmit">Add Item Sub Type!</button>
+							</div>
+							</div>
 
 						</div>
 
 						
 					</form>
+					</div>
 
 
-			<hr />
+		<br />
 			<div class="row">
 				<div class="col-sm-12">
 					<table class="table table-hover dataTable table-striped " id="subitemlistdata">
@@ -87,8 +89,7 @@
 									class="fetchitemsubtypedata btn btn-success"
 									data-target="#showitemSubType" data-toggle="modal"> <i
 										class="md-eye"></i></a> | <a th:href="@{'/deleteitemsubtype/' + ${it.id}}"
-									class="btn btn-danger"
-									> <i
+									class="btn btn-danger" onclick="return confirm('Are you sure to Delete?')"> <i
 										class="md-delete"></i></a></td>
 								
 							</tr>
@@ -154,6 +155,12 @@
 	<script>
   $(document).ready(function(){
 	  
+	  $("#subtypeformdiv").hide();
+	  
+	  $("#subtypeformtoggle").on('click',function(){
+		 $("#subtypeformdiv").toggle();
+		  
+	  });
 	  
 	
 	  $("#itemtypesubmit").on('click',function(){

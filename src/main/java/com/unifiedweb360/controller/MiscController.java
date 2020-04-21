@@ -1,11 +1,14 @@
 package com.unifiedweb360.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.unifiedweb360.modal.master.CodeHeadMaster;
-import com.unifiedweb360.modal.master.DemandMaster;
 import com.unifiedweb360.modal.master.ItemSubTypeMaster;
 import com.unifiedweb360.modal.master.ItemTypeMaster;
 import com.unifiedweb360.modal.user.User;
@@ -57,7 +59,9 @@ public class MiscController {
 		User u1 = userService.findByUsername(uname);
 		mv.addObject("urole",u1.getRoles().iterator().next().getName());
 		List<ItemTypeMaster> itm = itemTypeService.findAll();
+		List<CodeHeadMaster> chm = codeHeadService.findAll();
 		mv.addObject("itemtype",itm);
+		mv.addObject("codehead",chm);
 		return mv;
 	}
 	
@@ -68,7 +72,21 @@ public class MiscController {
 		List<ItemTypeMaster> itm = itemTypeService.findByItemDescription(request.getParameter("itemDescription"));
 		if(itm.size() == 0)
 		{
-			itemTypeService.save(itemTypeMaster);
+			int dSize = request.getParameterValues("codeHeadMaster").length;
+			List<ItemTypeMaster> ittm = new ArrayList<>();
+			String itemDescription = request.getParameter("itemDescription");
+
+			for (int i = 0; i < dSize; i++) {
+				ItemTypeMaster im = new ItemTypeMaster();
+				String codeHeadMaster = request.getParameterValues("codeHeadMaster")[i];
+				im.setItemDescription(itemDescription);
+				im.setCodeHeadMaster(codeHeadService.find(Integer.parseInt(codeHeadMaster)));
+				im.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+				im.setCreatedOn(new Date());
+				ittm.add(im);
+			}
+
+			itemTypeService.saveAll(ittm);
 			redirectAttribute.addFlashAttribute("success","Item Type Saved");
 			return new ModelAndView("redirect:/itemtype");
 		}

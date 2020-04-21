@@ -9,6 +9,14 @@ td.details-control {
 tr.shown td.details-control {
     background: url('assets/images/details_close.png') no-repeat center center;
 }
+
+#formobjectone{
+display: none;
+}
+
+#moreitem{
+display: none;
+}
 </style>
 <link rel="stylesheet" type="text/css" href="assets/css/datatables.min.css"/>
 <body class="animsition site-navbar-small ">
@@ -251,18 +259,21 @@ tr.shown td.details-control {
       
     
                   <!-- View More Item of Demand -->
-                  <div class="modal fade modal-just-me" id="showmoreitemsofdemandno" aria-hidden="true"
-                    aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+                  
+                  
+                 <!-- <div class="modal fade modal-just-me" id="showmoreitemsofdemandno" aria-hidden="true"
+                    aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1"> -->
+                    <div class="modal fade modal-fill-in" id="showmoreitemsofdemandno" aria-hidden="false" aria-labelledby="exampleFillIn"
+                    role="dialog" tabindex="-1" >
                     <div class="modal-dialog modal-simple">
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true" class="btn btn-danger">&times;</span>
                           </button>
-                          <b>Demand No:</b>&nbsp; <h5 id = "demandNoHeader" class="modal-title text-primary"></h5><br />
-                         
+                          <b>Demand No: <i id = "demandNoHeader" class="modal-title text-primary"></i></b>&nbsp; <br />
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" style="width:900px; margin-top: 0px;">
                         <button type="button" id="addmoreitemsindraft" class="btn btn-primary"><i class="icon md-collection-plus" aria-hidden="true"></i>
                         </button> 
                         <button type="button" id="printoption" class="btn btn-secondary"><i class="icon md-print" aria-hidden="true"></i>
@@ -272,21 +283,18 @@ tr.shown td.details-control {
                         <div class="container" id="formobjectone">
 											<div class="row">
 												<div class="col-sm-3">
-
 													<select name="codeHeadId" class="form-control"
 														id="codeHeadOne">
 														<option value="">Select Code Head</option>
 														<option th:each="ch : ${onlyahq}" th:value="${ch.id}"
 															th:utext="${ch.codeHeadDescription}" />
 													</select> <span class="codeheadid error text-danger"></span>
-
 												</div>
 												<div class="col-sm-3">
 													<select name="itemTypeId" class="form-control"
 														id="itemTypeIdOne">
 													</select> 
 													<span class="itemtypeid error text-danger"></span>
-
 												</div>
 												<div class="col-sm-3">
 													<select name="itemSubTypeId" class="form-control"
@@ -341,6 +349,8 @@ tr.shown td.details-control {
 													<th>Reason</th>
 													<th>Authority</th>
 													<th>Status</th>
+													<th>Qty Approved</th>
+													<th>Remarks</th>
 												</tr>
 											</thead>
 

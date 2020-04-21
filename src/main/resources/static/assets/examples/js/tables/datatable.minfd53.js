@@ -128,6 +128,23 @@
         });
     (0, _jquery2.default)("#demandindraftmodeforperusal").dataTable(options)
 }),
+(0, _jquery2.default)(document).ready(function() {
+    var defaults = Plugin.getDefaults("dataTable"),
+    options = _jquery2.default.extend(!0, {}, defaults, {
+        aoColumnDefs: [{
+            bSortable: !1,
+            aTargets: [-1]
+        }],
+        iDisplayLength: 5,
+        aLengthMenu: [
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, "All"]
+        ],
+        sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
+        buttons: ["csv","print"]
+    });
+(0, _jquery2.default)("#itetypenew").dataTable(options)
+}),
         function($) {
             var EditableTable = {
                 options: {

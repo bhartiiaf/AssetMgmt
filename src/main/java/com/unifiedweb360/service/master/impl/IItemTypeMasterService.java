@@ -53,5 +53,12 @@ public class IItemTypeMasterService implements ItemTypeMasterService {
 		return itemTypeMasterRepo.findByCodeHeadMaster(codeHeadMaster);
 	}
 
+
+
+	@Override
+	public void saveAll(List<ItemTypeMaster> t) {
+		itemTypeMasterRepo.saveAll(t);
+	}
+
 	
 }
