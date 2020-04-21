@@ -13,6 +13,8 @@ public interface ItemTypeMasterService {
 	
 	ItemTypeMaster find(Integer id);
 	List<Object[]> findByCodeHeadMaster(Integer codeHeadMaster);
+    public void deleteItemTypeById(int id);
+
 
 
 }

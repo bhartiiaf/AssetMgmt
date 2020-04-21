@@ -60,5 +60,12 @@ public class IItemTypeMasterService implements ItemTypeMasterService {
 		itemTypeMasterRepo.saveAll(t);
 	}
 
+
+
+	@Override
+	public void deleteItemTypeById(int id) {
+		itemTypeMasterRepo.deleteById(id);
+	}
+
 	
 }

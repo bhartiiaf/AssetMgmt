@@ -163,6 +163,13 @@ public class MiscController {
 		return new ModelAndView("redirect:/itemsubtype");
 	}
 	
+	@GetMapping(value = "deleteItemType/{id}")
+	public ModelAndView deleteItemType(@PathVariable("id") int id,RedirectAttributes redirect) {
+		itemTypeService.deleteItemTypeById(id);
+		redirect.addFlashAttribute("deletesuccessitemtype","Item Type Deleted");
+		return new ModelAndView("redirect:/itemtype");
+	}
+	
 	
 	
 	
