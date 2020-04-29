@@ -9,10 +9,10 @@ import com.unifiedweb360.modal.user.User;
 public interface UserService {
     void save(User user);
 
-    User findByUsername(String username);
-    List<User> findByUsernameAndPassword(String username, String password);
+    User findBySerno(String serno);
+    List<User> findBySernoAndPassword(String serno, String password);
     
-    List<User> findUserByUserName(String username);
+    List<User> findUserBySerno(String serno);
     
     List<User> findAllUser();
     

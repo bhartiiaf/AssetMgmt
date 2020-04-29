@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.unifiedweb360.modal.master.RankMaster;
+import com.unifiedweb360.modal.master.TradeMaster;
 import com.unifiedweb360.modal.master.UnitMaster;
 
 import lombok.Data;
@@ -30,19 +32,12 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "PersonalUser")
+@Table(name = "USER_MASTER")
 public class User {
     @Id
-  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="USER_MASTER_SEQ")
-    @SequenceGenerator(name="USER_MASTER_SEQ", sequenceName="USER_MASTER_SEQ",allocationSize=1)
- 	
-    private Long id;
-    private String username;
-    private String memberName;
-    private String email;
-    private String mobile;
-    private boolean isActive;
+    private String serno;
+    private String fullName;
+    private Integer isValid;
     private String password;
     private Date createdOn;
     private String createdBy;
@@ -55,5 +50,13 @@ public class User {
     @ManyToOne
     @JoinColumn(name="unit_id")
     private UnitMaster unitId;
+    
+    @ManyToOne
+	@JoinColumn(name="RANK_CODE")
+	private RankMaster rankMaster;
+    
+    @ManyToOne
+	@JoinColumn(name="TRADE_CODE")
+	private TradeMaster tradeMaster;
 
     }

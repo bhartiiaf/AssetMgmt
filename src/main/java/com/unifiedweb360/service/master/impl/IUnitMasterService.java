@@ -22,7 +22,7 @@ public class IUnitMasterService implements UnitMasterService {
 	}
 
 	@Override
-	public UnitMaster find(Integer id) {
+	public UnitMaster find(String id) {
 		return null;
 	}
 
@@ -34,7 +34,7 @@ public class IUnitMasterService implements UnitMasterService {
 
 	//test
 	@Override
-	public void delete(Integer id) {
+	public void delete(String id) {
 		// TODO Auto-generated method stub
 		
 	}

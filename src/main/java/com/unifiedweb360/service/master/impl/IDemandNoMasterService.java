@@ -33,8 +33,7 @@ public class IDemandNoMasterService implements DemandNoMasterService {
 
 	@Override
 	public List<DemandNoMaster> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return demandNoMasterRepo.findAll();
 	}
 
 	@Override
@@ -49,14 +48,40 @@ public class IDemandNoMasterService implements DemandNoMasterService {
 	}
 
 	@Override
-	public List<DemandNoMaster> findByUnitId(Integer unitId) {
-		return demandNoMasterRepo.findByUnitId(unitId);
+	public List<DemandNoMaster> findByUnitCD(String unitCD) {
+		return demandNoMasterRepo.findByUnitCD(unitCD);
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		demandNoMasterRepo.deleteById(id);
 	}
+
+	@Override
+	public List<DemandNoMaster> findDataById(Integer id) {
+		return demandNoMasterRepo.findDataById(id);
+	}
+
+	@Override
+	public void saveAll(List<DemandNoMaster> t) {
+		demandNoMasterRepo.saveAll(t);
+	}
+
+	@Override
+	public void updateData(String demandStatus,String demandLevel, int id) {
+		demandNoMasterRepo.updateData(demandStatus,demandLevel, id);
+	}
+
+	@Override
+	public void updateDataForCMD(String demandLevel, int id) {
+		demandNoMasterRepo.updateDataForCMD(demandLevel, id);
+	}
+
+	
+
+	
+
+	
 
 	
 	

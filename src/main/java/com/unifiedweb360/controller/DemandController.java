@@ -30,6 +30,7 @@ import com.unifiedweb360.modal.master.CodeHeadMaster;
 import com.unifiedweb360.modal.master.DemandMaster;
 import com.unifiedweb360.modal.master.DemandNoMaster;
 import com.unifiedweb360.modal.master.DemandStatusMaster;
+import com.unifiedweb360.modal.master.FinYearMaster;
 import com.unifiedweb360.modal.master.ItemTypeMaster;
 import com.unifiedweb360.modal.user.User;
 import com.unifiedweb360.service.UserService;
@@ -37,6 +38,7 @@ import com.unifiedweb360.service.master.CodeHeadMasterService;
 import com.unifiedweb360.service.master.DemandMasterService;
 import com.unifiedweb360.service.master.DemandNoMasterService;
 import com.unifiedweb360.service.master.DemandStatusMasterService;
+import com.unifiedweb360.service.master.FinYearMasterService;
 import com.unifiedweb360.service.master.ItemSubTypeService;
 import com.unifiedweb360.service.master.ItemTypeMasterService;
 
@@ -56,42 +58,47 @@ public class DemandController {
 	DemandNoMasterService demandNoMasterService;
 	@Autowired
 	DemandStatusMasterService demandStatusService;
-	
-	
+	@Autowired
+	FinYearMasterService finYearService;
 
-	
 	@GetMapping("/demand")
-	public ModelAndView getDemandPage(HttpServletRequest request,DemandNoMaster demandNoMaster) {
+	public ModelAndView getDemandPage(HttpServletRequest request, DemandNoMaster demandNoMaster) {
 
-		ModelAndView mv = new ModelAndView("demandmaster");
+		
 		Principal principal = request.getUserPrincipal();
 		String uname = principal.getName();
-		User u1 = userService.findByUsername(uname);
-		List<DemandNoMaster> demandByUnitId = demandNoMasterService.findByUnitId(u1.getUnitId().getId()).stream().filter(q -> q.getDemandMaster().iterator().next().getDemandStatus().equals("Finalised")).collect(Collectors.toList());
-		List<DemandNoMaster> demandByUnitIdDraft = demandNoMasterService.findByUnitId(u1.getUnitId().getId()).stream().filter(q -> q.getDemandMaster().iterator().next().getDemandStatus().equals("Draft")).collect(Collectors.toList());
-		List<DemandMaster> demandMasterInDraftMode = demandService.findAll().stream().filter(x -> x.getDemandStatus().equals("Draft")).collect(Collectors.toList());
-
-		List<DemandMaster> dMaster = demandService.findByDemandedBy(u1.getUsername());
-		List<DemandMaster> dMasterFin = demandService.findByDemandedByAndDemandStatusFinalised(u1.getUsername());
+		User u1 = userService.findBySerno(uname);
+		
+		ModelAndView mv = new ModelAndView("demandmaster");
+		List<DemandNoMaster> demandByUnitId = demandNoMasterService.findByUnitCD(u1.getUnitId().getUnitCD()).stream()
+				.filter(q -> q.getDemandMaster().iterator().next().getDemandStatus().equals("Finalised"))
+				.collect(Collectors.toList());
+		List<DemandNoMaster> demandByUnitIdDraft = demandNoMasterService.findByUnitCD(u1.getUnitId().getUnitCD()).stream()
+				.filter(q -> q.getDemandMaster().iterator().next().getDemandStatus().equals("Draft"))
+				.collect(Collectors.toList());
+		List<DemandMaster> demandMasterInDraftMode = demandService.findAll().stream()
+				.filter(x -> x.getDemandStatus().equals("Draft")).collect(Collectors.toList());
+		List<DemandMaster> dMaster = demandService.findByDemandedBy(u1.getSerno());
+		List<DemandMaster> dMasterFin = demandService.findByDemandedByAndDemandStatusFinalised(u1.getSerno());
 		mv.addObject("urole", u1.getRoles().iterator().next().getName());
-		List<User> u = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+		List<User> u = userService.findUserBySerno(SecurityContextHolder.getContext().getAuthentication().getName());
 		List<CodeHeadMaster> chmaster = codeHeadService.findAll();
 		List<CodeHeadMaster> onlyahq = chmaster.stream().filter(c -> c.getCodeHeadType().equals("CENTRAL"))
 				.collect(Collectors.toList());
 		List<CodeHeadMaster> onlycmdstn = chmaster.stream().filter(c -> c.getCodeHeadType().equals("LOCAL"))
 				.collect(Collectors.toList());
-		
-		List<DemandNoMaster> demandforcmd = demandNoMasterService.findByUnitId(u1.getUnitId().getCommandId().getId());
-		demandforcmd.stream().filter(x -> x.getDemandMaster().iterator().next().getDemandStatus().equals("Finalised")).collect(Collectors.toList());
-		
+
+		List<DemandNoMaster> demandforcmd = demandNoMasterService.findByUnitCD(u1.getUnitId().getCommandId().getCommandCD());
+		demandforcmd.stream().filter(x -> x.getDemandMaster().iterator().next().getDemandStatus().equals("Finalised"))
+				.collect(Collectors.toList());
+
 		for (User us : u) {
 			if (us.getAuthLevel().equals("AHQ")) {
 				mv.addObject("onlyahq", onlyahq);
-				
 
-			} else if (us.getAuthLevel().equals("COMMAND")) {
+			} else if (us.getAuthLevel().equals("CMD")) {
 				mv.addObject("onlyahq", onlycmdstn);
-				mv.addObject("forCmd",demandMasterInDraftMode);
+				mv.addObject("forCmd", demandMasterInDraftMode);
 			} else if (us.getAuthLevel().equals("UNIT")) {
 				mv.addObject("onlyahq", onlycmdstn);
 
@@ -101,142 +108,86 @@ public class DemandController {
 		List<DemandMaster> dm = demandService.findAll();
 		List<ItemTypeMaster> itm = itemTypeService.findAll();
 		List<CodeHeadMaster> chm = codeHeadService.findAll();
-		mv.addObject("demandforcmd",demandforcmd);
-		mv.addObject("fetchDemandNO",demandByUnitId);
-		mv.addObject("demandmode",demandByUnitIdDraft);
+		List<FinYearMaster> finYear = finYearService.findActiveFinYear();
+		mv.addObject("finYear", finYear);
+		mv.addObject("demandforcmd", demandforcmd);
+		mv.addObject("fetchDemandNO", demandByUnitId);
+		mv.addObject("demandmode", demandByUnitIdDraft);
 		mv.addObject("demanddraft", dMaster);
 		mv.addObject("findemand", dMasterFin);
 		mv.addObject("demand", dm);
 		mv.addObject("itemtype", itm);
 		mv.addObject("codehead", chm);
+		mv.addObject("urole",u1.getAuthLevel());
+		mv.addObject("udetail",u1);
+
 		return mv;
 
 	}
 	
+	@GetMapping("/demandforperusalofcmd")
+	public ModelAndView demandForPerusalForCmd(HttpServletRequest request)
+	{
+		ModelAndView mv = new ModelAndView("demandforperusalofcmd");
+		Principal principal = request.getUserPrincipal();
+		String uname = principal.getName();
+		User u1 = userService.findBySerno(uname);
+		List<DemandNoMaster> demandforcmd = demandNoMasterService.findByUnitCD(u1.getUnitId().getCommandId().getCommandCD()).stream().filter(x->x.getDemandLevel().equals("CMD")).collect(Collectors.toList());
+		mv.addObject("udetail",u1);
+		mv.addObject("urole",u1.getAuthLevel());
+		mv.addObject("demandforcmd", demandforcmd);
+
+		return mv;
+	}
+	
+	@GetMapping("/demandforperusalofahq")
+	public ModelAndView demandForPerusalForAHQ(HttpServletRequest request)
+	{
+		ModelAndView mv = new ModelAndView("demandforperusalofahq");
+		Principal principal = request.getUserPrincipal();
+		String uname = principal.getName();
+		User u1 = userService.findBySerno(uname);
+		System.out.println(u1.getAuthLevel());
+		List<DemandNoMaster> demandforahq = demandNoMasterService.findAll().stream().filter(x->x.getDemandStatus().equals("Finalised")).collect(Collectors.toList());
+		mv.addObject("urole",u1.getAuthLevel());
+		mv.addObject("udetail",u1);
+		mv.addObject("demandforahq", demandforahq);
+
+		return mv;
+	}
+	
+
 	@PostMapping("/submitdemand")
 	public ModelAndView submitDemand(HttpServletRequest request, DemandMaster demandMaster,
 			DemandNoMaster demandNoMaster, RedirectAttributes redirectAttribute) {
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("MMddyyyyHHmm");
-		String strDate = formatter.format(date);
-		String demandnoalloted = SecurityContextHolder.getContext().getAuthentication().getName() + strDate;
-		List<User> u = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-		
-			demandNoMaster.setDemandMasterNo(demandnoalloted);
-			demandNoMaster.setUnitId(u.iterator().next().getUnitId());
-			demandNoMasterService.save(demandNoMaster);
-			
-		int dataSize = request.getParameterValues("codeHeadId").length;
-		List<DemandMaster> dm = new ArrayList<>();
-		for (int i = 0; i < dataSize; i++) {
-			DemandMaster dmm = new DemandMaster();
-		
-			String codeHeadId = request.getParameterValues("codeHeadId")[i];
-			System.out.println(codeHeadId);
-			String itemTypeId = request.getParameterValues("itemTypeId")[i];
-			String itemSubTypeId = request.getParameterValues("itemSubTypeId")[i];
-			Integer itemQty = Integer.parseInt(request.getParameterValues("itemQty")[i]);
-			String demandReason = request.getParameterValues("demandReason")[i];
-			String demandAuth = request.getParameterValues("demandAuth")[i];
-			dmm.setCodeHeadId(codeHeadService.find(Integer.parseInt(codeHeadId)));
-			dmm.setItemTypeId(itemTypeService.find(Integer.parseInt(itemTypeId)));
-			dmm.setItemSubTypeId(itemSubTypeService.find(Integer.parseInt(itemSubTypeId)));
-			dmm.setItemQty(itemQty);
-			dmm.setDemandAuth(demandAuth);
-			dmm.setDemandReason(demandReason);
-			dmm.setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-			dmm.setDemandedOn(new Date());
-			dmm.setDemandNoMaster(demandNoMaster);
-			if (request.getParameter("saveandsubmit") != null) {
-				dmm.setDemandStatus("Finalised");
-			} else if (request.getParameter("saveasdraft") != null) {
-				dmm.setDemandStatus("Draft");
-				redirectAttribute.addFlashAttribute("draft", "Demand in Draft Mode");
-			}
-			dm.add(dmm);
-		}
 
-		demandService.saveAll(dm);
-		
-		redirectAttribute.addFlashAttribute("success","Demand Raised with Demand No: " +dm.iterator().
-								next().getDemandNoMaster().getDemandMasterNo()+ " | Demand Status is:  "+ dm.iterator().next().getDemandStatus());
-		
+		demandService.saveDemandMethod(request, redirectAttribute, demandMaster, demandNoMaster);
+
 		return new ModelAndView("redirect:/demand");
 	}
 
-	
 	@PostMapping("/changedemandstatus")
-	public ModelAndView changeDemandStatus(HttpServletRequest request,DemandMaster demandMaster,
-			 RedirectAttributes redirectAttribute)
-	{
-		int dataSize = request.getParameterValues("codeHeadId").length;
-		String dmnofornew = request.getParameter("demandNoMaster");
-		List<DemandMaster> dm = new ArrayList<>();
-		String action= request.getParameter("submitvalue");
-		for (int i = 0; i < dataSize; i++) {
-			
-			
-			
-			if(request.getParameterValues("id")[i]=="")
-			{
-				DemandMaster dmm = new DemandMaster();
-				String codeHeadId = request.getParameterValues("codeHeadId")[i];
-				System.out.println(codeHeadId);
-				String itemTypeId = request.getParameterValues("itemTypeId")[i];
-				String itemSubTypeId = request.getParameterValues("itemSubTypeId")[i];
-				Integer itemQty = Integer.parseInt(request.getParameterValues("itemQty")[i]);
-				String demandReason = request.getParameterValues("demandReason")[i];
-				String demandAuth = request.getParameterValues("demandAuth")[i];
-				dmm.setCodeHeadId(codeHeadService.find(Integer.parseInt(codeHeadId)));
-				dmm.setItemTypeId(itemTypeService.find(Integer.parseInt(itemTypeId)));
-				dmm.setItemSubTypeId(itemSubTypeService.find(Integer.parseInt(itemSubTypeId)));
-				dmm.setItemQty(itemQty);
-				dmm.setDemandAuth(demandAuth);
-				dmm.setDemandReason(demandReason);
-				dmm.setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-				dmm.setDemandedOn(new Date());
-				dmm.setDemandNoMaster(demandNoMasterService.find(Integer.parseInt(dmnofornew)));
-				dmm.setDemandStatus(action);
-				dm.add(dmm);
-
-			}
-			else
-			{
-				Integer id = Integer.parseInt(request.getParameterValues("id")[i]);
-				Integer dnm = Integer.parseInt(request.getParameterValues("demandNoMaster")[i]);
-				List<DemandMaster> dmm = demandService.getDemandMasterBydemandNoMaster(dnm,id);
-				String codeHeadId = request.getParameterValues("codeHeadId")[i];
-				System.out.println(codeHeadId);
-				String itemTypeId = request.getParameterValues("itemTypeId")[i];
-				String itemSubTypeId = request.getParameterValues("itemSubTypeId")[i];
-				Integer itemQty = Integer.parseInt(request.getParameterValues("itemQty")[i]);
-				String demandReason = request.getParameterValues("demandReason")[i];
-				String demandAuth = request.getParameterValues("demandAuth")[i];
-				dmm.iterator().next().setCodeHeadId(codeHeadService.find(Integer.parseInt(codeHeadId)));
-				dmm.iterator().next().setItemTypeId(itemTypeService.find(Integer.parseInt(itemTypeId)));
-				dmm.iterator().next().setItemSubTypeId(itemSubTypeService.find(Integer.parseInt(itemSubTypeId)));
-				dmm.iterator().next().setItemQty(itemQty);
-				dmm.iterator().next().setDemandAuth(demandAuth);
-				dmm.iterator().next().setDemandReason(demandReason);
-				dmm.iterator().next().setDemandedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-				dmm.iterator().next().setDemandedOn(new Date());
-				dmm.iterator().next().setDemandNoMaster(demandNoMasterService.find(dnm));
-				dmm.iterator().next().setId(id);
-				dmm.iterator().next().setDemandStatus(action);
-				dm.addAll(dmm);
-
-
-			}
-			
-			demandService.saveAll(dm);
-		}
-		redirectAttribute.addFlashAttribute("successedited","Demand No : " +dm.iterator().
-				next().getDemandNoMaster().getDemandMasterNo()+ " is saved successfully");
+	public ModelAndView changeDemandStatus(HttpServletRequest request, DemandMaster demandMaster,
+			RedirectAttributes redirectAttribute) {
+		demandService.updateAndSave(request, redirectAttribute);
 		return new ModelAndView("redirect:/demand");
 	}
 	
+	@PostMapping("/changedemandstatusforcmd")
+	public ModelAndView changeDemandStatusForCMDLevel(HttpServletRequest request, DemandMaster demandMaster,
+			RedirectAttributes redirectAttribute) {
+		demandService.updateAndSaveForCMD(request, redirectAttribute);
+		return new ModelAndView("redirect:/demandforperusalofcmd");
+	}
 	
+	@PostMapping("/changedemandstatusforahq")
+	public ModelAndView changeDemandStatusForAHQLevel(HttpServletRequest request, DemandMaster demandMaster,
+			RedirectAttributes redirectAttribute) {
+		demandService.updateAndSaveForAHQ(request, redirectAttribute);
+		return new ModelAndView("redirect:/demandforperusalofahq");
+	}
 	
+
 	@GetMapping("/fetchcodeheaddata")
 	public @ResponseBody CodeHeadMaster fetchCodeHeadDataByDesc(CodeHeadMaster codeHeadMaster,
 			@RequestParam("codeHead") String codeHead) {
@@ -253,15 +204,13 @@ public class DemandController {
 
 	@GetMapping("/fetchsubitem")
 	public @ResponseBody List<Object[]> fetchSubItem(HttpServletRequest request,
-			@RequestParam("itemTypeId") Integer itemTypeId)
-	{
+			@RequestParam("itemTypeId") Integer itemTypeId) {
 		return itemSubTypeService.findByItemTypeId(itemTypeId);
 	}
-	
+
 	@GetMapping("/fetchitemtypebycodehead")
 	public @ResponseBody List<Object[]> fetchItemTybeByCodeHead(HttpServletRequest request,
-			@RequestParam("codeHead") Integer codeHead)
-	{
+			@RequestParam("codeHead") Integer codeHead) {
 		return itemTypeService.findByCodeHeadMaster(codeHead);
 	}
 
@@ -278,22 +227,19 @@ public class DemandController {
 	public @ResponseBody List<Object[]> fetchDemandData(@PathVariable("id") int id) {
 		return demandService.findAllDataById(id);
 	}
-	
-	
+
 	@GetMapping(value = "deletequery/{id}")
-	public String deleteQuery(@PathVariable("id") int id,RedirectAttributes redirectAttribute) {
+	public String deleteQuery(@PathVariable("id") int id, RedirectAttributes redirectAttribute) {
 		demandService.deleteById(id);
-		redirectAttribute.addFlashAttribute("successdelete","Item ID "+ id +" is deleted");
+		redirectAttribute.addFlashAttribute("successdelete", "Item ID " + id + " is deleted");
 		return "redirect:/demand";
 	}
-	
-	@GetMapping(value="deletedemandnoindraft/{id}")
+
+	@GetMapping(value = "deletedemandnoindraft/{id}")
 	public String deleteDemandNoInDraft(@PathVariable("id") int id, RedirectAttributes redirect) {
 		demandNoMasterService.deleteById(id);
-		redirect.addFlashAttribute("successdeleteofdraftdemand","Demand No is Deleted");
-
+		redirect.addFlashAttribute("successdeleteofdraftdemand", "Demand No is Deleted");
 		return "redirect:/demand";
 	}
-	
-	
+
 }

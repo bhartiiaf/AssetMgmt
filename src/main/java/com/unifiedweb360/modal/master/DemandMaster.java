@@ -31,7 +31,13 @@ public class DemandMaster implements Serializable {
 	private ItemTypeMaster itemTypeId;
 	@ManyToOne
 	@JoinColumn(name="item_sub_type_id")
-	private ItemSubTypeMaster itemSubTypeId;	
+	private ItemSubTypeMaster itemSubTypeId;
+	
+	@ManyToOne
+	@JoinColumn(name="fin_year")
+	private FinYearMaster financeYearId;
+	
+	
 	private Integer itemQty;
 	private String demandReason;
 	private String demandAuth;

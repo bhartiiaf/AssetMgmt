@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,11 +19,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.unifiedweb360.modal.master.CodeHeadMaster;
+import com.unifiedweb360.modal.master.DemandNoMaster;
 import com.unifiedweb360.modal.master.ItemSubTypeMaster;
 import com.unifiedweb360.modal.master.ItemTypeMaster;
 import com.unifiedweb360.modal.user.User;
 import com.unifiedweb360.service.UserService;
 import com.unifiedweb360.service.master.CodeHeadMasterService;
+import com.unifiedweb360.service.master.DemandMasterService;
+import com.unifiedweb360.service.master.DemandNoMasterService;
+import com.unifiedweb360.service.master.DemandStatusMasterService;
 import com.unifiedweb360.service.master.ItemSubTypeService;
 import com.unifiedweb360.service.master.ItemTypeMasterService;
 
@@ -40,24 +45,25 @@ public class MiscController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	DemandMasterService demandService;
+	@Autowired
+	DemandNoMasterService demandNoMasterService;
+	
 
 	
-	@GetMapping("/viewdt")
-	public ModelAndView getView()
-	{
-		ModelAndView mv = new ModelAndView("datatable");
-		return mv;
-	}
 	
-//github.com/bhartiiaf/AssetMgmt
+	
 	@GetMapping("/itemtype")
 	public ModelAndView getItemType(HttpServletRequest request)
 	{
 		ModelAndView mv = new ModelAndView("itemtypemaster");
 		Principal principal = request.getUserPrincipal();
 		String uname = principal.getName();
-		User u1 = userService.findByUsername(uname);
+		User u1 = userService.findBySerno(uname);
 		mv.addObject("urole",u1.getRoles().iterator().next().getName());
+		mv.addObject("udetail",u1);
+
 		List<ItemTypeMaster> itm = itemTypeService.findAll();
 		List<CodeHeadMaster> chm = codeHeadService.findAll();
 		mv.addObject("itemtype",itm);
@@ -103,8 +109,10 @@ public class MiscController {
 		ModelAndView mv = new ModelAndView("itemsubtypemaster");
 		Principal principal = request.getUserPrincipal();
 		String uname = principal.getName();
-		User u1 = userService.findByUsername(uname);
+		User u1 = userService.findBySerno(uname);
 		mv.addObject("urole",u1.getRoles().iterator().next().getName());
+		mv.addObject("udetail",u1);
+
 		List<ItemTypeMaster> itm = itemTypeService.findAll();
 		List<ItemSubTypeMaster> subTypeItem = itemSubTypeService.findByOrder();
 		mv.addObject("itemtype",itm);
@@ -179,10 +187,12 @@ public class MiscController {
 		ModelAndView mv = new ModelAndView("codehead");
 		Principal principal = request.getUserPrincipal();
 		String uname = principal.getName();
-		User u1 = userService.findByUsername(uname);
+		User u1 = userService.findBySerno(uname);
 		mv.addObject("urole",u1.getRoles().iterator().next().getName());
 		List<CodeHeadMaster> chm = codeHeadService.findAll();
 		mv.addObject("codehead",chm);
+		mv.addObject("udetail",u1);
+
 		return mv;
 	}
 	
@@ -202,6 +212,14 @@ public class MiscController {
 			redirectAttribute.addFlashAttribute("failure","Code Head: " + request.getParameter("codeHeadDescription")+ " Already Exist");
 			return new ModelAndView("redirect:/codehead");
 		}
+	}
+	
+	
+	@GetMapping("/notificationforcmd")
+	public @ResponseBody List<DemandNoMaster> notificationForCmd() {
+		List<User> u = userService.findUserBySerno(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<DemandNoMaster> dnm = demandNoMasterService.findByUnitCD(u.iterator().next().getUnitId().getCommandId().getCommandCD());
+        return dnm.stream().filter(x->x.getDemandStatus().equals("Finalised")).collect(Collectors.toList()); 
 	}
 
 }

@@ -39,9 +39,9 @@ public class IndexController {
 		ModelAndView mv = new ModelAndView("welcome");
 		Principal principal = request.getUserPrincipal();
 		String uname = principal.getName();
-		User u1 = userService.findByUsername(uname);
+		User u1 = userService.findBySerno(uname);
 		mv.addObject("udetail",u1);
-		mv.addObject("urole",u1.getRoles().iterator().next().getName());
+		mv.addObject("urole",u1.getAuthLevel());
 		return mv;
 	}
 	

@@ -22,7 +22,7 @@ public class ICommandMasterService implements CommandMasterService {
 		commandRepo.save(commandMaster);
 	}
 	@Override
-	public CommandMaster find(Integer id) {
+	public CommandMaster find(String commandCD) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -32,7 +32,7 @@ public class ICommandMasterService implements CommandMasterService {
 		return null;
 	}
 	@Override
-	public void delete(Integer id) {
+	public void delete(String commandCD) {
 		// TODO Auto-generated method stub
 		
 	}

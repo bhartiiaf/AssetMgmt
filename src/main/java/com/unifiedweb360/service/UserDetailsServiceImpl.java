@@ -26,9 +26,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) throw new UsernameNotFoundException(username);
+    public UserDetails loadUserByUsername(String serno) {
+        User user = userRepository.findBySerno(serno);
+        if (user == null) throw new UsernameNotFoundException(serno);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		
@@ -38,6 +38,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		 }
 		
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getSerno(), user.getPassword(), grantedAuthorities);
     }
 }

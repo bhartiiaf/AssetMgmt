@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace = "skin/template :: head" />
+
+<body class="animsition site-navbar-small ">
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+  <div th:replace="skin/sidemenu :: topandsidemenu"></div> 
+  
+
+  <!-- Page -->
+  <div class="page">
+    <div class="page-content">
+      <div class="row">
+      <h4 class="text-success" th:text="${successedited}"></h4>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-9">
+     							<table class="table table-hover dataTable table-striped w-full" id="exampleTableTools1">
+											<thead class="thead-dark">
+												<tr>
+													<th>#</th>
+													<th>Demand No.</th>
+													<th>FY</th>
+													<th>Unit</th>
+													<th>Demand Date</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												
+												<tr  th:each="dm,iterationStatus : ${demandforahq}">
+													<td th:text=${iterationStatus.count}></td>
+													<td th:text="${dm.demandMasterNo}" />
+													<td th:text="${dm.finYearMaster.pppFromTo}" />
+													<td th:text="${dm.unitId.unitDispName}" />
+													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
+													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
+													data-target="#showmoreitemsofdemandno" data-toggle="modal">
+													<i class="md-eye"></i></a></td>
+												</tr>
+												
+											</tbody>
+
+										</table>
+						 
+     </div>
+      </div>
+      
+      <!-- Show More Item for Further Action -->
+      <div class="modal fade modal-fill-in" id="showmoreitemsofdemandno" aria-hidden="false" aria-labelledby="exampleFillIn"
+                    role="dialog" tabindex="-1" >
+                    <div class="modal-dialog modal-simple">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="btn btn-danger">&times;</span>
+                          </button>
+                          <b>Demand No: <i id = "demandNoHeader" class="modal-title text-primary"></i></b>&nbsp; <br />
+                        </div>
+                        <div class="modal-body" style="width:900px; margin-top: 0px;">
+                       
+                        
+                        
+                       
+                        <!-- id="demandindraftmodeforperusal" -->
+                        
+                        <form th:action="@{changedemandstatusforahq}" method="post">
+                         <table class="table table-hover dataTable table-striped w-full" id="forprintarea" >
+											<thead class="thead-dark">
+												<tr>
+													
+													<th>Code Head</th>
+													<th>Item Type</th>
+													<th>Sub Type</th>
+													<th>Qty</th>
+													<th>Reason</th>
+													<th>Authority</th>
+													<th>Status</th>
+													<th>CMD Approved Qty</th>
+													<th>CMD Remarks</th>
+													<th>DIT Approved Qty</th>
+													<th>DIR Remarks</th>
+												</tr>
+											</thead>
+
+											<tbody id="databydemandno">
+											
+											</tbody>
+										</table>
+										<p id="demandfordraft"></p>
+										
+										</form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+      
+      
+    </div>
+  </div>
+  <!-- End Page -->
+
+
+  <!-- Footer -->
+  <div th:replace = "skin/template :: footer"></div>
+    <script src="assets/js/DemandA.js"></script>
+  
+
+  
+</body>
+
+
+</html>

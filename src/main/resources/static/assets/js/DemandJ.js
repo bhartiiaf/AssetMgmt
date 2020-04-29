@@ -15,24 +15,6 @@ $(document).ready(function() {
         // Collapse row details
         table.rows('.parent').nodes().to$().find('td:first-child').trigger('click');
     });
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -118,8 +100,7 @@ $(document).ready(function() {
 					alert("Please enter Demand Auth");
 				} else {
 					
-					$("#databydemandno").append(
-							moreDemandDataOne);
+					$("#databydemandno").append(moreDemandDataOne);
 					
 					$("#codeHeadOne").val('');
 					$("#itemTypeIdOne").val('');
@@ -214,11 +195,11 @@ $("#codeHeadOne").on('change',function(e) {
 																											+ "<td>"+ result[i][0].demandReason+ "</td>"
 																											+ "<td>"+ result[i][0].demandAuth+ "</td>"
 																											+ "<td>"+ result[i][0].demandStatus+ "</td>"
-																											+
+																											+ 
 																											"</tr>"
 
 																									));
-																				} else if (result[i][0].demandStatus == 'Draft') {
+																				} else if (result[i][0].demandStatus == 'Draft' && result[i][0].demandNoMaster.demandLevel == 'UNIT') {
 																					$("#addmoreitemsindraft").show();
 																					var xxxx = "<input type='hidden' name='demandNoMaster' value='"+ result[i][0].demandNoMaster.id+ "'>";
 																					
@@ -267,6 +248,10 @@ $("#codeHeadOne").on('change',function(e) {
 
 																									));
 																				}
+																				
+																				
+																				
+																				
 																			}
 
 																			if (result[0][0].demandStatus == 'Draft') {
@@ -284,18 +269,11 @@ $("#codeHeadOne").on('change',function(e) {
 																				}
 
 																			} else if (result[0][0].demandStatus == 'Finalised') {
-																				$(
-																						"#demandfordraft")
-																						.html(
-																								"");
+																				$("#demandfordraft").html("");
 																			}
 
 																			$(
-																					"#demandNoHeader")
-																					.append(
-																							$("<b>"
-																									+ result[0][0].demandNoMaster.demandMasterNo
-																									+ "</b>"));
+																					"#demandNoHeader").append($("<b>"+ result[0][0].demandNoMaster.demandMasterNo+ "</b>"));
 																			
 																			$("#databydemandno").append(xxxx);
 																		}
@@ -367,6 +345,12 @@ $("#codeHeadOne").on('change',function(e) {
 									'click',
 									function(e) {
 										e.preventDefault();
+										
+											var financeYearId = $.trim($("#financeYearId")
+													.val());
+											var financeYear = $(
+													"#financeYearId option:selected")
+													.html();
 										var codeHeadId = $.trim($("#codeHead")
 												.val());
 										var codeHead = $(
@@ -391,8 +375,15 @@ $("#codeHeadOne").on('change',function(e) {
 												.html();
 										var demandAuth = $
 												.trim($("#demandAuth").val());
+										var moreDemandDataForFY = "<input  type='hidden' id='financeYearId' name='financeYearId' value="+ financeYearId+ ">"
+											+"</tr>"
 										var moreDemandData = "<tr>"
-												+ "<td><input  type='hidden' id='codeHead' name='codeHeadId' value="
+											+ "<td><input  type='hidden' id='financeYearId' name='financeYearId' value="
+											+ financeYearId
+											+ ">"
+											+ financeYear
+											+ "</td>"	
+											+ "<td><input  type='hidden' id='codeHead' name='codeHeadId' value="
 												+ codeHeadId
 												+ ">"
 												+ codeHead
@@ -425,7 +416,10 @@ $("#codeHeadOne").on('change',function(e) {
 												+ "<td><button class='remove btn btn-danger'>-</button</td>"
 												+ "</tr>";
 
-										if (!codeHeadId) {
+										if (!financeYearId) {
+											alert("Please Select FY");
+										}
+										else if (!codeHeadId) {
 											alert("Please Select Code Head");
 										} else if (!itemTypeId) {
 											alert("Please Select Item Type");
@@ -441,6 +435,7 @@ $("#codeHeadOne").on('change',function(e) {
 											$("#moreitem").show();
 											$("#pushdata").append(
 													moreDemandData);
+											//$("#getfyda").append(moreDemandDataForFY);
 											$("#draftdemand").show();
 											$("#raisedemand").show();
 											$("#codeHead").val('');

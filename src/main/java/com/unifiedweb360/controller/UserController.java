@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.unifiedweb360.config.UserValidator;
 import com.unifiedweb360.modal.user.User;
 import com.unifiedweb360.service.SecurityService;
 import com.unifiedweb360.service.UserService;
@@ -29,8 +28,7 @@ public class UserController {
     @Autowired
     private SecurityService securityService;
 
-    @Autowired
-    private UserValidator userValidator;
+    
     
     @Autowired
     RoleService roleService;
@@ -51,7 +49,7 @@ public class UserController {
     @PostMapping("/getregistration")
     public ModelAndView getRegistered(User userForm,HttpServletRequest request,RedirectAttributes redirectAttributes)
     {
-        List<User> u = userService.findUserByUserName(userForm.getUsername());
+        List<User> u = userService.findUserBySerno(userForm.getSerno());
         if(u.size() == 0)
         {
         	userService.save(userForm);

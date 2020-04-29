@@ -42,8 +42,8 @@ display: none;
                         aria-controls="demandindraftmode" role="tab">Demand in Draft Mode</a></li>
                     <li  th:if="${urole == 'UNIT' || urole == 'CMD'}" class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandinfinalisedmode"
                         aria-controls="demandinfinalisedmode" role="tab">Finalised Demand</a></li>
-                    <!-- <li  th:if="${urole == 'CMD'}" class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandForPerusal"
-                        aria-controls="demandForPerusal" role="tab">Demand For Perusal</a></li> -->
+                    <li  th:if="${urole == 'CMD'}" class="nav-item" role="presentation"><a class="nav-link" data-toggle="tab" href="#demandForPerusal"
+                        aria-controls="demandForPerusal" role="tab">Demand For Perusal</a></li>
                   </ul>
                   <div class="tab-content py-15">
                     <div class="tab-pane active" id="exampleTabsLeftOne" role="tabpanel">
@@ -66,12 +66,6 @@ display: none;
 
 										<div class="container" id="formobject">
 											<div class="row">
-											<div class="col-sm-3">
-											<select name="financeYearId" class="form-control"
-														id="financeYearId" >
-														<option th:each="finYear : ${finYear}" th:value="${finYear.id}" th:utext="${finYear.pppFromTo}" />
-													</select> 
-													</div>
 												<div class="col-sm-3">
 
 													<select name="codeHeadId" class="form-control"
@@ -95,15 +89,14 @@ display: none;
 													</select> <span class="itemsubtypeid error text-danger"></span>
 
 												</div>
-												
-											</div>
-											<div class="row mt-2">
-											<div class="col-sm-3">
+												<div class="col-sm-3">
 													<input type="number" class="form-control empty"
 														id="itemQty" name="itemQty" placeholder="Item Qty">
 													<span class="itemqty error text-danger"></span>
 
 												</div>
+											</div>
+											<div class="row mt-2">
 												<div class="col-sm-3">
 													<select name="demandReason" class="form-control"
 														id="demandReason">
@@ -121,7 +114,7 @@ display: none;
 														class="demandauth error text-danger"></span>
 												</div>
 
-												<div class="col-sm-3">
+												<div class="col-sm-4">
 													<button type="submit" id="addmoreitem" name="addmoreitem"
 														class="btn btn-primary">Add</button>
 												</div>
@@ -131,14 +124,12 @@ display: none;
 									<hr />
 									<div id="moreitem">
 										<form th:action="@{/submitdemand}" method="post">
-											<p id=""></p>
 											<table id="moreitemshow"
 												class="table table-bordered table-hover specialCollapse"
 												style="margin-bottom: 0px">
 												<thead class="thead-dark">
 													<tr>
 
-														<th style="text-align: center">FY</th>
 														<th style="text-align: center">Code Head</th>
 														<th style="text-align: center">Item Type</th>
 														<th style="text-align: center">Item Sub Type</th>
@@ -148,7 +139,7 @@ display: none;
 														<th style="text-align: center">#</th>
 													</tr>
 												</thead>
-												<tbody id="pushdata" align="center">
+												<tbody id="pushdata">
 
 
 												</tbody>
@@ -190,7 +181,7 @@ display: none;
 											<tbody>
 												<tr th:each="dm : ${demandmode}">
 													<td th:text="${dm.demandMasterNo}" />
-													<td th:text="${dm.unitId.unitDispName}" />
+													<td th:text="${dm.unitId.unitName}" />
 													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
 													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
@@ -211,16 +202,15 @@ display: none;
 													<th>Demand No.</th>
 													<th>Unit</th>
 													<th>Demand Date</th>
-													<th>Present Stage</th>
 													<th>Action</th>
 												</tr>
 											</thead>
+
 											<tbody>
 												<tr th:each="dm : ${fetchDemandNO}">
 													<td th:text="${dm.demandMasterNo}" />
-													<td th:text="${dm.unitId.unitDispName}" />
+													<td th:text="${dm.unitId.unitName}" />
 													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
-													<td class='text-success' th:text="${dm.demandLevel}"/>
 													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
 													<i class="md-eye"></i></a></td>
@@ -246,7 +236,7 @@ display: none;
 												
 												<tr th:if="${urole == 'CMD'}" th:each="dm : ${demandforcmd}">
 													<td th:text="${dm.demandMasterNo}" />
-													<td th:text="${dm.unitId.unitDispName}" />
+													<td th:text="${dm.unitId.unitName}" />
 													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
 													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">

@@ -23,7 +23,6 @@ import lombok.Data;
 @Entity
 @Table(name="demand_no_master")
 public class DemandNoMaster {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="DEMAND_NO_MASTER_SEQ")
     @SequenceGenerator(name="DEMAND_NO_MASTER_SEQ", sequenceName="DEMAND_NO_MASTER_SEQ",allocationSize=1)
@@ -38,7 +37,9 @@ public class DemandNoMaster {
 	@ManyToOne
 	@JoinColumn(name="unit_id")
 	private UnitMaster unitId;
+	private String demandStatus;
 	@ManyToOne
-	@JoinColumn(name="demand_status")
-	private DemandStatusMaster demandStatus;
+	@JoinColumn(name="fin_year")
+	private FinYearMaster finYearMaster;
+	private String demandLevel;
 }

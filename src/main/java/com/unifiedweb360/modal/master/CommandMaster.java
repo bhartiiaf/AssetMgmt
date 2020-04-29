@@ -17,10 +17,8 @@ import lombok.Data;
 public class CommandMaster {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="COMMAND_MASTER_SEQ")
-    @SequenceGenerator(name="COMMAND_MASTER_SEQ", sequenceName="COMMAND_MASTER_SEQ",allocationSize=1)
-	private Integer id;
-	private String commandName;
+	private String commandCD;
+	private String commandName, cmdDispName;
 	private Date createdOn;
 	private String createdBy;
 }

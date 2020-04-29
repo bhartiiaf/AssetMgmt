@@ -3,6 +3,7 @@ package com.unifiedweb360.service.master;
 import java.util.List;
 import java.util.Optional;
 
+import com.unifiedweb360.modal.master.DemandMaster;
 import com.unifiedweb360.modal.master.DemandNoMaster;
 import com.unifiedweb360.modal.master.ItemTypeMaster;
 import com.unifiedweb360.service.ICommonService;
@@ -11,7 +12,16 @@ public interface DemandNoMasterService extends ICommonService<DemandNoMaster,Int
 	
 List<DemandNoMaster> findByDemandNoGenerateddBy(String demandNoGenerateddBy);
 
-List<DemandNoMaster> findByUnitId(Integer unitId);
+List<DemandNoMaster> findByUnitCD(String unitCD);
 DemandNoMaster find(Integer id);
 void deleteById(Integer id);
-}
+
+List<DemandNoMaster> findDataById(Integer id);
+void saveAll(List<DemandNoMaster> t);
+
+void updateData(String demandStatus, String demandLevel, int id);
+void updateDataForCMD(String demandLevel, int id);
+
+
+
+} 

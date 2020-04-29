@@ -39,7 +39,7 @@
               </a>
           </li>
           <li class="nav-item hidden-sm-down" id="toggleFullscreen">
-                       <a class="nav-link">Role is: <b th:text="${urole}"></b></a>
+                       <a class="nav-link text-dark">WELCOME  [[${#httpServletRequest.remoteUser}]] &nbsp; <b th:each="r : ${udetail}" th:text="' ' + ${r.rankMaster.rankDispName} + '  ' + ${r.fullName} + ' | Unit : ' + ${r.unitId.unitDispName}"></b> | <b class='text-success'>Role Assigned: </b><b class='text-success' th:text="${urole}"></b></a>
           </li>
          <!--  <li class="nav-item hidden-sm-down" id="toggleFullscreen">
             <a class="nav-link icon icon-fullscreen" data-toggle="fullscreen" href="#" role="button">
@@ -235,12 +235,12 @@
             <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
               aria-expanded="false" data-animation="scale-up" role="button">
                 <i class="icon md-notifications" aria-hidden="true"></i>
-                <span class="badge badge-pill badge-danger up">0</span>
+                <span class="badge badge-pill badge-danger up" id="count"></span>
               </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu" id="noticebar">
               <div class="dropdown-menu-header">
-                <h5>NOTIFICATIONS</h5>
-                <span class="badge badge-round badge-danger">New 5</span>
+                <h5>DEMAND NOTIFICATIONS</h5>
+                <span class="badge badge-round badge-danger" id="count1">New &nbsp;</span>
               </div>
 
               <div class="list-group">
@@ -248,12 +248,8 @@
                   <div data-role="content">
                     <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
                       <div class="media">
-                        <div class="pr-10">
-                          <i class="icon md-receipt bg-red-600 white icon-circle" aria-hidden="true"></i>
-                        </div>
-                        <div class="media-body">
-                          <h6 class="media-heading">A new order has been placed</h6>
-                          <time class="media-meta" datetime="2017-06-12T20:50:48+08:00">5 hours ago</time>
+                         <div class="media-body">
+                          <h6 class="media-heading" th:if="${urole == 'CMD'}" id="notification"></h6>
                         </div>
                       </div>
                     </a>
@@ -262,10 +258,8 @@
               </div>
               <div class="dropdown-menu-footer">
                 <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
-                    <i class="icon md-settings" aria-hidden="true"></i>
                   </a>
                 <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                    All notifications
                   </a>
               </div>
             </div>
@@ -317,14 +311,14 @@
   
   <div class="site-menubar">
     <ul class="site-menu">
-      <li th:if="${urole == 'ADMIN' || urole == 'UNIT' || urole == 'CMD'}" class="site-menu-item active">
+      <li th:if="${urole == 'ADMIN' || urole == 'UNIT' || urole == 'CMD' || urole == 'AHQ'}" class="site-menu-item active">
         <a th:href="@{/welcome}">
                   <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                   <span class="site-menu-title">Dashboard</span>
               </a>
       </li>
      
-      <li th:if="${urole == 'ADMIN'}" class="site-menu-item has-sub">
+      <li th:if="${urole == 'SUPER'}" class="site-menu-item has-sub">
         <a href="javascript:void(0)">
                   <i class="site-menu-icon md-account-circle" aria-hidden="true"></i>
                   <span class="site-menu-title">User Mgmt</span>
@@ -367,9 +361,15 @@
               </a>
       </li>
       <li th:if="${urole  == 'CMD'}" class="site-menu-item">
-        <a th:href="@{/demand}">
+        <a th:href="@{/demandforperusalofcmd}">
                   <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
                   <span class="site-menu-title">Station Demand Status</span>
+              </a>
+      </li>
+      <li th:if="${urole  == 'AHQ'}" class="site-menu-item">
+        <a th:href="@{/demandforperusalofahq}">
+                  <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
+                  <span class="site-menu-title">All Demand For Perusal</span>
               </a>
       </li>
       

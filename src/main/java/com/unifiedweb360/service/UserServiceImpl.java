@@ -31,25 +31,25 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setCreatedOn(new Date());
         user.setRoles(new HashSet<>(roleRepository.findAll()));
-        user.setActive(true);
+        user.setIsValid(1);
         userRepository.save(user);
     }
 
     
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findBySerno(String serno) {
+        return userRepository.findBySerno(serno);
     }
 
 	@Override
-	public List<User> findByUsernameAndPassword(String username, String password) {
-		return userRepository.findByUsernameAndPassword(username, password);
+	public List<User> findBySernoAndPassword(String serno, String password) {
+		return userRepository.findBySernoAndPassword(serno, password);
 	}
 
 
 	@Override
-	public List<User> findUserByUserName(String username) {
-		return userRepository.findUserByUsername(username);
+	public List<User> findUserBySerno(String serno) {
+		return userRepository.findUserBySerno(serno);
 	}
 
 

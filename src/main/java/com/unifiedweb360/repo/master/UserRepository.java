@@ -11,12 +11,12 @@ import com.unifiedweb360.modal.user.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+    User findBySerno(String serno);
     
-    List<User> findByUsernameAndPassword(String username, String password);
+    List<User> findBySernoAndPassword(String serno, String password);
     
-    @Query("from User u where u.username=?1")
-    List<User> findUserByUsername(String username);
+    @Query("from User u where u.serno=?1")
+    List<User> findUserBySerno(String serno);
     
     
    
