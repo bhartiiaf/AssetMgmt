@@ -20,13 +20,10 @@ void deleteById(Integer id);
 
 List<DemandNoMaster> findDataById(Integer id);
 void saveAll(List<DemandNoMaster> t);
-
 void updateData(String demandStatus, String demandLevel, int id);
 void updateDataForCMD(String demandLevel, int id);
 void updateDataWithStatus(String demandStatus,String demandLevel,DemandStatusMaster did , int id);
-
 void updateDraftDataWithStatus(DemandStatusMaster did , int id);
-
 List<Object[]> totalDemand(String unitCD);
 
 

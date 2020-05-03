@@ -235,7 +235,8 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 				}
 				else if(action.equals("Finalised"))
 				{
-				demandNoMasterService.updateDataForCMD("AHQ", Integer.parseInt(dmnofornew));
+				demandNoMasterService.updateDataWithStatus(action,"AHQ",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
+
 
 				}
 			}
@@ -302,12 +303,10 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 				}
 				else if(action.equals("Finalised"))
 				{
-				demandNoMasterService.updateDataForCMD("AHQ", Integer.parseInt(dmnofornew));
 				demandNoMasterService.updateDataWithStatus(action,"Demand Approved",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(5)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
 
 				}
 			}
-			
 			List<DemandMaster> dm = new ArrayList<>();
 			for (int i = 0; i < dataSize; i++) {
 			
