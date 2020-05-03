@@ -6578,12 +6578,12 @@ label {
 	align-items: center
 }
 
-@media ( min-width :768px) {
+@media ( min-width :1090px) {
 	.modal-fill-in .modal-dialog>* {
-		width: 600px
+		width: 1090px
 	}
 	.modal-fill-in .modal-dialog.modal-sm>* {
-		width: 300px
+		width: 1090px
 	}
 	.modal-fill-in .modal-dialog button.close {
 		position: fixed;
@@ -6599,9 +6599,9 @@ label {
 	}
 }
 
-@media ( min-width :992px) {
+@media ( min-width :1090px) {
 	.modal-fill-in .modal-dialog.modal-lg>* {
-		width: 900px
+		width: 1090px
 	}
 }
 
@@ -6609,7 +6609,7 @@ label {
 	background-color: transparent;
 	border-radius: 0;
 	-webkit-box-shadow: none;
-	box-shadow: none
+	box-shadow:  1px;
 }
 
 .modal-primary .modal-header {

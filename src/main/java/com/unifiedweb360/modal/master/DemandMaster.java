@@ -37,7 +37,6 @@ public class DemandMaster implements Serializable {
 	@JoinColumn(name="fin_year")
 	private FinYearMaster financeYearId;
 	
-	
 	private Integer itemQty;
 	private String demandReason;
 	private String demandAuth;
@@ -47,10 +46,10 @@ public class DemandMaster implements Serializable {
 	@JoinColumn(name="demand_no_master")
 	private DemandNoMaster demandNoMaster;
 	private String demandStatus;
-	private Integer cmdApprovedQty;
-	private Integer ditApprovedQty;
-	private String cmdRemarks;
-	private String ditRemarks;
+	private Integer cmdApprovedQty=0;
+	private Integer ditApprovedQty=0;
+	private String cmdRemarks=" ";
+	private String ditRemarks=" ";
 	
 	
 }

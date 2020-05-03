@@ -2,6 +2,7 @@
 <html class="no-js css-menubar" lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace = "skin/template :: head" />
 
+
 <body class="animsition site-navbar-small ">
   <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -24,6 +25,7 @@
 													<th>FY</th>
 													<th>Unit</th>
 													<th>Demand Date</th>
+													<th>Present Status</th>
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -34,6 +36,7 @@
 													<td th:text="${dm.finYearMaster.pppFromTo}" />
 													<td th:text="${dm.unitId.unitDispName}" />
 													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
+													<td class='text-primary' th:text="${dm.demandStatusId.demandStatus}"/>
 													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
 													<i class="md-eye"></i></a></td>
@@ -57,7 +60,8 @@
                           </button>
                           <b>Demand No: <i id = "demandNoHeader" class="modal-title text-primary"></i></b>&nbsp; <br />
                         </div>
-                        <div class="modal-body" style="width:900px; margin-top: 0px;">
+                        <div class='container'>
+                        <div class="modal-body">
                        
                         
                         
@@ -75,7 +79,7 @@
 													<th>Qty</th>
 													<th>Reason</th>
 													<th>Authority</th>
-													<th>Status</th>
+													<th>Unit Demand Status</th>
 													<th>Qty Approved</th>
 													<th>Remarks</th>
 												</tr>
@@ -88,6 +92,7 @@
 										<p id="demandfordraft"></p>
 										
 										</form>
+                        </div>
                         </div>
                       </div>
                     </div>

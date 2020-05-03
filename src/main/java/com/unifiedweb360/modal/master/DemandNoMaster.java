@@ -31,7 +31,6 @@ public class DemandNoMaster {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy ="demandNoMaster",cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<DemandMaster> demandMaster = new ArrayList<>();
-	//private Set<DemandMaster> demandMaster;
 	private String demandNoGenerateddBy;
 	private Date demandNoGeneratedOn;
 	@ManyToOne
@@ -42,4 +41,7 @@ public class DemandNoMaster {
 	@JoinColumn(name="fin_year")
 	private FinYearMaster finYearMaster;
 	private String demandLevel;
+	@ManyToOne
+	@JoinColumn(name="approval_status")
+	private DemandStatusMaster demandStatusId;
 }

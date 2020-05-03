@@ -212,6 +212,7 @@ display: none;
 													<th>Unit</th>
 													<th>Demand Date</th>
 													<th>Present Stage</th>
+													<th>Present Status</th>
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -221,6 +222,7 @@ display: none;
 													<td th:text="${dm.unitId.unitDispName}" />
 													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
 													<td class='text-success' th:text="${dm.demandLevel}"/>
+													<td class='text-primary' th:text="${dm.demandStatusId.demandStatus}"/>
 													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
 													<i class="md-eye"></i></a></td>
@@ -359,9 +361,10 @@ display: none;
 													<th>Qty</th>
 													<th>Reason</th>
 													<th>Authority</th>
-													<th>Status</th>
-													<th th:if="${urole == 'CMD'}">Qty Approved</th>
-													<th th:if="${urole == 'CMD'}">Remarks</th>
+													<th>Unit Demand Status</th>
+													
+													<th></th>
+													
 												</tr>
 											</thead>
 

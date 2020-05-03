@@ -180,6 +180,11 @@ $("#codeHeadOne").on('change',function(e) {
 																		dataType : 'json',
 																		success : function(result) {
 																			for (var i = 0; i < result.length; i++) {
+																				
+																				var dstatus = result[i][0].demandNoMaster.demandStatusId.demandStatus;
+																				
+																				
+																				
 																				if (result[i][0].demandStatus == 'Finalised') {
 																					$("#addmoreitemsindraft").hide();
 																					$("#formobjectone").hide();
@@ -194,11 +199,20 @@ $("#codeHeadOne").on('change',function(e) {
 																											+ "<td>"+ result[i][0].itemQty+ "</td>"
 																											+ "<td>"+ result[i][0].demandReason+ "</td>"
 																											+ "<td>"+ result[i][0].demandAuth+ "</td>"
-																											+ "<td>"+ result[i][0].demandStatus+ "</td>"
-																											+ 
-																											"</tr>"
+																											+ "<td class='text-success'>"+ result[i][0].demandStatus+ "</td>"
+																											+"</tr>"
 
 																									));
+																					if(result[i][0].demandNoMaster.demandStatusId.demandStatus == 'Approved')
+																					{
+																					$('#databydemandno').append(
+																					$("<tr>"
+																					+"<td colspan='2' class='text-success'>"+"DIT Approved Qty: &nbsp;<b class='text-primary'>"	+ result[i][0].ditApprovedQty+ "</b></td>"
+																					+"<td colspan='2' class='text-success'>"+"DIT Remark: &nbsp; <b class='text-danger'>"	+ result[i][0].ditRemarks+ "</b></td>"
+
+																					+"</tr><br />"
+																					));
+																					}
 																				} else if (result[i][0].demandStatus == 'Draft' && result[i][0].demandNoMaster.demandLevel == 'UNIT') {
 																					$("#addmoreitemsindraft").show();
 																					var xxxx = "<input type='hidden' name='demandNoMaster' value='"+ result[i][0].demandNoMaster.id+ "'>";
@@ -238,6 +252,11 @@ $("#codeHeadOne").on('change',function(e) {
 																											+ "'>"
 																											+ result[i][0].demandAuth
 																											+ "</td>"
+																											+ "<td><input  type='hidden' id='demandStatus' name='demandStatus' value='"
+																											+ result[i][0].demandStatus
+																											+ "'>"
+																											+ result[i][0].demandStatus
+																											+ "</td>"
 																											+ "<td id='getDraftRow'><a href="
 																											+ 'deletequery/'
 																											+ result[i][0].id
@@ -248,6 +267,62 @@ $("#codeHeadOne").on('change',function(e) {
 
 																									));
 																				}
+																				
+																				else if (result[i][0].demandStatus == 'Draft' && result[i][0].demandNoMaster.demandLevel == 'CMD') {
+																					$("#addmoreitemsindraft").show();
+																					var xxxx = "<input type='hidden' name='demandNoMaster' value='"+ result[i][0].demandNoMaster.id+ "'>";
+																					
+																					$('#databydemandno').append(
+
+																									$("<tr>"
+																											+ "<td><input  type='hidden' id='codeHead' name='codeHeadId' value='"
+																											+ result[i][0].codeHeadId.id
+																											+ "'>"
+																											+ result[i][0].codeHeadId.codeHeadDescription
+																											+ "</td>"
+																											+ "<td><input  type='hidden' id='itemTypeId' name='itemTypeId' value='"
+																											+ result[i][0].itemTypeId.id
+																											+ "'>"
+																											+ result[i][0].itemTypeId.itemDescription
+																											+ "</td>"
+																											+ "<td><input  type='hidden' id='itemSubTypeId' name='itemSubTypeId' value='"
+																											+ result[i][0].itemSubTypeId.id
+																											+ "'>"
+																											+ result[i][0].itemSubTypeId.subTypeDesc
+																											+ "</td>"
+																											+ "<td><input  type='text' id='itemQty' name='itemQty' class='form-control' value="
+																											+ result[i][0].itemQty
+																											+ "></td>"
+																											+ "<td><input  type='hidden' id='demandReason' name='demandReason' value='"
+																											+ result[i][0].demandReason
+																											+ "'>"
+																											+ result[i][0].demandReason
+																											+ "</td>"
+																											+ "<td><input  type='hidden' id='demandNoMaster' name='demandNoMaster' value='"
+																											+ result[i][0].demandNoMaster.id
+																											+ "'><input  type='hidden' id='id' name='id' value='"
+																											+ result[i][0].id
+																											+ "'><input  type='hidden' id='demandAuth' name='demandAuth' value='"
+																											+ result[i][0].demandAuth
+																											+ "'>"
+																											+ result[i][0].demandAuth
+																											+ "</td>"
+																											+ "<td><input  type='hidden' id='demandStatus' name='demandStatus' value='"
+																											+ result[i][0].demandStatus
+																											+ "'>"
+																											+ result[i][0].demandStatus
+																											+ "</td>"
+																											+ "<td id='getDraftRow'><a href="
+																											+ 'deletequery/'
+																											+ result[i][0].id
+																											+ "><i class='md-close text-danger'></i></a></td>"
+																											+
+
+																											"</tr>"
+
+																									));
+																				}
+
 																				
 																				
 																				

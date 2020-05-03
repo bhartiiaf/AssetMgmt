@@ -11,4 +11,9 @@ public interface DemandStatusMasterRepository extends JpaRepository<DemandStatus
 	@Query("from DemandStatusMaster dsm where dsm.demandStatus='Finalised' ")
 	public DemandStatusMaster findFinalisedDemand();
 	
+	@Query("from DemandStatusMaster dsm where dsm.id=?1")
+	DemandStatusMaster find(Integer id);
+	
+	
+	
 }

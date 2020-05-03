@@ -148,7 +148,7 @@ public class DemandController {
 		String uname = principal.getName();
 		User u1 = userService.findBySerno(uname);
 		System.out.println(u1.getAuthLevel());
-		List<DemandNoMaster> demandforahq = demandNoMasterService.findAll().stream().filter(x->x.getDemandStatus().equals("Finalised")).collect(Collectors.toList());
+		List<DemandNoMaster> demandforahq = demandNoMasterService.findAll().stream().filter(x->x.getDemandLevel().equals("AHQ")).collect(Collectors.toList());
 		mv.addObject("urole",u1.getAuthLevel());
 		mv.addObject("udetail",u1);
 		mv.addObject("demandforahq", demandforahq);

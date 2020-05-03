@@ -23,8 +23,10 @@
 													<th>#</th>
 													<th>Demand No.</th>
 													<th>FY</th>
-													<th>Unit</th>
+													<th>CMD</th>
+													<th>UNIT</th>
 													<th>Demand Date</th>
+													<th>Status</th>
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -34,8 +36,10 @@
 													<td th:text=${iterationStatus.count}></td>
 													<td th:text="${dm.demandMasterNo}" />
 													<td th:text="${dm.finYearMaster.pppFromTo}" />
+													<td th:text="${dm.unitId.commandId.commandName}" />
 													<td th:text="${dm.unitId.unitDispName}" />
 													<td th:text="${#dates.format(dm.demandNoGeneratedOn, 'dd-MMM-yyyy')}" />
+													<td class='text-primary' th:text="${dm.demandStatusId.demandStatus}"/>
 													<td><a th:href="@{'/fetchdemanddata/' + ${dm.id}}" class="fetchmoredatafordemand btn btn-success"
 													data-target="#showmoreitemsofdemandno" data-toggle="modal">
 													<i class="md-eye"></i></a></td>
@@ -59,7 +63,7 @@
                           </button>
                           <b>Demand No: <i id = "demandNoHeader" class="modal-title text-primary"></i></b>&nbsp; <br />
                         </div>
-                        <div class="modal-body" style="width:900px; margin-top: 0px;">
+                        <div class="modal-body" style="width:900px; align-content:center; margin-top: 0px;">
                        
                         
                         

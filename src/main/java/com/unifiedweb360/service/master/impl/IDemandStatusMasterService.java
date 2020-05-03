@@ -16,8 +16,7 @@ public class IDemandStatusMasterService implements DemandStatusMasterService {
 	DemandStatusMasterRepository demandStatusRepo;
 	@Override
 	public DemandStatusMaster find(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return demandStatusRepo.find(id);
 	}
 
 	@Override

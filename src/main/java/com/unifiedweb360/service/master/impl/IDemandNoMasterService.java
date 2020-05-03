@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.unifiedweb360.modal.master.DemandNoMaster;
+import com.unifiedweb360.modal.master.DemandStatusMaster;
+import com.unifiedweb360.modal.master.UnitMaster;
 import com.unifiedweb360.repo.master.DemandNoMasterRepository;
 import com.unifiedweb360.service.master.DemandNoMasterService;
 
@@ -77,6 +79,22 @@ public class IDemandNoMasterService implements DemandNoMasterService {
 		demandNoMasterRepo.updateDataForCMD(demandLevel, id);
 	}
 
+	@Override
+	public void updateDataWithStatus(String demandStatus, String demandLevel, DemandStatusMaster did, int id) {
+		demandNoMasterRepo.updateDataWithStatus(demandStatus, demandLevel, did, id);
+	}
+
+	@Override
+	public void updateDraftDataWithStatus(DemandStatusMaster did, int id) {
+		demandNoMasterRepo.updateDraftDataWithStatus(did, id);
+	}
+
+	@Override
+	public List<Object[]> totalDemand(String unitCD) {
+		return demandNoMasterRepo.totalDemand(unitCD);
+	}
+
+	
 	
 
 	

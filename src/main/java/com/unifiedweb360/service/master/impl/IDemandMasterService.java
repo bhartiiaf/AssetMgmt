@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.unifiedweb360.modal.master.DemandMaster;
 import com.unifiedweb360.modal.master.DemandNoMaster;
+import com.unifiedweb360.modal.master.DemandStatusMaster;
 import com.unifiedweb360.modal.master.FinYearMaster;
 import com.unifiedweb360.modal.master.UnitMaster;
 import com.unifiedweb360.modal.user.User;
@@ -114,6 +116,8 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 		String dmnofornew = request.getParameter("demandNoMaster");
 		String action= request.getParameter("submitvalue");
 		List<User> u = userService.findUserBySerno(SecurityContextHolder.getContext().getAuthentication().getName());
+    	List<DemandStatusMaster> statuslist = demandStatusService.findAll();
+
 		if(u.iterator().next().getAuthLevel().equals("UNIT"))
 		{
 			if(action.equals("Draft"))
@@ -122,7 +126,7 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			}
 			else if(action.equals("Finalised"))
 			{
-			demandNoMasterService.updateData(action,"CMD", Integer.parseInt(dmnofornew));
+			demandNoMasterService.updateDataWithStatus(action,"CMD",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
 
 			}
 		}
@@ -135,6 +139,8 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			else if(action.equals("Finalised"))
 			{
 			demandNoMasterService.updateData(action,"AHQ", Integer.parseInt(dmnofornew));
+			demandNoMasterService.updateDataWithStatus(action,"AHQ",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
+
 
 			}
 		}
@@ -147,6 +153,7 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			else if(action.equals("Finalised"))
 			{
 			demandNoMasterService.updateData(action,"Finalised", Integer.parseInt(dmnofornew));
+			demandNoMasterService.updateDataWithStatus(action,"Demand Approved",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(5)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
 
 			}
 		}
@@ -217,11 +224,14 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			String dmnofornew = request.getParameter("demandNoMaster");
 			String action= request.getParameter("submitvalue");
 			List<User> u = userService.findUserBySerno(SecurityContextHolder.getContext().getAuthentication().getName());
+	    	List<DemandStatusMaster> statuslist = demandStatusService.findAll();
+
 			 if(u.iterator().next().getAuthLevel().equals("CMD"))
 			{
 				if(action.equals("Draft"))
 				{
-				demandNoMasterService.updateDataForCMD("CMD",Integer.parseInt(dmnofornew));
+				demandNoMasterService.updateDraftDataWithStatus(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(3)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
+				
 				}
 				else if(action.equals("Finalised"))
 				{
@@ -281,15 +291,19 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			String dmnofornew = request.getParameter("demandNoMaster");
 			String action= request.getParameter("submitvalue");
 			List<User> u = userService.findUserBySerno(SecurityContextHolder.getContext().getAuthentication().getName());
+	    	List<DemandStatusMaster> statuslist = demandStatusService.findAll();
+
 			 if(u.iterator().next().getAuthLevel().equals("AHQ"))
 			{
 				if(action.equals("Draft"))
 				{
-				demandNoMasterService.updateDataForCMD("AHQ",Integer.parseInt(dmnofornew));
+				demandNoMasterService.updateDraftDataWithStatus(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(4)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
+
 				}
 				else if(action.equals("Finalised"))
 				{
 				demandNoMasterService.updateDataForCMD("AHQ", Integer.parseInt(dmnofornew));
+				demandNoMasterService.updateDataWithStatus(action,"Demand Approved",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(5)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
 
 				}
 			}
@@ -349,16 +363,24 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 
 		List<User> u = userService.findUserBySerno(SecurityContextHolder.getContext().getAuthentication().getName());
 		int fy = Integer.parseInt(request.getParameter("financeYearId"));
+    	List<DemandStatusMaster> statuslist = demandStatusService.findAll();
+
 		if(u.iterator().next().getAuthLevel().equals("UNIT"))
 		{
 			 if
 			  (request.getParameter("saveandsubmit") != null) 
 			  {
 				 demandNoMaster.setDemandLevel("CMD");
+				 demandNoMaster.setDemandStatus("Finalised");
+				  demandNoMaster.setDemandStatusId(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()));
 			  }
 			 else if(request.getParameter("saveasdraft") != null) 
 			  {
 				 demandNoMaster.setDemandLevel("UNIT");
+				 demandNoMaster.setDemandStatus("Draft");
+				 demandNoMaster.setDemandStatusId(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(2)).collect(Collectors.toList()).iterator().next().getId()));
+
+				 
 			  }
 		}
 		else if(u.iterator().next().getAuthLevel().equals("CMD"))
@@ -367,10 +389,15 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			  (request.getParameter("saveandsubmit") != null) 
 			  {
 				demandNoMaster.setDemandLevel("AHQ");
+				demandNoMaster.setDemandStatus("Finalised");
+				demandNoMaster.setDemandStatusId(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()));
 			  }
 			else if(request.getParameter("saveasdraft") != null) 
 			  {
 				demandNoMaster.setDemandLevel("CMD");
+				demandNoMaster.setDemandStatus("Draft");
+				 demandNoMaster.setDemandStatusId(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(3)).collect(Collectors.toList()).iterator().next().getId()));
+
 			  }
 
 		}
@@ -384,17 +411,8 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 		String demandnoalloted =  u.iterator().next().getUnitId().getUnitDispName()+"/"+fym.get().getPppFromTo()+"/"+demandNoLatest;
 		  demandNoMaster.setDemandMasterNo(demandnoalloted);
 		  demandNoMaster.setFinYearMaster(finYearMasterService.find(fy));
-		
+		  
 		  demandNoMaster.setUnitId(u.iterator().next().getUnitId()); 
-		  if
-		  (request.getParameter("saveandsubmit") != null) 
-		  {
-		  demandNoMaster.setDemandStatus("Finalised");
-		  } else if(request.getParameter("saveasdraft") != null) 
-		  {
-		  demandNoMaster.setDemandStatus("Draft");
-		  }
-		
 		  demandNoMasterService.save(demandNoMaster);
 			
 		int dataSize = request.getParameterValues("codeHeadId").length;

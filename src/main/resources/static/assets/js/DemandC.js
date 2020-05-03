@@ -19,6 +19,9 @@ $(document).ready(function(){
 
 											for (var i = 0; i < result.length; i++) {
 												
+												
+												
+												
 												if (result[i][0].demandStatus == 'Finalised' && result[i][0].demandNoMaster.demandLevel == 'CMD') {
 													var xxxx = "<input type='hidden' name='demandNoMaster' value='"+ result[i][0].demandNoMaster.id+ "'>";
 													
@@ -57,7 +60,7 @@ $(document).ready(function(){
 																			+ "'>"
 																			+ result[i][0].demandAuth
 																			+ "</td>"
-																			+ "<td><input  type='hidden' id='demandStatus' name='demandStatus' value='"
+																			+ "<td class='text-success'><input  type='hidden' id='demandStatus' name='demandStatus' value='"
 																			+ result[i][0].demandStatus
 																			+ "'>"
 																			+ result[i][0].demandStatus
