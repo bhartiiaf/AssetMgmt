@@ -23,14 +23,13 @@ public class IndexController {
 	@Autowired
 	RoleService roleService;
 	@GetMapping({"/"})
-	public ModelAndView getArticleView(HttpServletRequest request)
+	public String getArticleView(HttpServletRequest request)
 	{
-		ModelAndView mv = new ModelAndView("login");
-		Date date = new Date();  
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");  
-		String strDate= formatter.format(date);  
-		mv.addObject("dateval",strDate);  
-		return mv;
+		if(request.getUserPrincipal() != null)
+		{
+			return "redirect:welcome";
+		}
+		return "login";
 	}
 	
 	@GetMapping({"/welcome"})

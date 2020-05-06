@@ -219,7 +219,14 @@ public class MiscController {
 	public @ResponseBody List<DemandNoMaster> notificationForCmd() {
 		List<User> u = userService.findUserBySerno(SecurityContextHolder.getContext().getAuthentication().getName());
         List<DemandNoMaster> dnm = demandNoMasterService.findByUnitCD(u.iterator().next().getUnitId().getCommandId().getCommandCD());
-        return dnm.stream().filter(x->x.getDemandStatus().equals("Finalised")).collect(Collectors.toList()); 
+        return dnm.stream().filter(x->x.getDemandLevel().equals("CMD")).collect(Collectors.toList()); 
+	}
+	
+	@GetMapping("/notificationforahq")
+	public @ResponseBody List<DemandNoMaster> notificationForAHQ() {
+		List<User> u = userService.findUserBySerno(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<DemandNoMaster> dnm = demandNoMasterService.findAll();
+        return dnm.stream().filter(x->x.getDemandLevel().equals("AHQ")).collect(Collectors.toList()); 
 	}
 
 }

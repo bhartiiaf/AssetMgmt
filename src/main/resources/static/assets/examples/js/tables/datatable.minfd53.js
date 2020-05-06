@@ -51,10 +51,10 @@
                         bSortable: !1,
                         aTargets: [-1]
                     }],
-                    iDisplayLength: 5,
+                    iDisplayLength: 50,
                     aLengthMenu: [
-                        [5, 10, 25, 50, -1],
-                        [5, 10, 25, 50, "All"]
+                        [50, 60, 70, 80, -1],
+                        [50, 60, 70, 80, "All"]
                     ],
                     sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
                     buttons: ["copy", "excel", "csv", "pdf", "print"]
@@ -68,10 +68,10 @@
                         bSortable: !1,
                         aTargets: [-1]
                     }],
-                    iDisplayLength: 5,
+                    iDisplayLength: 50,
                     aLengthMenu: [
-                        [5, 10, 25, 50, -1],
-                        [5, 10, 25, 50, "All"]
+                        [50, 60, 70, 80, -1],
+                        [50, 60, 70, 80, "All"]
                     ],
                     sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
                     buttons: ["copy", "excel", "csv", "pdf", "print"]
@@ -84,10 +84,10 @@
                     bSortable: !1,
                     aTargets: [-1]
                 }],
-                iDisplayLength: 5,
+                iDisplayLength: 50,
                 aLengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "All"]
+                    [50, 60, 70, 80, -1],
+                    [50, 60, 70, 80, "All"]
                 ],
                 sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
                 buttons: ["copy", "excel", "csv", "pdf", "print"]
@@ -101,10 +101,10 @@
                 bSortable: !1,
                 aTargets: [-1]
             }],
-            iDisplayLength: 5,
+            iDisplayLength: 50,
             aLengthMenu: [
-                [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "All"]
+                [50, 60, 70, 80, -1],
+                [50, 60, 70, 80, "All"]
             ],
             sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
             buttons: ["print"]
@@ -118,10 +118,10 @@
                 bSortable: !1,
                 aTargets: [-1]
             }],
-            iDisplayLength: 5,
+            iDisplayLength: 50,
             aLengthMenu: [
-                [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "All"]
+                [50, 60, 70, 80, -1],
+                [50, 60, 70, 80, "All"]
             ],
             sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
             buttons: ["copy", "excel", "csv","print"]
@@ -135,10 +135,10 @@
             bSortable: !1,
             aTargets: [-1]
         }],
-        iDisplayLength: 5,
+        iDisplayLength: 50,
         aLengthMenu: [
-            [5, 10, 25, 50, -1],
-            [5, 10, 25, 50, "All"]
+            [50, 60, 70, 80, -1],
+            [50, 60, 70, 80, "All"]
         ],
         sDom: '<"dt-panelmenu clearfix"Bfr>t<"dt-panelfooter clearfix"ip>',
         buttons: ["csv","print"]

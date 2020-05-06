@@ -228,10 +228,8 @@
         <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
           
            
-          
-          
          
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" th:if="${urole == 'CMD' || urole == 'AHQ'}">
             <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
               aria-expanded="false" data-animation="scale-up" role="button">
                 <i class="icon md-notifications" aria-hidden="true"></i>
@@ -246,13 +244,23 @@
               <div class="list-group">
                 <div data-role="container">
                   <div data-role="content">
-                    <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                      <div class="media">
+                    <a class="list-group-item dropdown-item" th:if="${urole == 'CMD'}" th:href="@{/demandforperusalofcmd}"  role="menuitem">
+                       <div class="media">
                          <div class="media-body">
-                          <h6 class="media-heading" th:if="${urole == 'CMD'}" id="notification"></h6>
+                          <h6 class="media-heading text-danger" id="notification"></h6>
                         </div>
                       </div>
                     </a>
+                    
+                    <a class="list-group-item dropdown-item" th:if="${urole == 'AHQ'}" th:href="@{/demandforperusalofahq}"  role="menuitem">
+                       <div class="media">
+                         <div class="media-body">
+                          <h6 class="media-heading text-danger" id="notification"></h6>
+                        </div>
+                      </div>
+                    </a>
+                    
+                    
                     </div>
                 </div>
               </div>
@@ -264,6 +272,8 @@
               </div>
             </div>
           </li>
+          
+          
            <li class="nav-item dropdown">
             <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
               data-animation="scale-up" role="button">
@@ -435,6 +445,5 @@
       </div>
     </div>
   </div>
-  
-  </div>
-  </html>
+ </div>
+</html>

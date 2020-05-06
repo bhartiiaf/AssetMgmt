@@ -183,6 +183,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <script src="global/vendor/bootstrap-select/bootstrap-select.minfd53.js?v4.0.1"></script>
         <script src="assets/chart/Chart.js"></script>
   <script src="assets/chart/demandchart.js"></script>
+   
+    <script th:if="${urole == 'CMD'}" src="assets/js/cmdnotification.js"></script>
+        <script th:if="${urole == 'AHQ'}" src="assets/js/ahqnotification.js"></script>
+    
+  
  
       
     

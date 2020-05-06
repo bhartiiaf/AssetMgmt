@@ -126,7 +126,7 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			}
 			else if(action.equals("Finalised"))
 			{
-			demandNoMasterService.updateDataWithStatus(action,"CMD",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
+			demandNoMasterService.updateDataWithStatus(action,"CMD",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(6)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
 
 			}
 		}
@@ -139,7 +139,7 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			else if(action.equals("Finalised"))
 			{
 			demandNoMasterService.updateData(action,"AHQ", Integer.parseInt(dmnofornew));
-			demandNoMasterService.updateDataWithStatus(action,"AHQ",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
+			demandNoMasterService.updateDataWithStatus(action,"AHQ",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(7)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
 
 
 			}
@@ -235,7 +235,7 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 				}
 				else if(action.equals("Finalised"))
 				{
-				demandNoMasterService.updateDataWithStatus(action,"AHQ",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
+				demandNoMasterService.updateDataWithStatus(action,"AHQ",demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(7)).collect(Collectors.toList()).iterator().next().getId()), Integer.parseInt(dmnofornew));
 
 
 				}
@@ -371,7 +371,7 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			  {
 				 demandNoMaster.setDemandLevel("CMD");
 				 demandNoMaster.setDemandStatus("Finalised");
-				  demandNoMaster.setDemandStatusId(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()));
+				  demandNoMaster.setDemandStatusId(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(6)).collect(Collectors.toList()).iterator().next().getId()));
 			  }
 			 else if(request.getParameter("saveasdraft") != null) 
 			  {
@@ -389,7 +389,7 @@ UnitWiseDemandNoService unitWiseDemandNoService;
 			  {
 				demandNoMaster.setDemandLevel("AHQ");
 				demandNoMaster.setDemandStatus("Finalised");
-				demandNoMaster.setDemandStatusId(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(1)).collect(Collectors.toList()).iterator().next().getId()));
+				demandNoMaster.setDemandStatusId(demandStatusService.find(statuslist.stream().filter(x->x.getId().equals(7)).collect(Collectors.toList()).iterator().next().getId()));
 			  }
 			else if(request.getParameter("saveasdraft") != null) 
 			  {

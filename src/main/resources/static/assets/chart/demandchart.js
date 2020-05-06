@@ -22,11 +22,11 @@ $(document).ready(function(){
        	new Chart(document.getElementById("totaldemandraisedbyunit"), {
    	    type: 'doughnut',
    	    data: {
-   	    	labels: ["Pending", "Approved"],
+   	    	labels: ["Approved","Pending"],
 	    	  	datasets: [
 	       	        {
 	       	          label: "Unit Name",
-	       	          backgroundColor: ['red','green'],
+	       	          backgroundColor: ['green','red'],
 	       	          data: dData,
 	       	        }
 	       	      ]
