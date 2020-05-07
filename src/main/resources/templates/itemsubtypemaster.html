@@ -73,16 +73,16 @@ display: none;
 							<tr>
 								<th>Item Sub Type</th>
 								<th>Item Type</th>
-
+								<!-- <th>Item Bar Code</th> -->
 								<th>Action</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<tr th:each="it : ${subTypeItem}">
-
 								<td th:text="${it.subTypeDesc}" />
 								<td th:text="${it.itemTypeId.itemDescription}" />
+								<!-- <td><img th:src="@{'/barcode/' + ${it.id}}" width="200" height="50"></td> -->
 
 								<td>
 									<a th:href="@{'/fetchitemsubtypedata/' + ${it.id}}"
@@ -91,7 +91,6 @@ display: none;
 										class="md-eye"></i></a> | <a th:href="@{'/deleteitemsubtype/' + ${it.id}}"
 									class="btn btn-danger" onclick="return confirm('Are you sure to Delete?')"> <i
 										class="md-delete"></i></a></td>
-								
 							</tr>
 						</tbody>
 					</table>

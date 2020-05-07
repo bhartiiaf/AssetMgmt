@@ -1,5 +1,6 @@
 package com.unifiedweb360.controller;
 
+import java.io.OutputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +26,7 @@ import com.unifiedweb360.modal.master.ItemSubTypeMaster;
 import com.unifiedweb360.modal.master.ItemTypeMaster;
 import com.unifiedweb360.modal.user.User;
 import com.unifiedweb360.service.UserService;
+import com.unifiedweb360.service.BarCodeService;
 import com.unifiedweb360.service.master.CodeHeadMasterService;
 import com.unifiedweb360.service.master.DemandMasterService;
 import com.unifiedweb360.service.master.DemandNoMasterService;
@@ -71,6 +74,16 @@ public class MiscController {
 		return mv;
 	}
 	
+	@GetMapping(value = "/barcode/{id}")
+	public void barcode(@PathVariable("id") String id, HttpServletResponse response) throws Exception {
+		response.setContentType("image/png");
+		OutputStream outputStream = response.getOutputStream();
+		outputStream.write(BarCodeService.getBarCodeImage(id, 200, 200));
+		outputStream.flush();
+		outputStream.close();
+	}
+	
+	
 	@PostMapping("/submititemtype")
 	public ModelAndView submitItemType(HttpServletRequest request, ItemTypeMaster itemTypeMaster,
 			RedirectAttributes redirectAttribute)
@@ -115,6 +128,8 @@ public class MiscController {
 
 		List<ItemTypeMaster> itm = itemTypeService.findAll();
 		List<ItemSubTypeMaster> subTypeItem = itemSubTypeService.findByOrder();
+
+		
 		mv.addObject("itemtype",itm);
 		mv.addObject("subTypeItem", subTypeItem);
 		return mv;
