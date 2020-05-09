@@ -78,7 +78,7 @@ $(document).ready(function(){
 																			+ result[i][0].ditApprovedQty
 																			+ "'>"
 																			+ "</td>"
-																			+ "<td><textarea class='form-control' id='ditRemarks' name='ditRemarks'>"+ result[i][0].ditRemarks+"</textarea>"
+																			+ "<td><textarea cols=20 class='form-control' id='ditRemarks' name='ditRemarks'>"+ result[i][0].ditRemarks+"</textarea>"
 																			+ "</td>"
 																			
 																			+
